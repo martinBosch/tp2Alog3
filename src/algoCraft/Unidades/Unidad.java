@@ -1,6 +1,8 @@
 package Unidades;
 public abstract class Unidad {
 
+	protected int posX;
+	protected int posY;
 	protected int transporte;
 	protected int vision;
 	protected int precioM;
@@ -17,7 +19,13 @@ public abstract class Unidad {
 	public String getNombre(){
 		return nombre;
 	}
-	public void construir(){};
+	public void construir(){}
+	public int getPosX(){
+		return this.posX;
+	}	
+	public int getPosY(){
+		return this.posY;
+	}
 	public int getPrecioM(){
 		return precioM;
 	}
@@ -53,6 +61,26 @@ public abstract class Unidad {
 			this.vida=this.vida-vidaABajar;
 		}else{
 			this.vida=0;
+		}
+	}
+	public void atacarEdificio(Edificio edificioAAtacar){
+		double DiferenciaPosicionX= Math.pow(this.getPosX()-edificioAAtacar.getPosX(), 2);
+		double DiferenciaPosicionY=Math.pow(this.getPosY()-edificioAAtacar.getPosY(), 2);
+		if(DiferenciaPosicionX+DiferenciaPosicionY<=Math.pow(this.getRangoT(),2)){
+			edificioAAtacar.bajarVida(this.getDanioT());	
+		}
+	}
+	public void atacarUnidad(Unidad unidadAAtacar){
+		double DiferenciaPosicionX= Math.pow(this.getPosX()-unidadAAtacar.getPosX(), 2);
+		double DiferenciaPosicionY=Math.pow(this.getPosY()-unidadAAtacar.getPosY(), 2);
+		if(unidadAAtacar.getTipo()=="Aereo"){
+			if(DiferenciaPosicionX+DiferenciaPosicionY<=Math.pow(this.getRangoA(),2)){
+				unidadAAtacar.bajarVida(this.getDanioA());
+			}
+		}else{
+			if(DiferenciaPosicionX+DiferenciaPosicionY<=Math.pow(this.getRangoT(),2)){
+				unidadAAtacar.bajarVida(this.getDanioT());	
+			}
 		}
 	}
 }
