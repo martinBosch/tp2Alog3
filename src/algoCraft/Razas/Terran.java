@@ -18,25 +18,15 @@ import Unidades.NaveCiencia;
 import Unidades.NaveTransportadorT;
 import Unidades.Unidad;
 
-public class Terran implements Raza {
-	private Collection<String> listaDeUnidades;
-	private Collection<String> listaDeEdificios;
+public class Terran extends Raza {
+	private ArrayList<Class> listaDeUnidades;
+	private ArrayList<Class> listaDeEdificios;
 
-	/*public Terran() {
-		listaDeEdificios.add("Centro de mineral");
-		listaDeEdificios.add("Barraca");
-		listaDeEdificios.add("Deposito suministros");
-		listaDeEdificios.add("Refineria");
-		listaDeEdificios.add("Fabrica");
-		listaDeEdificios.add("Puerto estelar");
-
-		listaDeUnidades.add("Marine");
-		listaDeUnidades.add("Golliat");
-		listaDeUnidades.add("Espectro");
-		listaDeUnidades.add("Nave Ciencia");
-		listaDeUnidades.add("Nave Transporte");
-	};*/
-
+	public Terran(ArrayList<Class> listaEdificios,ArrayList<Class> listaUnidades){
+		listaDeEdificios = listaEdificios;
+		listaDeUnidades = listaUnidades;
+	};
+	
 	public Edificio crearEdificio(int minerales, int gases,
 			ArrayList<Edificio> listaDeEdificios, int index) {
 		Edificio edificio = null;// cambiar
@@ -133,7 +123,7 @@ public class Terran implements Raza {
 		return unidad;
 	};
 
-	private boolean verificarExistenciaDelEdificio(
+	public boolean verificarExistenciaDelEdificio(
 			ArrayList<Edificio> listaDeEdificios, String EdificioAVerrificar) {
 		boolean existeElEdificio = false;
 		Iterator<Edificio> iterador = listaDeEdificios.iterator();

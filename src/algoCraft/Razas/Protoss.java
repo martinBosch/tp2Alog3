@@ -29,25 +29,14 @@ import Unidades.Scout;
 import Unidades.Unidad;
 import Unidades.Zealot;
 
-public class Protoss implements Raza{
-	private Collection<String> ListaDeUnidades;
-	private Collection<String> ListaDeEdificios;
+public class Protoss extends Raza{
+	private ArrayList<Class> listaDeUnidades;
+	private ArrayList<Class> listaDeEdificios;
 	
-	
-	/*public Terran() {
-	listaDeEdificios.add("Centro de mineral");
-	listaDeEdificios.add("Barraca");
-	listaDeEdificios.add("Deposito suministros");
-	listaDeEdificios.add("Refineria");
-	listaDeEdificios.add("Fabrica");
-	listaDeEdificios.add("Puerto estelar");
-
-	listaDeUnidades.add("Marine");
-	listaDeUnidades.add("Golliat");
-	listaDeUnidades.add("Espectro");
-	listaDeUnidades.add("Nave Ciencia");
-	listaDeUnidades.add("Nave Transporte");
-};*/
+	public Protoss(ArrayList<Class> listaEdificios,ArrayList<Class> listaUnidades){
+		listaDeEdificios = listaEdificios;
+		listaDeUnidades = listaUnidades;
+	};
 	
 	public Edificio crearEdificio(int minerales, int gases,
 			ArrayList<Edificio> listaDeEdificios, int index) {
@@ -144,7 +133,7 @@ public class Protoss implements Raza{
 		return unidad;
 	};
 	
-	private boolean verificarExistenciaDelEdificio(
+	public boolean verificarExistenciaDelEdificio(
 			ArrayList<Edificio> listaDeEdificios, String EdificioAVerrificar) {
 		boolean existeElEdificio = false;
 		Iterator<Edificio> iterador = listaDeEdificios.iterator();
