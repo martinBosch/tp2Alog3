@@ -18,15 +18,15 @@ public abstract class Raza {
 	}
 
 	
-	public boolean verificarExistenciaDelEdificio(ArrayList<Edificio> listaDeEdificios, String EdificioAVerrificar) {
+	public boolean verificarExistenciaDelEdificio(ArrayList<Edificio> listaDeEdificios, String EdificioAVerificar) {
 		boolean existeElEdificio = false;
-		if(EdificioAVerrificar == "Ninguno"){
+		if(EdificioAVerificar == "Ninguno"){
 			existeElEdificio = true;
 		}
 		if (!existeElEdificio){
 			Iterator<Edificio> iterador = listaDeEdificios.iterator();
 			while (iterador.hasNext()) {
-				if(iterador.next().getNombre() == EdificioAVerrificar){
+				if(iterador.next().getNombre() == EdificioAVerificar){
 					existeElEdificio = true; 
 				}
 			}
@@ -70,13 +70,15 @@ public abstract class Raza {
 		return puede;
 	}
 	
-	private boolean verificarEdificioEnRaza(Edificio edi){
+	private boolean verificarEdificioEnRaza(Edificio edificio){
 		boolean puede = false;
-		Class c = edi.getClass();
+		Class c = edificio.getClass();
 		Iterator<Class> iterador = listaEdificios.iterator();
 		while (iterador.hasNext()) {
-			if(iterador.next().getClass() == c){
+			if(iterador.next() == c){
+				System.out.println("entra3");
 				puede = true; 
+				break;
 			}
 		}
 		return puede;

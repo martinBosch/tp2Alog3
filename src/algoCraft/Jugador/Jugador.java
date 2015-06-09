@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import Edificios.DepositoSuministro;
 import Edificios.Edificio;
+import Edificios.Pilon;
 import Razas.Raza;
 import Razas.Protoss;
 import Razas.Terran;
@@ -68,9 +70,11 @@ public class Jugador {
 	
 	public void crearEdificio(Edificio edificioACrear) {
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases, this.listaDeEdificios, edificioACrear);
+		Edificio pilon = new Pilon();
+		Edificio deposito = new DepositoSuministro();
 		if (puede) {
-			if (((edificioACrear.getNombre() == "Pilon") || (edificioACrear
-					.getNombre() == "Deposito Suministro"))) {
+			if ((edificioACrear.getClass() == pilon.getClass()) || (edificioACrear
+					.getClass() == deposito.getClass())) {
 				aumentarPoblacionMax();
 			}
 			modificarGas(-edificioACrear.getPrecioG());

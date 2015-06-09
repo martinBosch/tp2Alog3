@@ -19,12 +19,9 @@ import Unidades.NaveTransportadorT;
 import Unidades.Unidad;
 
 public class Terran extends Raza {
-	private ArrayList<Class> listaDeUnidades;
-	private ArrayList<Class> listaDeEdificios;
-
 	public Terran(ArrayList<Class> listaEdificios,ArrayList<Class> listaUnidades){
-		listaDeEdificios = listaEdificios;
-		listaDeUnidades = listaUnidades;
+		this.listaEdificios = new ArrayList<Class>(listaEdificios);
+		this.listaUnidades = new ArrayList<Class>(listaUnidades);
 	};
 	
 /*	public Edificio crearEdificio(int minerales, int gases,

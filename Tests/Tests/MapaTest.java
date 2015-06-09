@@ -1,7 +1,7 @@
-package algoCraft.mapa;
+package Tests;
 
+import mapa.Mapa;
 import org.junit.Assert;
-
 import org.junit.Test;
 
 

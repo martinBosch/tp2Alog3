@@ -9,7 +9,7 @@ import Razas.*;
 public class RazaBuilder {
 
 	public Raza crearTerran(){
-		ArrayList<Class> listaEdificios = new ArrayList();
+		ArrayList<Class> listaEdificios = new ArrayList<Class>();
 		CentroMineral aux = new CentroMineral();
 		listaEdificios.add(aux.getClass());
 		Barraca aux1 = new Barraca();
@@ -22,8 +22,7 @@ public class RazaBuilder {
 		listaEdificios.add(aux4.getClass());
 		PuertoEstelarP aux5 = new PuertoEstelarP();
 		listaEdificios.add(aux5.getClass());
-		
-		ArrayList<Class> listaUnidades = new ArrayList();
+		ArrayList<Class> listaUnidades = new ArrayList<Class>();
 		
 		Marine uni1 = new Marine();
 		listaUnidades.add(uni1.getClass());
@@ -42,21 +41,21 @@ public class RazaBuilder {
 	}
 	
 	public Raza crearProtoss(){
-		ArrayList<Class> listaEdificios = new ArrayList();
-		CentroMineral aux = new CentroMineral();
+		ArrayList<Class> listaEdificios = new ArrayList<Class>();
+		NexoMineral aux = new NexoMineral();
 		listaEdificios.add(aux.getClass());
-		Barraca aux1 = new Barraca();
+		Pilon aux1 = new Pilon();
 		listaEdificios.add(aux1.getClass());
-		DepositoSuministro aux2 = new DepositoSuministro();
+		Asimilador aux2 = new Asimilador();
 		listaEdificios.add(aux2.getClass());
-		Refineria aux3 = new Refineria();
+		Acceso aux3 = new Acceso();
 		listaEdificios.add(aux3.getClass());
-		Fabrica aux4 = new Fabrica();
+		PuertoEstelarP aux4 = new PuertoEstelarP();
 		listaEdificios.add(aux4.getClass());
-		PuertoEstelarP aux5 = new PuertoEstelarP();
+		ArchivosTemplarios aux5 = new ArchivosTemplarios();
 		listaEdificios.add(aux5.getClass());
 		
-		ArrayList<Class> listaUnidades = new ArrayList();
+		ArrayList<Class> listaUnidades = new ArrayList<Class>();
 		
 		Marine uni1 = new Marine();
 		listaUnidades.add(uni1.getClass());

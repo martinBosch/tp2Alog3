@@ -35,4 +35,12 @@ public abstract class Edificio {
 	public String getEdifNecesario(){
 		return edifNecesario;
 	}
+
+	public void bajarVida (int vidaABajar){
+		if(this.vida>vidaABajar){
+			this.vida=this.vida-vidaABajar;
+		}else{
+			this.vida=0;
+		}
+	}
 }

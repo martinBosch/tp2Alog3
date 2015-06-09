@@ -30,12 +30,10 @@ import Unidades.Unidad;
 import Unidades.Zealot;
 
 public class Protoss extends Raza{
-	private ArrayList<Class> listaDeUnidades;
-	private ArrayList<Class> listaDeEdificios;
-	
+
 	public Protoss(ArrayList<Class> listaEdificios,ArrayList<Class> listaUnidades){
-		listaDeEdificios = listaEdificios;
-		listaDeUnidades = listaUnidades;
+		this.listaEdificios = new ArrayList<Class>(listaEdificios);
+		this.listaUnidades = new ArrayList<Class>(listaUnidades);
 	};
 	
 
