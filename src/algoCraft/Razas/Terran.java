@@ -27,7 +27,7 @@ public class Terran extends Raza {
 		listaDeUnidades = listaUnidades;
 	};
 	
-	public Edificio crearEdificio(int minerales, int gases,
+/*	public Edificio crearEdificio(int minerales, int gases,
 			ArrayList<Edificio> listaDeEdificios, int index) {
 		Edificio edificio = null;// cambiar
 		Edificio edificioAuxiliar;
@@ -81,68 +81,9 @@ public class Terran extends Raza {
 			break;
 		}
 		return edificio;
-	};
+	}; */
 
-	public Unidad crearUnidad(int minerales, int gases,
-			ArrayList<Edificio> listaDeEdificios, int suministroDisponible, int index) {
-		Unidad unidad = null;
-		Unidad unidadAuxiliar;
-		String edificioAuxiliar;
-		switch (index) {
-		case (1):
-			unidadAuxiliar = new Marine();
-			if (verificarCreacionUnidad(unidadAuxiliar,"Barraca", listaDeEdificios, minerales, gases, suministroDisponible)) {
-				unidad = unidadAuxiliar;
-			}
-			break;
-		case (2):
-			unidadAuxiliar = new Golliat();
-			if (verificarCreacionUnidad(unidadAuxiliar,"Fabrica", listaDeEdificios, minerales, gases, suministroDisponible)) {
-				unidad = unidadAuxiliar;
-			}
-			break;
-		case (3):
-			unidadAuxiliar = new Espectro();
-			if (verificarCreacionUnidad(unidadAuxiliar,"Puerto Estelar", listaDeEdificios, minerales, gases, suministroDisponible)) {
-				unidad = unidadAuxiliar;
-			}
-			break;
-		case (4):
-			unidadAuxiliar = new NaveCiencia();
-			if (verificarCreacionUnidad(unidadAuxiliar, "Puerto Estelar", listaDeEdificios, minerales, gases, suministroDisponible)) {
-				unidad = unidadAuxiliar;
-			}
-			break;
-		case (5):
-			unidadAuxiliar = new NaveTransportadorT();
-			if (verificarCreacionUnidad(unidadAuxiliar, "Puerto Estelar", listaDeEdificios, minerales, gases, suministroDisponible)) {
-				unidad = unidadAuxiliar;
-			}
-			break;
-		}
-		return unidad;
-	};
 
-	public boolean verificarExistenciaDelEdificio(
-			ArrayList<Edificio> listaDeEdificios, String EdificioAVerrificar) {
-		boolean existeElEdificio = false;
-		Iterator<Edificio> iterador = listaDeEdificios.iterator();
-		while (iterador.hasNext()) {
-			if (iterador.next().getNombre() == EdificioAVerrificar) {
-				existeElEdificio = true;
-			}
-		}
-		return existeElEdificio;
-	}
 
-	private boolean verificarCreacionUnidad(Unidad unidadAuxiliar,
-			String edificio, ArrayList<Edificio> listaDeEdificios,
-			int minerales, int gases, int suministrosTotales) {
-		boolean EsPosibleCrear;
-		EsPosibleCrear = (unidadAuxiliar.getSuministros() <= suministrosTotales)
-				&& (unidadAuxiliar.getPrecioG() <= gases)
-				&& (unidadAuxiliar.getPrecioM() <= minerales)
-		 && (verificarExistenciaDelEdificio(listaDeEdificios, edificio));
-		return EsPosibleCrear;
-	}
+
 }

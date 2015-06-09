@@ -38,7 +38,9 @@ public class Protoss extends Raza{
 		listaDeUnidades = listaUnidades;
 	};
 	
-	public Edificio crearEdificio(int minerales, int gases,
+
+	
+/*	public Edificio crearEdificio(int minerales, int gases,
 			ArrayList<Edificio> listaDeEdificios, int index) {
 		Edificio edificio = null;// cambiar
 		Edificio edificioAuxiliar;
@@ -131,29 +133,7 @@ public class Protoss extends Raza{
 			break;
 		}
 		return unidad;
-	};
+	}; */
 	
-	public boolean verificarExistenciaDelEdificio(
-			ArrayList<Edificio> listaDeEdificios, String EdificioAVerrificar) {
-		boolean existeElEdificio = false;
-		Iterator<Edificio> iterador = listaDeEdificios.iterator();
-		while (iterador.hasNext()) {
-			if(iterador.next().getNombre() == EdificioAVerrificar){
-				existeElEdificio = true; 
-			}
-		}
-		return existeElEdificio;
-	}
-	
-	private boolean verificarCreacionUnidad(Unidad unidadAuxiliar,
-			String edificio, ArrayList<Edificio> listaDeEdificios,
-			int minerales, int gases, int suministrosTotales) {
-		boolean EsPosibleCrear;
-		EsPosibleCrear = (unidadAuxiliar.getSuministros() <= suministrosTotales)
-				&& (unidadAuxiliar.getPrecioG() <= gases)
-				&& (unidadAuxiliar.getPrecioM() <= minerales)
-		 && (verificarExistenciaDelEdificio(listaDeEdificios, edificio));
-		return EsPosibleCrear;
-	}
 }
 

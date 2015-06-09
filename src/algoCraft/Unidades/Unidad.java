@@ -15,6 +15,8 @@ public abstract class Unidad {
 	protected int rangoT;
 	protected int vida;
 	protected String nombre;
+	protected String edifNecesario;
+	
 	
 	public String getNombre(){
 		return nombre;
@@ -52,6 +54,9 @@ public abstract class Unidad {
 	}
 	public int getVida(){
 		return vida;
+	}
+	public String getEdifNecesario(){
+		return edifNecesario;
 	}
 	public int getTiempoConstruccion(){
 		return tiempoConstruccion;

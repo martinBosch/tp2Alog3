@@ -6,8 +6,13 @@ public abstract class Edificio {
 	protected int tiempoConstruccion;
 	protected int vida;
 	protected String nombre;
+	protected String edifNecesario;
 	protected int posX;
 	protected int posY;
+	
+	public Edificio(){
+		edifNecesario = "Ninguno"
+	}
 	
 	public int getPrecioM(){
 		return precioM;
@@ -26,5 +31,8 @@ public abstract class Edificio {
 	}
 	public String getNombre(){
 		return nombre;
+	}
+	public String getEdifNecesario(){
+		return edifNecesario;
 	}
 }
