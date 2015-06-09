@@ -1,4 +1,4 @@
-package algoCraft.recursos;
+package recursos;
 
 public class Minerales extends Recurso {
 

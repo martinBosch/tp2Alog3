@@ -1,4 +1,4 @@
-package algoCraft.construcciones;
+package construcciones;
 
 import java.util.Random;
 

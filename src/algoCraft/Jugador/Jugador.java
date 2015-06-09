@@ -32,12 +32,8 @@ public class Jugador {
 		poblacion = 0;
 	}
 
-	public void elegirRaza(int num){
-		if (num == 1){
-			this.raza = new Protoss();
-		} else {
-			this.raza = new Terran();
-		}
+	public void elegirRaza(Raza razaSet){
+		this.raza = razaSet;
 	};
 	
 	public void modificarMineral(int mineralModificado){
@@ -70,9 +66,9 @@ public class Jugador {
 	};
 
 	
-	public void crearEdificio(int num) {
-		Edificio edificioACrear = this.raza.crearEdificio(this.minerales, this.gases, this.listaDeEdificios, num);
-		if (edificioACrear != null) {
+	public void crearEdificio(Edificio edificioACrear) {
+		boolean puede = this.raza.crearEdificio(this.minerales, this.gases, this.listaDeEdificios, edificioACrear);
+		if (puede) {
 			if (((edificioACrear.getNombre() == "Pilon") || (edificioACrear
 					.getNombre() == "Deposito Suministro"))) {
 				aumentarPoblacionMax();
@@ -95,10 +91,10 @@ public class Jugador {
 		return gases;	
 	}
 	
-	public void crearUnidad(int num) {
-		Unidad unidadACrear = this.raza.crearUnidad(this.minerales, this.gases,
-				this.listaDeEdificios, this.poblacionMax - this.poblacion, num);
-		if (unidadACrear != null) {
+	public void crearUnidad(Unidad unidadACrear) {
+		boolean puede = this.raza.crearUnidad(this.minerales, this.gases,
+				this.listaDeEdificios, this.poblacionMax - this.poblacion, unidadACrear);
+		if (puede) {
 			modificarGas(-unidadACrear.getPrecioG());
 			modificarMineral(-unidadACrear.getPrecioM());
 			modificarPoblacion(unidadACrear.getSuministros());

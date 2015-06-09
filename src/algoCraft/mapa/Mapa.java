@@ -1,4 +1,4 @@
-package algoCraft.mapa;
+package mapa;
 
 import java.util.ArrayList;
 import java.util.Iterator;
