@@ -2,6 +2,7 @@ package Razas;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import Unidades.Unidad;
 import Edificios.Edificio;
@@ -14,6 +15,7 @@ public abstract class Raza {
 	public Raza() {
 		listaEdificios = new ArrayList();
 		listaUnidades = new ArrayList();
+	}
 
 	
 	public boolean verificarExistenciaDelEdificio(ArrayList<Edificio> listaDeEdificios, String EdificioAVerrificar) {
@@ -50,7 +52,7 @@ public abstract class Raza {
 			if ((edificioAuxiliar.getPrecioG() <= gases)
 					&& (edificioAuxiliar.getPrecioM() <= minerales)
 					&& (verificarExistenciaDelEdificio(listaDeEdificios,
-							edifAuxiliar.getEdifNecesario()))&&(verificarEdificioEnRaza(edificioAuxiliar))) {
+							edificioAuxiliar.getEdifNecesario()))&&(verificarEdificioEnRaza(edificioAuxiliar))) {
 				puede = true;
 			}
 		return puede;

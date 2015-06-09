@@ -11,7 +11,7 @@ public abstract class Edificio {
 	protected int posY;
 	
 	public Edificio(){
-		edifNecesario = "Ninguno"
+		edifNecesario = "Ninguno";
 	}
 	
 	public int getPrecioM(){

@@ -1,4 +1,4 @@
-package algoCraft.mapa.celdas;
+package mapa.celdas;
 
 public class Espacio extends Celda {
 	

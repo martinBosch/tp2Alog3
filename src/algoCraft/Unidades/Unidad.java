@@ -1,4 +1,9 @@
 package Unidades;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import Edificios.*;
+
 public abstract class Unidad {
 
 	protected int posX;
