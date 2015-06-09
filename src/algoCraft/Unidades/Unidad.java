@@ -21,6 +21,7 @@ public abstract class Unidad {
 	protected int vida;
 	protected String nombre;
 	protected String edifNecesario;
+	protected String tipo;
 	
 	
 	public String getNombre(){
@@ -65,6 +66,9 @@ public abstract class Unidad {
 	}
 	public int getTiempoConstruccion(){
 		return tiempoConstruccion;
+	}
+	public String getTipo(){
+		return this.tipo;
 	}
 	public void bajarVida (int vidaABajar){
 		if(this.vida>vidaABajar){

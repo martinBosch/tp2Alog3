@@ -3,13 +3,13 @@ package mapa;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import algoCraft.construcciones.Base;
-import algoCraft.mapa.celdas.Celda;
-import algoCraft.mapa.celdas.Espacio;
-import algoCraft.mapa.celdas.Tierra;
-import algoCraft.recursos.GasVespeno;
-import algoCraft.recursos.Minerales;
-import algoCraft.recursos.Recurso;
+import construcciones.Base;
+import mapa.celdas.Celda;
+import mapa.celdas.Espacio;
+import mapa.celdas.Tierra;
+import recursos.GasVespeno;
+import recursos.Minerales;
+import recursos.Recurso;
 
 public class Mapa {
 
