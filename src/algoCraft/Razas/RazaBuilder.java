@@ -2,16 +2,36 @@ package Razas;
 
 import java.util.ArrayList;
 
-import Unidades.*;
-import Edificios.*;
-import Razas.*;
+import Edificios.Acceso;
+import Edificios.ArchivosTemplarios;
+import Edificios.Asimilador;
+import Edificios.Barraca;
+import Edificios.CentroMineral;
+import Edificios.DepositoSuministro;
+import Edificios.Fabrica;
+import Edificios.NexoMineral;
+import Edificios.Pilon;
+import Edificios.PuertoEstelarP;
+import Edificios.PuertoEstelarT;
+import Edificios.Refineria;
+import Unidades.AltoTemplario;
+import Unidades.Dragon;
+import Unidades.Espectro;
+import Unidades.Golliat;
+import Unidades.Marine;
+import Unidades.NaveCiencia;
+import Unidades.NaveTransportadorP;
+import Unidades.NaveTransportadorT;
+import Unidades.Scout;
+import Unidades.Zealot;
 
+@SuppressWarnings("rawtypes")
 public class RazaBuilder {
 
-	public Raza crearTerran(){
-		
+	public Raza crearTerran() {
+
 		ArrayList<Class> listaEdificios = new ArrayList<Class>();
-		
+
 		CentroMineral aux = new CentroMineral();
 		listaEdificios.add(aux.getClass());
 		Barraca aux1 = new Barraca();
@@ -24,9 +44,9 @@ public class RazaBuilder {
 		listaEdificios.add(aux4.getClass());
 		PuertoEstelarT aux5 = new PuertoEstelarT();
 		listaEdificios.add(aux5.getClass());
-		
+
 		ArrayList<Class> listaUnidades = new ArrayList<Class>();
-		
+
 		Marine uni1 = new Marine();
 		listaUnidades.add(uni1.getClass());
 		Golliat uni2 = new Golliat();
@@ -37,16 +57,16 @@ public class RazaBuilder {
 		listaUnidades.add(uni4.getClass());
 		NaveTransportadorP uni5 = new NaveTransportadorP();
 		listaUnidades.add(uni5.getClass());
-		
-		Raza raza = new Terran(listaEdificios,listaUnidades);
-		
+
+		Raza raza = new Terran(listaEdificios, listaUnidades);
+
 		return raza;
 	}
-	
-	public Raza crearProtoss(){
-		
+
+	public Raza crearProtoss() {
+
 		ArrayList<Class> listaEdificios = new ArrayList<Class>();
-		
+
 		NexoMineral aux = new NexoMineral();
 		listaEdificios.add(aux.getClass());
 		Pilon aux1 = new Pilon();
@@ -59,9 +79,9 @@ public class RazaBuilder {
 		listaEdificios.add(aux4.getClass());
 		ArchivosTemplarios aux5 = new ArchivosTemplarios();
 		listaEdificios.add(aux5.getClass());
-		
+
 		ArrayList<Class> listaUnidades = new ArrayList<Class>();
-		
+
 		Zealot uni1 = new Zealot();
 		listaUnidades.add(uni1.getClass());
 		Dragon uni2 = new Dragon();
@@ -72,9 +92,9 @@ public class RazaBuilder {
 		listaUnidades.add(uni4.getClass());
 		NaveTransportadorT uni5 = new NaveTransportadorT();
 		listaUnidades.add(uni5.getClass());
-		
-		Raza raza = new Protoss(listaEdificios,listaUnidades);
-		
+
+		Raza raza = new Protoss(listaEdificios, listaUnidades);
+
 		return raza;
 	}
 

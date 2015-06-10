@@ -2,9 +2,8 @@ package Unidades;
 
 import Edificios.ArchivosTemplarios;
 
-
 public class AltoTemplario extends Unidad {
-	
+
 	private int energia;
 	
 	public AltoTemplario(){		
@@ -39,5 +38,5 @@ public class AltoTemplario extends Unidad {
 			
 		}
 	}
-	
+
 }

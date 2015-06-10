@@ -1,20 +1,20 @@
 package Razas;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
-import Unidades.Unidad;
 import Edificios.Edificio;
+import Unidades.Unidad;
 
+@SuppressWarnings("rawtypes")
 public abstract class Raza {
 
 	protected ArrayList<Class> listaEdificios;
 	protected ArrayList<Class> listaUnidades;
 
 	public Raza() {
-		listaEdificios = new ArrayList();
-		listaUnidades = new ArrayList();
+		listaEdificios = new ArrayList<Class>();
+		listaUnidades = new ArrayList<Class>();
 	}
 
 	public boolean verificarExistenciaDelEdificio(
@@ -85,19 +85,18 @@ public abstract class Raza {
 	public boolean crearUnidad(int minerales, int gases,
 			ArrayList<Edificio> listaDeEdificios, Unidad unidadACrear) {
 		boolean puede = false;
-		
-		if ((verificarCreacionUnidad(unidadACrear,
-				listaDeEdificios, minerales,gases))
-				&& (verificarUnidadEnRaza(unidadACrear))){
+
+		if ((verificarCreacionUnidad(unidadACrear, listaDeEdificios, minerales,
+				gases)) && (verificarUnidadEnRaza(unidadACrear))) {
 			puede = true;
 		}
 
 		return puede;
 	};
-	
+
 	private boolean verificarCreacionUnidad(Unidad unidadAuxiliar,
 			ArrayList<Edificio> listaDeEdificios, int minerales, int gases) {
-		boolean EsPosibleCrear= (unidadAuxiliar.getPrecioG() <= gases)
+		boolean EsPosibleCrear = (unidadAuxiliar.getPrecioG() <= gases)
 				&& (unidadAuxiliar.getPrecioM() <= minerales)
 				&& (verificarExistenciaDelEdificio(listaDeEdificios,
 						unidadAuxiliar.getEdifNecesario()));
