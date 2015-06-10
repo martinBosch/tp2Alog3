@@ -2,6 +2,7 @@ package Unidades;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import Edificios.*;
 
 public abstract class Unidad {
@@ -20,9 +21,12 @@ public abstract class Unidad {
 	protected int rangoT;
 	protected int vida;
 	protected String nombre;
-	protected String edifNecesario;
+	protected ArrayList<Class> edifNecesario;
 	protected String tipo;
 	
+	public Unidad(){
+		edifNecesario = new ArrayList<Class>();
+	}
 	
 	public String getNombre(){
 		return nombre;
@@ -61,7 +65,7 @@ public abstract class Unidad {
 	public int getVida(){
 		return vida;
 	}
-	public String getEdifNecesario(){
+	public ArrayList<Class> getEdifNecesario(){
 		return edifNecesario;
 	}
 	public int getTiempoConstruccion(){

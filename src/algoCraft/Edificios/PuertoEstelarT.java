@@ -8,6 +8,7 @@ public class PuertoEstelarT extends Edificio { //Terran
 		tiempoConstruccion= 10;
 		vida= 1300;
 		nombre= "Puerto Estelar";
+		edifNecesario.add(Fabrica.class);
 	}
 	
 	

@@ -1,4 +1,8 @@
 package Unidades;
+
+import Edificios.Acceso;
+import Edificios.Fabrica;
+
 public class Golliat extends Unidad{ //Terran
 
 	public Golliat(){		
@@ -14,6 +18,7 @@ public class Golliat extends Unidad{ //Terran
 		rangoT= 6;
 		vida= 125;
 		nombre= "Golliat";
+		edifNecesario.add(Fabrica.class);
 	}
 	
 	

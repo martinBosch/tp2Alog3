@@ -1,4 +1,8 @@
 package Unidades;
+
+import Edificios.Acceso;
+import Edificios.PuertoEstelarT;
+
 public class Espectro extends Unidad { //Terran
 
 	public Espectro(){		
@@ -14,6 +18,8 @@ public class Espectro extends Unidad { //Terran
 		rangoT= 5;
 		vida= 120;
 		nombre= "Espectro";
+		tipo="Aereo";
+		edifNecesario.add(PuertoEstelarT.class);
 	}
 	
 }

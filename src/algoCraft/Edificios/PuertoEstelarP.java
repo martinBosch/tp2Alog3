@@ -8,6 +8,7 @@ public class PuertoEstelarP extends Edificio{ //Protoss
 		tiempoConstruccion= 10;
 		vida= 600;//no se entiende
 		nombre= "Puerto Estelar";
+		edifNecesario.add(Acceso.class);
 	}
 	
 	

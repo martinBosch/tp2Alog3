@@ -8,6 +8,7 @@ public class Fabrica extends Edificio{ //Terran
 		tiempoConstruccion= 12;
 		vida= 1250;
 		nombre= "Fabrica";
+		edifNecesario.add(Barraca.class);
 	}
 	
 }

@@ -1,4 +1,7 @@
 package Unidades;
+
+import Edificios.PuertoEstelarT;
+
 public class NaveTransportadorT extends Unidad { //Terran
 	
 	public NaveTransportadorT(){		
@@ -14,6 +17,8 @@ public class NaveTransportadorT extends Unidad { //Terran
 		rangoT= 0;
 		vida= 150;
 		nombre= "Nave Transportador";
+		tipo="Aereo";
+		edifNecesario.add(PuertoEstelarT.class);
 	}
 	
 	

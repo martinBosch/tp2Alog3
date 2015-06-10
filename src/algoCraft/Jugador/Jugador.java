@@ -96,14 +96,15 @@ public class Jugador {
 	}
 	
 	public void crearUnidad(Unidad unidadACrear) {
-		boolean puede = this.raza.crearUnidad(this.minerales, this.gases,
-				this.listaDeEdificios, this.poblacionMax - this.poblacion, unidadACrear);
-		if (puede) {
-			modificarGas(-unidadACrear.getPrecioG());
-			modificarMineral(-unidadACrear.getPrecioM());
-			modificarPoblacion(unidadACrear.getSuministros());
-			this.listaDeUnidades.add(unidadACrear);
-			
+		if (unidadACrear.getSuministros()<=(this.poblacionMax - this.poblacion)){
+			boolean puede = this.raza.crearUnidad(this.minerales, this.gases,
+				this.listaDeEdificios, unidadACrear);
+			if (puede) {
+				modificarGas(-unidadACrear.getPrecioG());
+				modificarMineral(-unidadACrear.getPrecioM());
+				modificarPoblacion(unidadACrear.getSuministros());
+				this.listaDeUnidades.add(unidadACrear);	
+			}
 		}
 	};
 
@@ -113,6 +114,10 @@ public class Jugador {
 	
 	public void destruirUnidad(Unidad unidadAux){
 		
+	}
+
+	public int getCantidadUnidades() {
+		return listaDeUnidades.size();
 	};
 
 }

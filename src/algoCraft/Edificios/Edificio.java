@@ -1,4 +1,7 @@
 package Edificios;
+
+import java.util.ArrayList;
+
 public abstract class Edificio {
 	
 	protected int precioM;
@@ -6,12 +9,12 @@ public abstract class Edificio {
 	protected int tiempoConstruccion;
 	protected int vida;
 	protected String nombre;
-	protected String edifNecesario;
+	protected ArrayList<Class> edifNecesario;
 	protected int posX;
 	protected int posY;
 	
 	public Edificio(){
-		edifNecesario = "Ninguno";
+		edifNecesario = new ArrayList<Class>();
 	}
 	
 	public int getPrecioM(){
@@ -32,7 +35,7 @@ public abstract class Edificio {
 	public String getNombre(){
 		return nombre;
 	}
-	public String getEdifNecesario(){
+	public ArrayList<Class> getEdifNecesario(){
 		return edifNecesario;
 	}
 

@@ -1,4 +1,7 @@
 package Unidades;
+
+import Edificios.Acceso;
+
 public class Zealot extends Unidad { //Protoss
 
 	public Zealot(){		
@@ -14,6 +17,8 @@ public class Zealot extends Unidad { //Protoss
 		rangoT= 1;
 		vida= 150; //No se entiendeuu
 		nombre= "Zealot";
+		tipo="Otro";
+		edifNecesario.add(Acceso.class);
 	}
 	
 }

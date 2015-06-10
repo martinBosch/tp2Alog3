@@ -1,4 +1,7 @@
 package Unidades;
+
+import Edificios.Acceso;
+
 public class Dragon extends Unidad {
 
 	public Dragon(){		
@@ -14,6 +17,8 @@ public class Dragon extends Unidad {
 		rangoT= 4;
 		vida= 150; //No se entiende
 		nombre= "Dragon";
+		tipo="Otro";
+		edifNecesario.add(Acceso.class);
 	}
 	
 	

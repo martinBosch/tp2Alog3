@@ -8,7 +8,7 @@ public class ArchivosTemplarios extends Edificio{ //Protoss
 		tiempoConstruccion= 9;
 		vida= 500; //NO SE ENTIENDE
 		nombre= "Archivos Templarios";
-		
+		edifNecesario.add(PuertoEstelarP.class);
 	}
 		
 }

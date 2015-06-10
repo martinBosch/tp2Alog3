@@ -1,4 +1,8 @@
 package Unidades;
+
+import Edificios.ArchivosTemplarios;
+
+
 public class AltoTemplario extends Unidad {
 	
 	private int energia;
@@ -17,6 +21,8 @@ public class AltoTemplario extends Unidad {
 		vida= 40;
 		energia=0;
 		nombre= "Alto Templario";
+		tipo="Otro";
+		edifNecesario.add(ArchivosTemplarios.class);
 	}
 	
 	

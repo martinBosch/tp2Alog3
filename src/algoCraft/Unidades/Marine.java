@@ -1,4 +1,7 @@
 package Unidades;
+
+import Edificios.Barraca;
+
 public class Marine extends Unidad{ //Terran
 
 	public Marine(){
@@ -14,6 +17,8 @@ public class Marine extends Unidad{ //Terran
 		rangoA= 4;
 		rangoT= 4;
 		nombre= "Marine";
+		tipo="Otro";
+		edifNecesario.add(Barraca.class);
 	}
 	
 	

@@ -1,4 +1,7 @@
 package Unidades;
+
+import Edificios.PuertoEstelarT;
+
 public class NaveCiencia extends Unidad{ //Terran
 	
 	private int energia;
@@ -17,6 +20,8 @@ public class NaveCiencia extends Unidad{ //Terran
 		vida= 200;
 		energia=0;
 		nombre= "Nave Ciencia";
+		tipo="Aereo";
+		edifNecesario.add(PuertoEstelarT.class);
 	}
 	
 	

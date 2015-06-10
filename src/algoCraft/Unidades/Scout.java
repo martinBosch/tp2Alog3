@@ -1,4 +1,7 @@
 package Unidades;
+
+import Edificios.PuertoEstelarP;
+
 public class Scout extends Unidad{
 
 	public Scout(){		
@@ -14,6 +17,8 @@ public class Scout extends Unidad{
 		rangoT= 4;
 		vida= 150; //No se entiende
 		nombre= "Scout";
+		tipo="Aereo";
+		edifNecesario.add(PuertoEstelarP.class);
 	}
 	
 }

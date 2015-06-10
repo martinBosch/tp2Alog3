@@ -141,8 +141,10 @@ public class UnidadesTest {
 		
 		Edificio barraca = new Barraca();
 		jugador.crearEdificio(barraca);
-		Unidad marine = new Marine();
+		System.out.println(jugador.getCantidadEdificios());
+		Marine marine = new Marine();
 		jugador.crearUnidad(marine);
+		System.out.println(jugador.getCantidadUnidades());
 		assertTrue (jugador.getPoblacion() == 1);
 	}
 	
@@ -262,7 +264,12 @@ public class UnidadesTest {
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new PuertoEstelarT();
 		jugador.crearEdificio(edificioACrear);
+		edificioACrear = new DepositoSuministro();
+		jugador.crearEdificio(edificioACrear);
 
+		Unidad marine = new Marine();
+		jugador.crearUnidad(marine);
+		
 		Unidad espectro= new Espectro();
 		jugador.crearUnidad(espectro);
 		espectro= new Espectro();
@@ -272,7 +279,7 @@ public class UnidadesTest {
 		espectro= new Espectro();
 		jugador.crearUnidad(espectro);
 		
-		assertTrue(jugador.getPoblacion() == 8);
+		assertTrue(jugador.getPoblacion() == 9);
 		
 	}
 	

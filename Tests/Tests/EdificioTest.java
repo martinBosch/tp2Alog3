@@ -63,39 +63,45 @@ public class EdificioTest {
 		jugador.elegirRaza(raza.crearProtoss());
 		jugador.modificarMineral(300);
 		jugador.modificarGas(300);
-		Edificio pilon = new Pilon();
+		Edificio acceso = new Acceso();
 		Edificio puertoEstelar = new PuertoEstelarP();
-		jugador.crearEdificio(pilon);
+		jugador.crearEdificio(acceso);
 		jugador.crearEdificio(puertoEstelar);
-		assertTrue(jugador.getGases() == 150);
+		assertTrue(jugador.getMinerales() == 200);
 	
 	}
 	
 	@Test
-	public void testCrearEdificioConJugadorResteMinerales() {
+	public void testCrearEdificiosYAgregarlosAListaProtoss() {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearProtoss());
-		jugador.modificarMineral(300);
-		jugador.modificarGas(300);
-		Edificio pilon = new Pilon();
-		jugador.crearEdificio(pilon);
+		jugador.modificarMineral(3000);
+		jugador.modificarGas(3000);
+		Edificio acceso = new Acceso();
+		jugador.crearEdificio(acceso);
 		Edificio puertoEstelar = new PuertoEstelarP();
 		jugador.crearEdificio(puertoEstelar);
-		assertTrue(jugador.getMinerales() == 250);
+		Edificio archivosTemplarios = new ArchivosTemplarios();
+		jugador.crearEdificio(archivosTemplarios);
+		assertTrue(jugador.getCantidadEdificios() == 3);
 	
 	}
 	
 	@Test
-	public void testCrearEdificioYAgregarloALista() {
+	public void testCrearEdificiosYAgregarlosAListaTerran() {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearProtoss());
-		jugador.modificarMineral(300);
-		jugador.modificarGas(300);
-		Edificio asimilador = new Asimilador();
-		jugador.crearEdificio(asimilador);
-		assertTrue(jugador.getCantidadEdificios() == 1);
+		jugador.elegirRaza(raza.crearTerran());
+		jugador.modificarMineral(3000);
+		jugador.modificarGas(3000);
+		Edificio barraca = new Barraca();
+		jugador.crearEdificio(barraca);
+		Edificio fabrica = new Fabrica();
+		jugador.crearEdificio(fabrica);
+		Edificio puertoEstelar = new PuertoEstelarT();
+		jugador.crearEdificio(puertoEstelar);
+		assertTrue(jugador.getCantidadEdificios() == 3);
 	
 	}
 	
@@ -106,14 +112,14 @@ public class EdificioTest {
 		jugador.elegirRaza(raza.crearProtoss());
 		jugador.modificarMineral(300);
 		jugador.modificarGas(300);
-		Edificio pilon = new Pilon();
-		jugador.crearEdificio(pilon);
+		Edificio acceso = new Acceso();
+		jugador.crearEdificio(acceso);
 		Edificio puertoEstelar = new PuertoEstelarP();
 		jugador.crearEdificio(puertoEstelar);
-		System.out.println(jugador.getGases());
 		assertTrue(jugador.getGases() == 150);
 		
 	}
+	
 	
 	@Test
 	public void testAumentarPoblacionMaxima() {
