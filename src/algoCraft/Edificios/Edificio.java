@@ -2,8 +2,9 @@ package Edificios;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("rawtypes")
 public abstract class Edificio {
-	
+
 	protected int precioM;
 	protected int precioG;
 	protected int tiempoConstruccion;
@@ -12,38 +13,44 @@ public abstract class Edificio {
 	protected ArrayList<Class> edifNecesario;
 	protected int posX;
 	protected int posY;
-	
-	public Edificio(){
+
+	public Edificio() {
 		edifNecesario = new ArrayList<Class>();
 	}
-	
-	public int getPrecioM(){
+
+	public int getPrecioM() {
 		return precioM;
 	}
-	public int getPosX(){
+
+	public int getPosX() {
 		return this.posX;
-	}	
-	public int getPosY(){
+	}
+
+	public int getPosY() {
 		return this.posY;
 	}
-	public int getPrecioG(){
+
+	public int getPrecioG() {
 		return precioG;
 	}
-	public int getVida(){
+
+	public int getVida() {
 		return vida;
 	}
-	public String getNombre(){
+
+	public String getNombre() {
 		return nombre;
 	}
-	public ArrayList<Class> getEdifNecesario(){
+
+	public ArrayList<Class> getEdifNecesario() {
 		return edifNecesario;
 	}
 
-	public void bajarVida (int vidaABajar){
-		if(this.vida>vidaABajar){
-			this.vida=this.vida-vidaABajar;
-		}else{
-			this.vida=0;
+	public void bajarVida(int vidaABajar) {
+		if (this.vida > vidaABajar) {
+			this.vida = this.vida - vidaABajar;
+		} else {
+			this.vida = 0;
 		}
 	}
 }

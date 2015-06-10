@@ -1,43 +1,24 @@
 package Tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.junit.Test;
 
-import Edificios.Acceso;
-import Edificios.ArchivosTemplarios;
-import Edificios.Asimilador;
 import Edificios.Barraca;
-import Edificios.CentroMineral;
 import Edificios.DepositoSuministro;
 import Edificios.Edificio;
 import Edificios.Fabrica;
-import Edificios.NexoMineral;
-import Edificios.Pilon;
-import Edificios.PuertoEstelarP;
 import Edificios.PuertoEstelarT;
-import Edificios.Refineria;
+import Jugador.Jugador;
+import Razas.RazaBuilder;
 import Unidades.AltoTemplario;
 import Unidades.Dragon;
 import Unidades.Espectro;
 import Unidades.Golliat;
 import Unidades.Marine;
-import Unidades.NaveCiencia;
-import Unidades.NaveTransportadorP;
-import Unidades.NaveTransportadorT;
-import Unidades.Scout;
 import Unidades.Unidad;
-import Unidades.Zealot;
-import Jugador.Jugador;
-import Razas.RazaBuilder;
-import Razas.Terran;
-import Razas.Protoss;
-import mapa.Mapa;
-import recursos.GasVespeno;
-import recursos.Minerales;
-public class UnidadesTest {
 
+public class UnidadesTest {
 
 	@Test
 	public void testCreacionAltosTemplarios() {
@@ -69,7 +50,7 @@ public class UnidadesTest {
 		assertTrue(dragon.getVida() == 150);
 		assertTrue(dragon.getTiempoConstruccion() == 6);
 	}
-	
+
 	public void testCreacionEspectro() {
 		Espectro espectro = new Espectro();
 		assertTrue(espectro.getPrecioG() == 100);
@@ -84,7 +65,7 @@ public class UnidadesTest {
 		assertTrue(espectro.getVida() == 120);
 		assertTrue(espectro.getTiempoConstruccion() == 8);
 	}
-	
+
 	public void testCreacionGolliat() {
 		Golliat golliat = new Golliat();
 		assertTrue(golliat.getPrecioG() == 50);
@@ -99,7 +80,7 @@ public class UnidadesTest {
 		assertTrue(golliat.getVida() == 125);
 		assertTrue(golliat.getTiempoConstruccion() == 6);
 	}
-	
+
 	public void testCreacionMarine() {
 		Marine marine = new Marine();
 		assertTrue(marine.getPrecioG() == 0);
@@ -114,40 +95,43 @@ public class UnidadesTest {
 		assertTrue(marine.getVida() == 40);
 		assertTrue(marine.getTiempoConstruccion() == 3);
 	}
+
 	@Test
 	public void testPoblacionMaxima() {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());			
+		jugador.elegirRaza(raza.crearTerran());
 		assertTrue(jugador.getPoblacionMax() == 5);
 	}
+
 	@Test
-	public void testCreacionUnidadSinEdificio(){
+	public void testCreacionUnidadSinEdificio() {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearTerran());
 		Unidad marine = new Marine();
 		jugador.crearUnidad(marine);
-		assertTrue (jugador.getPoblacion() == 0);
+		assertTrue(jugador.getPoblacion() == 0);
 	}
+
 	@Test
-	public void testCreacionUnidadConEdificio(){
+	public void testCreacionUnidadConEdificio() {
 		Jugador jugador = new Jugador();
-		
+
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearTerran());
-		
+
 		jugador.modificarMineral(10000);
-		
+
 		Edificio barraca = new Barraca();
 		jugador.crearEdificio(barraca);
 		System.out.println(jugador.getCantidadEdificios());
 		Marine marine = new Marine();
 		jugador.crearUnidad(marine);
 		System.out.println(jugador.getCantidadUnidades());
-		assertTrue (jugador.getPoblacion() == 1);
+		assertTrue(jugador.getPoblacion() == 1);
 	}
-	
+
 	@Test
 	public void testUnidadConMineralYsinGas() {
 		Jugador jugador = new Jugador();
@@ -155,109 +139,109 @@ public class UnidadesTest {
 		jugador.elegirRaza(raza.crearTerran());
 		jugador.modificarMineral(300);
 		jugador.modificarMineral(10000);
-		
+
 		Edificio edificioACrear = new Barraca();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new Fabrica();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new PuertoEstelarT();
 		jugador.crearEdificio(edificioACrear);
-		
-		Unidad espectro= new Espectro();
+
+		Unidad espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		
+
 		assertTrue(jugador.getPoblacion() == 0);
-		
+
 	}
-	
+
 	@Test
 	public void testUnidadConMineralYConGas() {
 		Jugador jugador = new Jugador();
-		
+
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearTerran());
-		
+
 		jugador.modificarMineral(450);
 		jugador.modificarGas(300);
-		
+
 		Edificio edificioACrear = new Barraca();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new Fabrica();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new PuertoEstelarT();
 		jugador.crearEdificio(edificioACrear);
-		
-		Unidad espectro= new Espectro();
+
+		Unidad espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		
+
 		assertTrue(jugador.getPoblacion() == 2);
-		
+
 	}
-	
+
 	@Test
 	public void testUnidadSinMineralYConGas() {
 		Jugador jugador = new Jugador();
-		
+
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearTerran());
-		
+
 		jugador.modificarMineral(300);
 		jugador.modificarGas(500);
-		
+
 		Edificio edificioACrear = new Barraca();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new Fabrica();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new PuertoEstelarT();
 		jugador.crearEdificio(edificioACrear);
-		
-		Unidad espectro= new Espectro();
+
+		Unidad espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		
+
 		assertTrue(jugador.getPoblacion() == 0);
-		
+
 	}
-	
+
 	@Test
 	public void testUnidadSinSuministros() {
 		Jugador jugador = new Jugador();
-		
+
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearTerran());
-		
+
 		jugador.modificarMineral(1000);
 		jugador.modificarGas(1000);
-		
+
 		Edificio edificioACrear = new Barraca();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new Fabrica();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new PuertoEstelarT();
 		jugador.crearEdificio(edificioACrear);
-		
-		Unidad espectro= new Espectro();
+
+		Unidad espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		espectro= new Espectro();
+		espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		espectro= new Espectro();
+		espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		espectro= new Espectro();
+		espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		
+
 		assertTrue(jugador.getPoblacion() == 4);
-		
+
 	}
-	
+
 	@Test
 	public void testUnidadConSuministrosAumentoDeSuministros() {
 		Jugador jugador = new Jugador();
-		
+
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearTerran());
-		
+
 		jugador.modificarMineral(1500);
 		jugador.modificarGas(1000);
-		
+
 		Edificio edificioACrear = new Barraca();
 		jugador.crearEdificio(edificioACrear);
 		edificioACrear = new Fabrica();
@@ -269,18 +253,18 @@ public class UnidadesTest {
 
 		Unidad marine = new Marine();
 		jugador.crearUnidad(marine);
-		
-		Unidad espectro= new Espectro();
+
+		Unidad espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		espectro= new Espectro();
+		espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		espectro= new Espectro();
+		espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		espectro= new Espectro();
+		espectro = new Espectro();
 		jugador.crearUnidad(espectro);
-		
+
 		assertTrue(jugador.getPoblacion() == 9);
-		
+
 	}
-	
+
 }
