@@ -19,12 +19,25 @@ public class AltoTemplario extends Unidad {
 		rangoA= 0;
 		rangoT= 0;
 		vida= 40;
-		energia=0;
+		energia=50;
 		nombre= "Alto Templario";
 		tipo="Otro";
 		edifNecesario.add(ArchivosTemplarios.class);
 	}
-	
-	
+	public void AumentarEnergia(){
+		if (energia<=185){
+			energia=energia+15;
+		}
+	}
+	public void TormentaPsiónica(){
+		if (energia>=75){
+			
+		}
+	}
+	public void Radiación(){
+		if (energia>=100){
+			
+		}
+	}
 	
 }

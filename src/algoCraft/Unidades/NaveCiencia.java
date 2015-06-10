@@ -18,10 +18,25 @@ public class NaveCiencia extends Unidad{ //Terran
 		rangoA= 0;
 		rangoT= 0;
 		vida= 200;
-		energia=0;
+		energia=50;
 		nombre= "Nave Ciencia";
 		tipo="Aereo";
 		edifNecesario.add(PuertoEstelarT.class);
+	}
+	public void AumentarEnergia(){
+		if (energia<=185){
+			energia=energia+15;
+		}
+	}
+	public void EMP(){
+		if (energia>=100){
+			
+		}
+	}
+	public void Radiación(){
+		if (energia>=75){
+			
+		}
 	}
 	
 	

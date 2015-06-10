@@ -2,11 +2,16 @@ package Jugador;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import Edificios.Asimilador;
+import Edificios.CentroMineral;
 import Edificios.DepositoSuministro;
 import Edificios.Edificio;
+import Edificios.NexoMineral;
 import Edificios.Pilon;
+import Edificios.Refineria;
 import Razas.Raza;
 import Razas.Protoss;
 import Razas.Terran;
@@ -106,18 +111,52 @@ public class Jugador {
 				this.listaDeUnidades.add(unidadACrear);	
 			}
 		}
-	};
+	}
 
-	public void destruirEdificio(Edificio edificioAux){
-		
-	};
+	public void destruirEdificios(){
+		Iterator<Edificio> iterator = this.listaDeEdificios.iterator();
+		int i=0;
+		while (iterator.hasNext()) {
+			i++;
+			if (iterator.next().getVida()<0){
+				this.listaDeEdificios.remove(i);
+			}
+		}
+	}
 	
-	public void destruirUnidad(Unidad unidadAux){
-		
+	public void destruirUnidades(){
+		Iterator<Unidad> iterator = this.listaDeUnidades.iterator();
+		int i=0;
+		while (iterator.hasNext()) {
+			i++;
+			if (iterator.next().getVida()<0){
+				this.listaDeUnidades.remove(i);
+			}
+		}
 	}
 
 	public int getCantidadUnidades() {
 		return listaDeUnidades.size();
-	};
+	}
+
+	public void pasarTurno() {
+		Iterator<Edificio> iterator = this.listaDeEdificios.iterator();
+		int numeroDeEdificiosMinerales = 0;
+		int numeroDeEdificiosGases = 0;
+		destruirUnidades();
+		destruirEdificios();
+		while (iterator.hasNext()) {
+			if ((iterator.next().getClass() == CentroMineral.class)
+					|| (iterator.next().getClass() == NexoMineral.class)) {
+				numeroDeEdificiosMinerales++;
+			}
+			if ((iterator.next().getClass() == Refineria.class)
+					|| ((iterator.next()).getClass() == Asimilador.class)) {
+				numeroDeEdificiosGases++;
+			}
+		this.minerales=this.minerales+(numeroDeEdificiosMinerales*10);
+		this.gases=this.gases+(numeroDeEdificiosGases*10);
+		}
+	}
 
 }
