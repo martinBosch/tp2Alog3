@@ -20,15 +20,15 @@ public class AlgoCraft {
 		turnos = 0;
 	}
 
-	void InicializarJugadores(Raza raza1,Raza raza2) {
+	void InicializarJugadores(Raza raza1, Raza raza2) {
 		Jugador1.elegirRaza(raza1);
 		Jugador2.elegirRaza(raza2);
 	}
 
-	void PasarTurnos(){
-		if((turnos % 2)==0){
+	void PasarTurnos() {
+		if ((turnos % 2) == 0) {
 			Jugador1.pasarTurno();
-		}else{
+		} else {
 			Jugador2.pasarTurno();
 		}
 	}

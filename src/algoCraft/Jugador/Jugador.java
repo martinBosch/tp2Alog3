@@ -1,7 +1,6 @@
 package Jugador;
 
 import java.util.ArrayList;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -28,11 +27,16 @@ public class Jugador {
 	private int poblacion;
 	private int poblacionMax;
 	private ArrayList<Edificio> listaDeEdificios;
+	private ArrayList<Edificio> listaDeEdificiosACrear;
 	private ArrayList<Unidad> listaDeUnidades;
+	private ArrayList<Unidad> listaDeUnidadesACrear;
+	
 
 	public Jugador() {
 		this.listaDeEdificios = new ArrayList<Edificio>();
 		this.listaDeUnidades = new ArrayList<Unidad>();
+		this.listaDeEdificiosACrear = new ArrayList<Edificio>();
+		this.listaDeUnidadesACrear = new ArrayList<Unidad>();
 		gases = 0;
 		minerales = 200;
 		poblacionMax = 5;
@@ -77,13 +81,9 @@ public class Jugador {
 		Edificio pilon = new Pilon();
 		Edificio deposito = new DepositoSuministro();
 		if (puede) {
-			if ((edificioACrear.getClass() == pilon.getClass())
-					|| (edificioACrear.getClass() == deposito.getClass())) {
-				aumentarPoblacionMax();
-			}
 			modificarGas(-edificioACrear.getPrecioG());
 			modificarMineral(-edificioACrear.getPrecioM());
-			this.listaDeEdificios.add(edificioACrear);
+			this.listaDeEdificiosACrear.add(edificioACrear);
 		}
 	};
 
@@ -107,28 +107,28 @@ public class Jugador {
 				modificarGas(-unidadACrear.getPrecioG());
 				modificarMineral(-unidadACrear.getPrecioM());
 				modificarPoblacion(unidadACrear.getSuministros());
-				this.listaDeUnidades.add(unidadACrear);
+				this.listaDeUnidadesACrear.add(unidadACrear);
 			}
 		}
 	}
 
-	public void destruirEdificios(){
+	public void destruirEdificios() {
 		Iterator<Edificio> iterator = this.listaDeEdificios.iterator();
-		int i=0;
+		int i = 0;
 		while (iterator.hasNext()) {
 			i++;
-			if (iterator.next().getVida()<0){
+			if (iterator.next().getVida() < 0) {
 				this.listaDeEdificios.remove(i);
 			}
 		}
 	}
-	
-	public void destruirUnidades(){
+
+	public void destruirUnidades() {
 		Iterator<Unidad> iterator = this.listaDeUnidades.iterator();
-		int i=0;
+		int i = 0;
 		while (iterator.hasNext()) {
 			i++;
-			if (iterator.next().getVida()<0){
+			if (iterator.next().getVida() < 0) {
 				this.listaDeUnidades.remove(i);
 			}
 		}
@@ -137,25 +137,65 @@ public class Jugador {
 	public int getCantidadUnidades() {
 		return listaDeUnidades.size();
 	}
-
-	public void pasarTurno() {
-		Iterator<Edificio> iterator = this.listaDeEdificios.iterator();
+	
+	public void aumentoGasYMineralPorEdificios(Iterator<Edificio> iterator) {
 		int numeroDeEdificiosMinerales = 0;
 		int numeroDeEdificiosGases = 0;
+		Edificio edificioAuxiliar;
+		if (listaDeEdificios.size() != 0) {
+			while (iterator.hasNext()) {
+				edificioAuxiliar=iterator.next();
+				if ((edificioAuxiliar.getClass() == CentroMineral.class)
+						|| (edificioAuxiliar.getClass() == NexoMineral.class)) {
+					numeroDeEdificiosMinerales++;
+				}
+				if ((edificioAuxiliar.getClass() == Refineria.class)
+						|| (edificioAuxiliar.getClass() == Asimilador.class)) {
+					numeroDeEdificiosGases++;
+				}
+
+			}
+		this.minerales = this.minerales
+				+ (numeroDeEdificiosMinerales * 10);
+		this.gases = this.gases + (numeroDeEdificiosGases * 10);
+		}
+	}
+
+	public void DisminuirTiempoDeConstruccion() {
+		Iterator<Edificio> iteradorEdificios = this.listaDeEdificiosACrear
+				.iterator();
+		Iterator<Unidad> iteradorUnidades = this.listaDeUnidadesACrear
+				.iterator();
+		int i;
+		Edificio edificioAuxiiliar;
+		Unidad unidadAuxiliar;
+		for(i=0;i<listaDeEdificiosACrear.size();i++) {
+			edificioAuxiiliar = this.listaDeEdificiosACrear.get(i);
+			edificioAuxiiliar.bajarTiempoConstruccion();
+			if (edificioAuxiiliar.getTiempoConstruccion() == 0) {
+				if ((edificioAuxiiliar.getClass() == Pilon.class)
+						|| (edificioAuxiiliar.getClass() == DepositoSuministro.class)) {
+					aumentarPoblacionMax();
+				}
+				this.listaDeEdificios.add(edificioAuxiiliar);
+				this.listaDeEdificiosACrear.remove(i);
+			}
+		}
+		for(i=0;i<listaDeUnidadesACrear.size();i++) {
+			unidadAuxiliar = this.listaDeUnidadesACrear.get(i);
+			unidadAuxiliar.bajarTiempoConstruccion();
+			if (unidadAuxiliar.getTiempoConstruccion() == 0) {
+				this.listaDeUnidades.add(unidadAuxiliar);
+				this.listaDeUnidadesACrear.remove(unidadAuxiliar);
+			}
+		}
+	}
+	public void pasarTurno() {
 		destruirUnidades();
 		destruirEdificios();
-		while (iterator.hasNext()) {
-			if ((iterator.next().getClass() == CentroMineral.class)
-					|| (iterator.next().getClass() == NexoMineral.class)) {
-				numeroDeEdificiosMinerales++;
-			}
-			if ((iterator.next().getClass() == Refineria.class)
-					|| ((iterator.next()).getClass() == Asimilador.class)) {
-				numeroDeEdificiosGases++;
-			}
-		this.minerales=this.minerales+(numeroDeEdificiosMinerales*10);
-		this.gases=this.gases+(numeroDeEdificiosGases*10);
-		}
+		aumentoGasYMineralPorEdificios(this.listaDeEdificios.iterator());
+		DisminuirTiempoDeConstruccion();
+
 	}
 
 }
