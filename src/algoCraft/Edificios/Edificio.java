@@ -23,6 +23,10 @@ public abstract class Edificio extends ObjetoMapa {
 		edifNecesario = new ArrayList<Class>();
 	}
 
+	public int getTiempoConstruccion() {
+		return tiempoConstruccion;
+	}
+	
 	public int getPrecioM() {
 		return precioM;
 	}
@@ -57,5 +61,9 @@ public abstract class Edificio extends ObjetoMapa {
 		} else {
 			this.vida = 0;
 		}
+	}
+
+	public void bajarTiempoConstruccion() {
+		tiempoConstruccion--;
 	}
 }

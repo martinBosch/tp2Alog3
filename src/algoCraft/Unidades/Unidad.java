@@ -35,7 +35,11 @@ public abstract class Unidad extends ObjetoMapa {
 	public String getNombre() {
 		return nombre;
 	}
-
+	
+	public void bajarTiempoConstruccion(){
+		tiempoConstruccion--;
+	}
+	
 	public void construir() {
 	}
 

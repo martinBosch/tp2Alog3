@@ -48,7 +48,13 @@ public class EdificioTest {
 		Edificio acceso = new Acceso();
 		Edificio puertoEstelar = new PuertoEstelarP();
 		jugador.crearEdificio(acceso);
+		for(int i=1;i<=8;i++){
+			jugador.pasarTurno();
+		}
 		jugador.crearEdificio(puertoEstelar);
+		for(int i=1;i<=10;i++){
+			jugador.pasarTurno();
+		}
 		assertTrue(jugador.getMinerales() == 200);
 
 	}
@@ -60,12 +66,28 @@ public class EdificioTest {
 		jugador.elegirRaza(raza.crearProtoss());
 		jugador.modificarMineral(3000);
 		jugador.modificarGas(3000);
+		
 		Edificio acceso = new Acceso();
 		jugador.crearEdificio(acceso);
+		
+		for(int i=1;i<=8;i++){
+			jugador.pasarTurno();
+		}
+		
 		Edificio puertoEstelar = new PuertoEstelarP();
 		jugador.crearEdificio(puertoEstelar);
+		
+		for(int i=1;i<=10;i++){
+			jugador.pasarTurno();
+		}
+		
 		Edificio archivosTemplarios = new ArchivosTemplarios();
 		jugador.crearEdificio(archivosTemplarios);
+		
+		for(int i=1;i<=9;i++){
+			jugador.pasarTurno();
+		}
+		
 		assertTrue(jugador.getCantidadEdificios() == 3);
 
 	}
@@ -77,12 +99,28 @@ public class EdificioTest {
 		jugador.elegirRaza(raza.crearTerran());
 		jugador.modificarMineral(3000);
 		jugador.modificarGas(3000);
+		
 		Edificio barraca = new Barraca();
 		jugador.crearEdificio(barraca);
+		
+		for(int i=1;i<=12;i++){
+			jugador.pasarTurno();
+		}
+		
 		Edificio fabrica = new Fabrica();
 		jugador.crearEdificio(fabrica);
+		
+		for(int i=1;i<=12;i++){
+			jugador.pasarTurno();
+		}
+		
 		Edificio puertoEstelar = new PuertoEstelarT();
 		jugador.crearEdificio(puertoEstelar);
+		
+		for(int i=1;i<=10;i++){
+			jugador.pasarTurno();
+		}
+		
 		assertTrue(jugador.getCantidadEdificios() == 3);
 
 	}
@@ -95,9 +133,15 @@ public class EdificioTest {
 		jugador.modificarMineral(300);
 		jugador.modificarGas(300);
 		Edificio acceso = new Acceso();
-		jugador.crearEdificio(acceso);
 		Edificio puertoEstelar = new PuertoEstelarP();
+		jugador.crearEdificio(acceso);
+		for(int i=1;i<=8;i++){
+			jugador.pasarTurno();
+		}
 		jugador.crearEdificio(puertoEstelar);
+		for(int i=1;i<=10;i++){
+			jugador.pasarTurno();
+		}
 		assertTrue(jugador.getGases() == 150);
 
 	}
@@ -109,6 +153,10 @@ public class EdificioTest {
 		jugador.elegirRaza(raza.crearProtoss());
 		Edificio pilon = new Pilon();
 		jugador.crearEdificio(pilon);
+		assertFalse(jugador.getPoblacionMax() == 10);
+		for(int i=1;i<=5;i++){
+			jugador.pasarTurno();
+		}
 		assertTrue(jugador.getPoblacionMax() == 10);
 
 	}
