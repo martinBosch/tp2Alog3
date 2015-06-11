@@ -45,6 +45,10 @@ public class MapaListaBuilder {
 	public MapaLista obtenerMapaLista() {
 		return mapaLista;
 	}
+	
+	public static void reiniciarMapaLista() {
+		INSTANCE = null;
+	}
 
 	private void cargarTablero() {
 		this.cargarBases();

@@ -36,6 +36,14 @@ public class MapaLista {
 //		return INSTANCE;
 //	}
 
+	public boolean agregar(ObjetoMapa objetoAgregar) {
+		if ( posOcupada(objetoAgregar.obtenerAreaOcupa()) ) {
+			return false;
+		}
+		objetosEnMapa.add(objetoAgregar);
+		return true;		
+	}
+
 	private boolean posOcupada(Rectangle area1) {
 		Iterator<ObjetoMapa> i = this.objetosEnMapa.iterator();
 		while (i.hasNext()) {

@@ -193,7 +193,6 @@ public class Jugador {
 		destruirEdificios();
 		aumentoGasYMineralPorEdificios(this.listaDeEdificios.iterator());
 		DisminuirTiempoDeConstruccion();
-
 	}
 
 }
