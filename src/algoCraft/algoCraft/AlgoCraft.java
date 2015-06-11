@@ -1,7 +1,5 @@
 package algoCraft;
 
-import java.util.ArrayList;
-
 import mapa.Mapa;
 import Jugador.Jugador;
 import Razas.Raza;
@@ -16,7 +14,7 @@ public class AlgoCraft {
 	AlgoCraft() {
 		Jugador1 = new Jugador();
 		Jugador2 = new Jugador();
-		mapa.getInstance();
+		Mapa.getInstance();
 		turnos = 0;
 	}
 
