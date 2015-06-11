@@ -4,7 +4,9 @@ import Edificios.PuertoEstelarP;
 
 public class Scout extends Unidad{
 
-	public Scout(){		
+	public Scout(int x, int y){	
+		super(x,y);
+
 		transporte= 0;
 		vision= 7;
 		precioM= 300;

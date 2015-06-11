@@ -4,7 +4,9 @@ import Edificios.Acceso;
 
 public class Dragon extends Unidad {
 
-	public Dragon(){		
+	public Dragon(int x, int y){
+		super(x,y);
+
 		transporte= 4;
 		vision= 8;
 		precioM= 125;

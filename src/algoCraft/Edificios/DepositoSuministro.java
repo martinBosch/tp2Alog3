@@ -2,7 +2,9 @@ package Edificios;
 
 public class DepositoSuministro extends Edificio{ //Terran
 	
-	public DepositoSuministro(){
+	public DepositoSuministro(int x, int y){
+		super(x, y);
+
 		precioM= 100;
 		precioG= 0;
 		tiempoConstruccion= 6;

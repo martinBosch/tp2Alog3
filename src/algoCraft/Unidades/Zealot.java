@@ -4,7 +4,9 @@ import Edificios.Acceso;
 
 public class Zealot extends Unidad { //Protoss
 
-	public Zealot(){		
+	public Zealot(int x, int y){
+		super(x,y);
+
 		transporte= 2;
 		vision= 7;
 		precioM= 100;

@@ -4,7 +4,9 @@ import Edificios.PuertoEstelarP;
 
 public class NaveTransportadorP extends Unidad{ //Protoss
 	
-	public NaveTransportadorP(){		
+	public NaveTransportadorP(int x, int y){
+		super(x,y);
+
 		transporte= 8; //Dice Capacidad. Imagino que debe ser esto
 		vision= 8;
 		precioM= 200;

@@ -20,9 +20,12 @@ import Unidades.Unidad;
 
 public class UnidadesTest {
 
+	private static int x = 0;
+	private static int y = 0;
+
 	@Test
 	public void testCreacionAltosTemplarios() {
-		AltoTemplario templario = new AltoTemplario();
+		AltoTemplario templario = new AltoTemplario(x,y);
 		assertTrue(templario.getPrecioG() == 150);
 		assertTrue(templario.getPrecioM() == 50);
 		assertTrue(templario.getNombre() == "Alto Templario");
@@ -37,7 +40,7 @@ public class UnidadesTest {
 	}
 
 	public void testCreacionDragones() {
-		Dragon dragon = new Dragon();
+		Dragon dragon = new Dragon(x,y);
 		assertTrue(dragon.getPrecioG() == 125);
 		assertTrue(dragon.getPrecioM() == 50);
 		assertTrue(dragon.getNombre() == "Dragon");
@@ -52,7 +55,7 @@ public class UnidadesTest {
 	}
 
 	public void testCreacionEspectro() {
-		Espectro espectro = new Espectro();
+		Espectro espectro = new Espectro(x,y);
 		assertTrue(espectro.getPrecioG() == 100);
 		assertTrue(espectro.getPrecioM() == 150);
 		assertTrue(espectro.getNombre() == "Espectro");
@@ -67,7 +70,7 @@ public class UnidadesTest {
 	}
 
 	public void testCreacionGolliat() {
-		Golliat golliat = new Golliat();
+		Golliat golliat = new Golliat(x,y);
 		assertTrue(golliat.getPrecioG() == 50);
 		assertTrue(golliat.getPrecioM() == 100);
 		assertTrue(golliat.getNombre() == "Golliat");
@@ -82,7 +85,7 @@ public class UnidadesTest {
 	}
 
 	public void testCreacionMarine() {
-		Marine marine = new Marine();
+		Marine marine = new Marine(x,y);
 		assertTrue(marine.getPrecioG() == 0);
 		assertTrue(marine.getPrecioM() == 50);
 		assertTrue(marine.getNombre() == "Marine");
@@ -110,7 +113,7 @@ public class UnidadesTest {
 		RazaBuilder raza = new RazaBuilder();
 		jugador.elegirRaza(raza.crearTerran());
 		
-		Unidad marine = new Marine();
+		Unidad marine = new Marine(x,y);
 		jugador.crearUnidad(marine);
 		
 		for(int i=1;i<=3;i++){
@@ -129,14 +132,14 @@ public class UnidadesTest {
 
 		jugador.modificarMineral(10000);
 
-		Edificio barraca = new Barraca();
+		Edificio barraca = new Barraca(x,y);
 		jugador.crearEdificio(barraca);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		Marine marine = new Marine();
+		Marine marine = new Marine(x,y);
 		jugador.crearUnidad(marine);
 		
 		for(int i=1;i<=3;i++){
@@ -154,28 +157,28 @@ public class UnidadesTest {
 		jugador.modificarMineral(300);
 		jugador.modificarMineral(10000);
 
-		Edificio edificioACrear = new Barraca();
+		Edificio edificioACrear = new Barraca(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new Fabrica();
+		edificioACrear = new Fabrica(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new PuertoEstelarT();
+		edificioACrear = new PuertoEstelarT(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}
 
-		Unidad espectro = new Espectro();
+		Unidad espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
 		
 		for(int i=1;i<=8;i++){
@@ -196,28 +199,28 @@ public class UnidadesTest {
 		jugador.modificarMineral(450);
 		jugador.modificarGas(300);
 
-		Edificio edificioACrear = new Barraca();
+		Edificio edificioACrear = new Barraca(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new Fabrica();
+		edificioACrear = new Fabrica(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new PuertoEstelarT();
+		edificioACrear = new PuertoEstelarT(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}
 
-		Unidad espectro = new Espectro();
+		Unidad espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
 		
 		for(int i=1;i<=8;i++){
@@ -238,28 +241,28 @@ public class UnidadesTest {
 		jugador.modificarMineral(300);
 		jugador.modificarGas(500);
 
-		Edificio edificioACrear = new Barraca();
+		Edificio edificioACrear = new Barraca(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new Fabrica();
+		edificioACrear = new Fabrica(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new PuertoEstelarT();
+		edificioACrear = new PuertoEstelarT(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}
 
-		Unidad espectro = new Espectro();
+		Unidad espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
 		
 		for(int i=1;i<=8;i++){
@@ -280,33 +283,33 @@ public class UnidadesTest {
 		jugador.modificarMineral(1000);
 		jugador.modificarGas(1000);
 
-		Edificio edificioACrear = new Barraca();
+		Edificio edificioACrear = new Barraca(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
-		edificioACrear = new Fabrica();
+		edificioACrear = new Fabrica(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new PuertoEstelarT();
+		edificioACrear = new PuertoEstelarT(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}
 
-		Unidad espectro = new Espectro();
+		Unidad espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
-		espectro = new Espectro();
+		espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
-		espectro = new Espectro();
+		espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
-		espectro = new Espectro();
+		espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
 		
 		for(int i=1;i<=8;i++){
@@ -327,41 +330,41 @@ public class UnidadesTest {
 		jugador.modificarMineral(1500);
 		jugador.modificarGas(1000);
 
-		Edificio edificioACrear = new Barraca();
+		Edificio edificioACrear = new Barraca(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new Fabrica();
+		edificioACrear = new Fabrica(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
-		edificioACrear = new PuertoEstelarT();
+		edificioACrear = new PuertoEstelarT(x,y);
 		jugador.crearEdificio(edificioACrear);		
-		edificioACrear = new DepositoSuministro();
+		edificioACrear = new DepositoSuministro(x,y);
 		jugador.crearEdificio(edificioACrear);
 		
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}		
 
-		Unidad marine = new Marine();
+		Unidad marine = new Marine(x,y);
 		jugador.crearUnidad(marine);
 
-		Unidad espectro = new Espectro();
+		Unidad espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
-		espectro = new Espectro();
+		espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
-		espectro = new Espectro();
+		espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
-		espectro = new Espectro();
+		espectro = new Espectro(x,y);
 		jugador.crearUnidad(espectro);
-		
+
 		for(int i=1;i<=8;i++){
 			jugador.pasarTurno();
 		}

@@ -2,7 +2,9 @@ package Edificios;
 
 public class Pilon extends Edificio{ //Protoss
 
-	public Pilon(){
+	public Pilon(int x, int y){
+		super(x, y);
+
 		precioM= 100;
 		precioG= 0;
 		tiempoConstruccion= 5;

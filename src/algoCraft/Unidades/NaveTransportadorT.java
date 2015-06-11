@@ -4,7 +4,9 @@ import Edificios.PuertoEstelarT;
 
 public class NaveTransportadorT extends Unidad { //Terran
 	
-	public NaveTransportadorT(){		
+	public NaveTransportadorT(int x, int y){
+		super(x,y);
+
 		transporte= 8; //Dice Capacidad. Imagino que debe ser esto
 		vision= 8;
 		precioM= 100;

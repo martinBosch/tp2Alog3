@@ -1,9 +1,7 @@
 package Jugador;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import Edificios.Asimilador;
 import Edificios.CentroMineral;
@@ -78,8 +76,8 @@ public class Jugador {
 	public void crearEdificio(Edificio edificioACrear) {
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases,
 				this.listaDeEdificios, edificioACrear);
-		Edificio pilon = new Pilon();
-		Edificio deposito = new DepositoSuministro();
+//		Edificio pilon = new Pilon();
+//		Edificio deposito = new DepositoSuministro();
 		if (puede) {
 			modificarGas(-edificioACrear.getPrecioG());
 			modificarMineral(-edificioACrear.getPrecioM());

@@ -2,7 +2,9 @@ package Edificios;
 
 public class PuertoEstelarT extends Edificio { //Terran
 
-	public PuertoEstelarT(){
+	public PuertoEstelarT(int x, int y){
+		super(x, y);
+
 		precioM= 150;
 		precioG= 100;
 		tiempoConstruccion= 10;

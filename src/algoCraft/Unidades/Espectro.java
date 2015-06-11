@@ -4,7 +4,9 @@ import Edificios.PuertoEstelarT;
 
 public class Espectro extends Unidad { // Terran
 
-	public Espectro() {
+	public Espectro(int x, int y) {
+		super(x,y);
+
 		transporte = 0;
 		vision = 7;
 		precioM = 150;

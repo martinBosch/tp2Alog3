@@ -4,7 +4,9 @@ import Edificios.Barraca;
 
 public class Marine extends Unidad{ //Terran
 
-	public Marine(){
+	public Marine(int x, int y){
+		super(x,y);
+
 		vida= 40;
 		transporte= 1;
 		vision= 7;

@@ -6,7 +6,9 @@ public class NaveCiencia extends Unidad{ //Terran
 	
 	private int energia;
 	
-	public NaveCiencia(){		
+	public NaveCiencia(int x, int y){
+		super(x,y);
+
 		transporte= 0;
 		vision= 10;
 		precioM= 100;
@@ -33,7 +35,7 @@ public class NaveCiencia extends Unidad{ //Terran
 			
 		}
 	}
-	public void Radiación(){
+	public void Radiacion(){
 		if (energia>=75){
 			
 		}

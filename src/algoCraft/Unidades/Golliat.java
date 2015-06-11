@@ -4,7 +4,9 @@ import Edificios.Fabrica;
 
 public class Golliat extends Unidad { // Terran
 
-	public Golliat() {
+	public Golliat(int x, int y) {
+		super(x,y);
+
 		transporte = 2;
 		vision = 8;
 		precioM = 100;

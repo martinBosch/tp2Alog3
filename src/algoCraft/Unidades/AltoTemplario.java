@@ -6,7 +6,9 @@ public class AltoTemplario extends Unidad {
 
 	private int energia;
 	
-	public AltoTemplario(){		
+	public AltoTemplario(int x, int y){	
+		super(x,y);
+
 		transporte= 2;
 		vision= 7;
 		precioM= 50;
@@ -28,12 +30,12 @@ public class AltoTemplario extends Unidad {
 			energia=energia+15;
 		}
 	}
-	public void TormentaPsiónica(){
+	public void TormentaPsionica(){
 		if (energia>=75){
 			
 		}
 	}
-	public void Radiación(){
+	public void Radiacion(){
 		if (energia>=100){
 			
 		}

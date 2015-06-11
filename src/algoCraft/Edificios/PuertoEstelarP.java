@@ -2,7 +2,9 @@ package Edificios;
 
 public class PuertoEstelarP extends Edificio{ //Protoss
 
-	public PuertoEstelarP(){
+	public PuertoEstelarP(int x, int y){
+		super(x, y);
+
 		precioM= 150;
 		precioG= 150;
 		tiempoConstruccion= 10;

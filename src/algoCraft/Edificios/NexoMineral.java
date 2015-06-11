@@ -2,7 +2,9 @@ package Edificios;
 
 public class NexoMineral extends Edificio{ //Protoss
 
-	public NexoMineral(){
+	public NexoMineral(int x, int y){
+		super(x, y);
+
 		precioM= 50;
 		precioG= 0;
 		tiempoConstruccion= 4;
