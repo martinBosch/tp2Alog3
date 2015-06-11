@@ -5,8 +5,7 @@ import java.util.ArrayList;
 @SuppressWarnings("rawtypes")
 public class Protoss extends Raza {
 
-	public Protoss(ArrayList<Class> listaEdificios,
-			ArrayList<Class> listaUnidades) {
+	public Protoss(ArrayList<Class> listaEdificios, ArrayList<Class> listaUnidades) {
 		this.listaEdificios = new ArrayList<Class>(listaEdificios);
 		this.listaUnidades = new ArrayList<Class>(listaUnidades);
 	};

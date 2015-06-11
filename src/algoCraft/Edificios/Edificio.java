@@ -2,8 +2,10 @@ package Edificios;
 
 import java.util.ArrayList;
 
+import mapa.ObjetoMapa;
+
 @SuppressWarnings("rawtypes")
-public abstract class Edificio {
+public abstract class Edificio extends ObjetoMapa {
 
 	protected int precioM;
 	protected int precioG;
@@ -14,7 +16,10 @@ public abstract class Edificio {
 	protected int posX;
 	protected int posY;
 
-	public Edificio() {
+	public Edificio(int x, int y) {
+		super(x,y);
+		ancho = 64;// Constantes.ANCHO_EDIF
+		alto = 32;// Constantes.ALTO_EDIF
 		edifNecesario = new ArrayList<Class>();
 	}
 

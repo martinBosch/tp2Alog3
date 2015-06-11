@@ -2,10 +2,11 @@ package Unidades;
 
 import java.util.ArrayList;
 
+import mapa.ObjetoMapa;
 import Edificios.Edificio;
 
 @SuppressWarnings("rawtypes")
-public abstract class Unidad {
+public abstract class Unidad extends ObjetoMapa {
 
 	protected int posX;
 	protected int posY;
@@ -24,7 +25,10 @@ public abstract class Unidad {
 	protected ArrayList<Class> edifNecesario;
 	protected String tipo;
 
-	public Unidad() {
+	public Unidad(int x, int y) {
+		super(x,y);
+		ancho = 32;// Constantes.ANCHO_RECURSO
+		alto = 32;// Constantes.ALTO_RECURSO
 		edifNecesario = new ArrayList<Class>();
 	}
 

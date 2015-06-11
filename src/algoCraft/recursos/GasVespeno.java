@@ -2,7 +2,8 @@ package recursos;
 
 public class GasVespeno extends Recurso {
 
-	public GasVespeno() {
+	public GasVespeno(int x, int y) {
+		super(x, y);
 	}
 
 }

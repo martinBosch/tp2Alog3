@@ -2,7 +2,8 @@ package recursos;
 
 public class Minerales extends Recurso {
 
-	public Minerales() {
+	public Minerales(int x, int y) {
+		super(x, y);
 	}
 
 }
