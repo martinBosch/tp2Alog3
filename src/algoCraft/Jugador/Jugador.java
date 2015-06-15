@@ -209,15 +209,49 @@ public class Jugador {
 		}
 
 	}
+	
+	private void aplicarRadiacion(Iterator<Unidad> iteratorUnidades){
+		Unidad unidadAuxiliar;
+		ArrayList<Unidad> unidadesAledanias;
+		while (iteratorUnidades.hasNext()) {
+			unidadAuxiliar = iteratorUnidades.next();
+			if(unidadAuxiliar.getEstadoIrradiacion()){
+				unidadesAledanias=VerificarUnidadesAledanias(unidadAuxiliar);
+				irradiar(unidadesAledanias.iterator());
+			}
+		}
+	}
+
+	private void irradiar(Iterator<Unidad> unidadesAledanias) {
+		Unidad unidadAuxiliar;
+		while (unidadesAledanias.hasNext()) {
+			unidadAuxiliar = unidadesAledanias.next();
+			unidadAuxiliar.recibirDanio(10);
+		}
+		
+	}
+
+	private ArrayList<Unidad> VerificarUnidadesAledanias(Unidad unidad) {
+		ArrayList<Unidad> ListaUnidadesAux=new ArrayList<Unidad>();
+		Unidad unidadAuxiliar;
+		Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
+		while (iterador.hasNext()) {
+			unidadAuxiliar = iterador.next();
+			if(unidadAuxiliar.distancia(unidad)<=1){
+				ListaUnidadesAux.add(unidadAuxiliar);
+			}
+		}
+		return ListaUnidadesAux;
+	}
 
 	public void pasarTurno() {
+		aplicarRadiacion(this.listaDeUnidades.iterator());
 		destruirUnidades();
 		destruirEdificios();
 		aumentoGasYMineralPorEdificios(this.listaDeEdificios.iterator());
 		DisminuirTiempoDeConstruccion();
 		RegenerarEscudosProtoss(this.listaDeEdificios.iterator(),
 				this.listaDeUnidades.iterator());
-
 	}
 
 }

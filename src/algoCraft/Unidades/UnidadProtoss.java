@@ -31,6 +31,10 @@ public class UnidadProtoss extends Unidad {
 		if (!this.escudoDestruido) {
 			this.escudo = this.escudoMax;
 		}
+	}
+
+	public void eliminarEscudo() {
+		this.escudo=0;
 	};
 
 }

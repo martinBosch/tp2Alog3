@@ -419,5 +419,13 @@ public class UnidadesTest {
 		
 	}
 	
+	@Test
+	public void testRadiacion() {// a terminar
+		Jugador jugador = new Jugador();
+
+		RazaBuilder raza = new RazaBuilder();
+		jugador.elegirRaza(raza.crearProtoss());
+		
+	}
 
 }

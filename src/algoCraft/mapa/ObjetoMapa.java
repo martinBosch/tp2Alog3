@@ -72,11 +72,7 @@ public abstract class ObjetoMapa {
 	public void bajarTiempoConstruccion() {
 		tiempoConstruccion--;
 	}
-	
-	
-	
-	
-	
+		
 	public void recibirDanio(int danio) {
 		vida -= danio;
 
@@ -104,6 +100,8 @@ public abstract class ObjetoMapa {
 
 		return (int) Math.sqrt( x*x + y*y );
 	}
+	
+	
 		
 //		double DiferenciaPosicionX = Math.pow(
 //				this.getPosX() - unidadAAtacar.getPosX(), 2);

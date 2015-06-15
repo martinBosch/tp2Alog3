@@ -1,5 +1,8 @@
 package Unidades;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import Edificios.PuertoEstelarT;
 
 public class NaveCiencia extends Unidad{ //Terran
@@ -26,19 +29,37 @@ public class NaveCiencia extends Unidad{ //Terran
 		edifNecesario.add(PuertoEstelarT.class);
 	}
 	public void AumentarEnergia(){
-		if (energia<=185){
-			energia=energia+15;
+		if (energia<=190){
+			energia=energia+10;
 		}
 	}
-	public void EMP(){
-		if (energia>=100){
-			
+
+	public void EMP(ArrayList<Unidad> unidadesAfectadas) {
+		Iterator<Unidad> iterator = unidadesAfectadas.iterator();
+		Unidad unidadAModificar;
+		while(iterator.hasNext()){
+			unidadAModificar = iterator.next();
+			if(unidadAModificar.getClass().getSuperclass()== UnidadProtoss.class){
+				((UnidadProtoss) unidadAModificar).eliminarEscudo();
+			}else{
+				if((unidadAModificar.getClass()==AltoTemplario.class)||(unidadAModificar.getClass()==NaveCiencia.class)){
+					((NaveCiencia) unidadAModificar).vaciarEnergia();
+				}else{
+					if((unidadAModificar.getClass()==AltoTemplario.class)){
+						((AltoTemplario) unidadAModificar).vaciarEnergia();
+					}
+				}
+			}
 		}
+		energia=energia-100;
 	}
-	public void Radiacion(){
-		if (energia>=75){
-			
-		}
+
+	public void Radiacion(Unidad unidadAfectada) {
+		unidadAfectada.serIrradiada();
+		energia=energia-75;
+	}
+	public void vaciarEnergia(){
+		this.energia=0;
 	}
 	
 	

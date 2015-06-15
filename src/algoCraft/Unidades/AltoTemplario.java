@@ -42,5 +42,8 @@ public class AltoTemplario extends UnidadProtoss {
 			
 		}
 	}
+	public void vaciarEnergia(){
+		this.energia=0;
+	}
 
 }
