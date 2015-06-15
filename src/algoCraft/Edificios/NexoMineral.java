@@ -1,6 +1,6 @@
 package Edificios;
 
-public class NexoMineral extends Edificio{ //Protoss
+public class NexoMineral extends EdificioProtoss{ //Protoss
 
 	public NexoMineral(int x, int y){
 		super(x, y);
@@ -10,6 +10,8 @@ public class NexoMineral extends Edificio{ //Protoss
 		tiempoConstruccion= 4;
 		vida= 250; //NO SE ENTIENDE
 		nombre= "Nexo Mineral";
+		escudo=250;
+		escudoMax=250;
 	}
 		
 }

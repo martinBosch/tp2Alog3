@@ -2,7 +2,7 @@ package Unidades;
 
 import Edificios.Acceso;
 
-public class Dragon extends Unidad {
+public class Dragon extends UnidadProtoss {
 
 	public Dragon(int x, int y){
 		super(x,y);
@@ -21,6 +21,8 @@ public class Dragon extends Unidad {
 		nombre= "Dragon";
 		tipo="Otro";
 		edifNecesario.add(Acceso.class);
+		escudo=80;
+		escudoMax=80;
 	}
 	
 	

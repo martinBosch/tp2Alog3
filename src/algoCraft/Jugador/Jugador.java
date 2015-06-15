@@ -7,11 +7,13 @@ import Edificios.Asimilador;
 import Edificios.CentroMineral;
 import Edificios.DepositoSuministro;
 import Edificios.Edificio;
+import Edificios.EdificioProtoss;
 import Edificios.NexoMineral;
 import Edificios.Pilon;
 import Edificios.Refineria;
 import Razas.Raza;
 import Unidades.Unidad;
+import Unidades.UnidadProtoss;
 
 public class Jugador {
 
@@ -28,7 +30,6 @@ public class Jugador {
 	private ArrayList<Edificio> listaDeEdificiosACrear;
 	private ArrayList<Unidad> listaDeUnidades;
 	private ArrayList<Unidad> listaDeUnidadesACrear;
-	
 
 	public Jugador() {
 		this.listaDeEdificios = new ArrayList<Edificio>();
@@ -76,8 +77,8 @@ public class Jugador {
 	public void crearEdificio(Edificio edificioACrear) {
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases,
 				this.listaDeEdificios, edificioACrear);
-//		Edificio pilon = new Pilon();
-//		Edificio deposito = new DepositoSuministro();
+		// Edificio pilon = new Pilon();
+		// Edificio deposito = new DepositoSuministro();
 		if (puede) {
 			modificarGas(-edificioACrear.getPrecioG());
 			modificarMineral(-edificioACrear.getPrecioM());
@@ -135,14 +136,14 @@ public class Jugador {
 	public int getCantidadUnidades() {
 		return listaDeUnidades.size();
 	}
-	
+
 	public void aumentoGasYMineralPorEdificios(Iterator<Edificio> iterator) {
 		int numeroDeEdificiosMinerales = 0;
 		int numeroDeEdificiosGases = 0;
 		Edificio edificioAuxiliar;
 		if (listaDeEdificios.size() != 0) {
 			while (iterator.hasNext()) {
-				edificioAuxiliar=iterator.next();
+				edificioAuxiliar = iterator.next();
 				if ((edificioAuxiliar.getClass() == CentroMineral.class)
 						|| (edificioAuxiliar.getClass() == NexoMineral.class)) {
 					numeroDeEdificiosMinerales++;
@@ -153,21 +154,16 @@ public class Jugador {
 				}
 
 			}
-		this.minerales = this.minerales
-				+ (numeroDeEdificiosMinerales * 10);
-		this.gases = this.gases + (numeroDeEdificiosGases * 10);
+			this.minerales = this.minerales + (numeroDeEdificiosMinerales * 10);
+			this.gases = this.gases + (numeroDeEdificiosGases * 10);
 		}
 	}
 
 	public void DisminuirTiempoDeConstruccion() {
-		Iterator<Edificio> iteradorEdificios = this.listaDeEdificiosACrear
-				.iterator();
-		Iterator<Unidad> iteradorUnidades = this.listaDeUnidadesACrear
-				.iterator();
 		int i;
 		Edificio edificioAuxiiliar;
 		Unidad unidadAuxiliar;
-		for(i=0;i<listaDeEdificiosACrear.size();i++) {
+		for (i = 0; i < listaDeEdificiosACrear.size(); i++) {
 			edificioAuxiiliar = this.listaDeEdificiosACrear.get(i);
 			edificioAuxiiliar.bajarTiempoConstruccion();
 			if (edificioAuxiiliar.getTiempoConstruccion() == 0) {
@@ -179,7 +175,7 @@ public class Jugador {
 				this.listaDeEdificiosACrear.remove(i);
 			}
 		}
-		for(i=0;i<listaDeUnidadesACrear.size();i++) {
+		for (i = 0; i < listaDeUnidadesACrear.size(); i++) {
 			unidadAuxiliar = this.listaDeUnidadesACrear.get(i);
 			unidadAuxiliar.bajarTiempoConstruccion();
 			if (unidadAuxiliar.getTiempoConstruccion() == 0) {
@@ -188,11 +184,40 @@ public class Jugador {
 			}
 		}
 	}
+
+	private void RegenerarEscudosProtoss(Iterator<Edificio> iteratorEdificios,
+			Iterator<Unidad> iteratorUnidades) {
+		Edificio edificioAuxiliar;
+		Unidad unidadAuxiliar;
+		if (listaDeEdificios.size() != 0) {
+			while (iteratorEdificios.hasNext()) {
+				edificioAuxiliar = iteratorEdificios.next();
+				if ((edificioAuxiliar.getClass().getSuperclass() == EdificioProtoss.class)) {
+					((EdificioProtoss) edificioAuxiliar).recargarEscudo();
+					;
+				}
+			}
+		}
+		if (listaDeUnidades.size() != 0) {
+			while (iteratorUnidades.hasNext()) {
+				unidadAuxiliar = iteratorUnidades.next();
+				if ((unidadAuxiliar.getClass().getSuperclass() == UnidadProtoss.class)) {
+					((UnidadProtoss) unidadAuxiliar).recargarEscudo();
+					;
+				}
+			}
+		}
+
+	}
+
 	public void pasarTurno() {
 		destruirUnidades();
 		destruirEdificios();
 		aumentoGasYMineralPorEdificios(this.listaDeEdificios.iterator());
 		DisminuirTiempoDeConstruccion();
+		RegenerarEscudosProtoss(this.listaDeEdificios.iterator(),
+				this.listaDeUnidades.iterator());
+
 	}
 
 }

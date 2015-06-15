@@ -1,6 +1,6 @@
 package Edificios;
 
-public class ArchivosTemplarios extends Edificio { // Protoss
+public class ArchivosTemplarios extends EdificioProtoss { // Protoss
 
 	public ArchivosTemplarios(int x, int y) {
 		super(x, y);
@@ -11,6 +11,8 @@ public class ArchivosTemplarios extends Edificio { // Protoss
 		vida = 500; // NO SE ENTIENDE
 		nombre = "Archivos Templarios";
 		edifNecesario.add(PuertoEstelarP.class);
+		escudo=600;
+		escudoMax=600;
 	}
 
 }

@@ -2,7 +2,7 @@ package Unidades;
 
 import Edificios.ArchivosTemplarios;
 
-public class AltoTemplario extends Unidad {
+public class AltoTemplario extends UnidadProtoss {
 
 	private int energia;
 	
@@ -24,6 +24,8 @@ public class AltoTemplario extends Unidad {
 		nombre= "Alto Templario";
 		tipo="Otro";
 		edifNecesario.add(ArchivosTemplarios.class);
+		escudo=40;
+		escudoMax=40;
 	}
 	public void AumentarEnergia(){
 		if (energia<=185){
