@@ -3,6 +3,8 @@ package Tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import Edificios.Acceso;
@@ -18,6 +20,7 @@ import Unidades.Dragon;
 import Unidades.Espectro;
 import Unidades.Golliat;
 import Unidades.Marine;
+import Unidades.NaveCiencia;
 import Unidades.Unidad;
 import Unidades.UnidadProtoss;
 import Unidades.Zealot;
@@ -420,12 +423,31 @@ public class UnidadesTest {
 	}
 	
 	@Test
-	public void testRadiacion() {// a terminar
-		Jugador jugador = new Jugador();
-
+	public void testRadiacion() {
+		Jugador jugadorUno = new Jugador();
+		jugadorUno.modificarMineral(1000);
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearProtoss());
+		jugadorUno.elegirRaza(raza.crearTerran());
 		
+		Edificio edificioACrear = new Barraca(x, y);
+		jugadorUno.crearEdificio(edificioACrear);
+
+		for (int i = 1; i <= 12; i++) {
+			jugadorUno.pasarTurno();
+		}
+			
+		Unidad naveCiencia = new NaveCiencia(50,50); 
+		
+		Unidad marine = new Marine(80,80);
+		jugadorUno.crearUnidad(marine);
+		
+		for (int i = 1; i <= 3; i++) {
+			jugadorUno.pasarTurno();
+		}
+		ArrayList<Unidad> listaAux = jugadorUno.getListaUnidades();
+		((NaveCiencia) naveCiencia).Radiacion(listaAux.get(0));
+		jugadorUno.pasarTurno();
+		assertEquals(listaAux.get(0).getVida(),30);
 	}
 
 }

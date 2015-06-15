@@ -254,4 +254,8 @@ public class Jugador {
 				this.listaDeUnidades.iterator());
 	}
 
+	public ArrayList<Unidad> getListaUnidades() {
+		return this.listaDeUnidades;
+	}
+
 }
