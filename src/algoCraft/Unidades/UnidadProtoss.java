@@ -43,4 +43,8 @@ public class UnidadProtoss extends Unidad {
 		danioT=0;
 	}
 
+	public int getEscudoMax() {
+		return escudo;
+	}
+
 }

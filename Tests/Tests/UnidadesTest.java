@@ -22,6 +22,7 @@ import Unidades.Golliat;
 import Unidades.Marine;
 import Unidades.NaveCiencia;
 import Unidades.Unidad;
+import Unidades.UnidadCopia;
 import Unidades.UnidadProtoss;
 import Unidades.Zealot;
 
@@ -420,6 +421,19 @@ public class UnidadesTest {
 		assertEquals(zealot.getEscudo(),0);
 		assertEquals(zealot.getVida(),60);
 		
+	}
+	
+	@Test 
+	public void testAlucinacion(){
+		ArrayList<UnidadProtoss> listaUnidades=new ArrayList<UnidadProtoss>();
+		UnidadProtoss zealot = new Zealot(30,30);
+		listaUnidades.add(zealot);
+		AltoTemplario altoTemplario = new AltoTemplario(50,50);
+		altoTemplario.Alucinacion(listaUnidades, zealot);
+		assertEquals(listaUnidades.size(),3);
+		assertTrue(((UnidadCopia) listaUnidades.get(2)).getClassCopia()==Zealot.class);
+		assertTrue(((UnidadCopia) listaUnidades.get(1)).getVida()==0);
+		assertTrue(((UnidadCopia) listaUnidades.get(2)).getEscudo()==60);
 	}
 	
 	@Test

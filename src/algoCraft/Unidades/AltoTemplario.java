@@ -1,6 +1,5 @@
 package Unidades;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import Edificios.ArchivosTemplarios;
@@ -43,26 +42,15 @@ public class AltoTemplario extends UnidadProtoss {
 			
 		}
 	}
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void Alucinacion(ArrayList<UnidadProtoss> listaUnidades,UnidadProtoss unidadAlucinante){
-		UnidadProtoss copiaUnidad;
-		Class <UnidadProtoss> auxiliar = (Class<UnidadProtoss>) unidadAlucinante.getClass();
+		UnidadCopia copiaUnidad;
+		Class auxiliar = unidadAlucinante.getClass();
 		int posicionX = unidadAlucinante.getPosX();
 		int posicionY = unidadAlucinante.getPosY();
-		@SuppressWarnings("rawtypes")
-		Class [] paramTypesSub = {int.class,int.class};
 		for(int i=0;i<2;i++){
-			int [] paramValuesSub ={posicionX+i+1,posicionY+i+1};
-			try {
-				copiaUnidad= (auxiliar.getConstructor(paramTypesSub).newInstance(paramValuesSub));
-				copiaUnidad.EstablecerValoresDeCopia();
+				copiaUnidad= new UnidadCopia(posicionX+10+i*10,posicionY,auxiliar,unidadAlucinante.getEscudoMax(),unidadAlucinante.getEscudo());
 				listaUnidades.add(copiaUnidad);
-			} catch (InstantiationException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException
-					| NoSuchMethodException | SecurityException e) {
-				
-				e.printStackTrace();
-			}
 
 		}
 	}
