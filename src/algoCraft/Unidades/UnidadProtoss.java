@@ -36,5 +36,11 @@ public class UnidadProtoss extends Unidad {
 	public void eliminarEscudo() {
 		this.escudo=0;
 	};
+	
+	public void EstablecerValoresDeCopia() {
+		vida=0;
+		danioA=0;
+		danioT=0;
+	}
 
 }
