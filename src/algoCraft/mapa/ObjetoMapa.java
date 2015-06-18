@@ -72,11 +72,7 @@ public abstract class ObjetoMapa {
 	public void bajarTiempoConstruccion() {
 		tiempoConstruccion--;
 	}
-	
-	
-	
-	
-	
+		
 	public void recibirDanio(int danio) {
 		vida -= danio;
 
@@ -104,22 +100,5 @@ public abstract class ObjetoMapa {
 
 		return (int) Math.sqrt( x*x + y*y );
 	}
-
-//		double DiferenciaPosicionX = Math.pow(
-//				this.getPosX() - unidadAAtacar.getPosX(), 2);
-//		double DiferenciaPosicionY = Math.pow(
-//				this.getPosY() - unidadAAtacar.getPosY(), 2);
-//		if (unidadAAtacar.getTipo() == "Aereo") {
-//			if (DiferenciaPosicionX + DiferenciaPosicionY <= Math.pow(
-//					this.getRangoA(), 2)) {
-//				unidadAAtacar.bajarVida(this.getDanioA());
-//			}
-//		} else {
-//			if (DiferenciaPosicionX + DiferenciaPosicionY <= Math.pow(
-//					this.getRangoT(), 2)) {
-//				unidadAAtacar.bajarVida(this.getDanioT());
-//			}
-//		}
-//	}
 
 }

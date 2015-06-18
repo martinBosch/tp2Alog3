@@ -1,6 +1,6 @@
 package Edificios;
 
-public class PuertoEstelarP extends Edificio{ //Protoss
+public class PuertoEstelarP extends EdificioProtoss{ //Protoss
 
 	public PuertoEstelarP(int x, int y){
 		super(x, y);
@@ -11,6 +11,8 @@ public class PuertoEstelarP extends Edificio{ //Protoss
 		vida= 600;//no se entiende
 		nombre= "Puerto Estelar";
 		edifNecesario.add(Acceso.class);
+		escudo=600;
+		escudoMax=600;
 	}
 	
 	

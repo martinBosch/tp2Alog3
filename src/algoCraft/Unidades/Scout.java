@@ -2,7 +2,7 @@ package Unidades;
 
 import Edificios.PuertoEstelarP;
 
-public class Scout extends Unidad{
+public class Scout extends UnidadProtoss{
 
 	public Scout(int x, int y){	
 		super(x,y);
@@ -21,6 +21,8 @@ public class Scout extends Unidad{
 		nombre= "Scout";
 		tipo="Aereo";
 		edifNecesario.add(PuertoEstelarP.class);
+		escudo=100;
+		escudoMax=100;
 	}
 	
 }

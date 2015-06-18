@@ -1,7 +1,7 @@
 package Edificios;
 
-public class Pilon extends Edificio{ //Protoss
-
+public class Pilon extends EdificioProtoss{ 
+	
 	public Pilon(int x, int y){
 		super(x, y);
 
@@ -10,6 +10,8 @@ public class Pilon extends Edificio{ //Protoss
 		tiempoConstruccion= 5;
 		vida= 300; //NO SE ENTIENDE
 		nombre= "Pilon";
+		escudo=300;
+		escudoMax=300;
 	}
 		
 }

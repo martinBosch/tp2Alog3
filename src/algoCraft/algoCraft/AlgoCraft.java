@@ -30,4 +30,6 @@ public class AlgoCraft {
 			Jugador2.pasarTurno();
 		}
 	}
+	
+
 }

@@ -1,8 +1,10 @@
 package Unidades;
 
+import java.util.ArrayList;
+
 import Edificios.ArchivosTemplarios;
 
-public class AltoTemplario extends Unidad {
+public class AltoTemplario extends UnidadProtoss {
 
 	private int energia;
 	
@@ -24,6 +26,11 @@ public class AltoTemplario extends Unidad {
 		nombre= "Alto Templario";
 		tipo="Otro";
 		edifNecesario.add(ArchivosTemplarios.class);
+		escudo=40;
+		escudoMax=40;
+	}
+	public int GetEnergia(){
+		return energia;
 	}
 	public void AumentarEnergia(){
 		if (energia<=185){
@@ -35,10 +42,20 @@ public class AltoTemplario extends Unidad {
 			
 		}
 	}
-	public void Radiacion(){
-		if (energia>=100){
-			
+	@SuppressWarnings("rawtypes")
+	public void Alucinacion(ArrayList<UnidadProtoss> listaUnidades,UnidadProtoss unidadAlucinante){
+		UnidadCopia copiaUnidad;
+		Class auxiliar = unidadAlucinante.getClass();
+		int posicionX = unidadAlucinante.getPosX();
+		int posicionY = unidadAlucinante.getPosY();
+		for(int i=0;i<2;i++){
+				copiaUnidad= new UnidadCopia(posicionX+10+i*10,posicionY,auxiliar,unidadAlucinante.getEscudoMax(),unidadAlucinante.getEscudo());
+				listaUnidades.add(copiaUnidad);
+
 		}
+	}
+	public void vaciarEnergia(){
+		this.energia=0;
 	}
 
 }
