@@ -18,7 +18,7 @@ public class MapaListaBuilder {
 
 	private ArrayList<ObjetoMapa> objetosEnMapa = new ArrayList<ObjetoMapa>();
 	private ArrayList<Base> bases = new ArrayList<Base>();
-	
+
 	MapaLista mapaLista;
 
 	

@@ -135,7 +135,7 @@ public class Jugador {
 	public int getCantidadUnidades() {
 		return listaDeUnidades.size();
 	}
-	
+
 	public void aumentoGasYMineralPorEdificios(Iterator<Edificio> iterator) {
 		int numeroDeEdificiosMinerales = 0;
 		int numeroDeEdificiosGases = 0;
@@ -160,10 +160,10 @@ public class Jugador {
 	}
 
 	public void DisminuirTiempoDeConstruccion() {
-		Iterator<Edificio> iteradorEdificios = this.listaDeEdificiosACrear
-				.iterator();
-		Iterator<Unidad> iteradorUnidades = this.listaDeUnidadesACrear
-				.iterator();
+//		Iterator<Edificio> iteradorEdificios = this.listaDeEdificiosACrear
+//				.iterator();
+//		Iterator<Unidad> iteradorUnidades = this.listaDeUnidadesACrear
+//				.iterator();
 		int i;
 		Edificio edificioAuxiiliar;
 		Unidad unidadAuxiliar;

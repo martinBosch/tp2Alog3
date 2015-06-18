@@ -104,7 +104,7 @@ public abstract class ObjetoMapa {
 
 		return (int) Math.sqrt( x*x + y*y );
 	}
-		
+
 //		double DiferenciaPosicionX = Math.pow(
 //				this.getPosX() - unidadAAtacar.getPosX(), 2);
 //		double DiferenciaPosicionY = Math.pow(
