@@ -3,6 +3,7 @@ package Unidades;
 import java.util.ArrayList;
 
 import Edificios.ArchivosTemplarios;
+import Magias.TormentaPsionica;
 
 public class AltoTemplario extends UnidadProtoss {
 
@@ -37,10 +38,12 @@ public class AltoTemplario extends UnidadProtoss {
 			energia=energia+15;
 		}
 	}
-	public void TormentaPsionica(){
+	public TormentaPsionica tormentaPsionica(int x ,int y,ArrayList<Unidad> listaDeUnidades){
+		TormentaPsionica tormentaAux = null;
 		if (energia>=75){
-			
+			tormentaAux = new TormentaPsionica(x, y,listaDeUnidades);
 		}
+		return tormentaAux;
 	}
 	@SuppressWarnings("rawtypes")
 	public void Alucinacion(ArrayList<UnidadProtoss> listaUnidades,UnidadProtoss unidadAlucinante){

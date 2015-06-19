@@ -13,17 +13,20 @@ public class TormentaPsionica {
 	int radio;
 	int turnosDeVida;
 	int danio;
+	ArrayList<Unidad> listaDeUnidadesOtroJugador;
 	
-	TormentaPsionica(int x,int y){
+	public TormentaPsionica(int x,int y,ArrayList<Unidad> listaDeUnidades){
 		posX=x;
 		posY=y;
 		radio=3;
 		turnosDeVida=2;
 		danio=100;
+		this.listaDeUnidadesOtroJugador= listaDeUnidades;
 	}
 	
 	public void PasarTurno(){
 		turnosDeVida--;
+		InflingirDanio(this.listaDeUnidadesOtroJugador);
 	}
 	
 	public ArrayList<Unidad> InflingirDanio(ArrayList<Unidad> ListaUnidades){

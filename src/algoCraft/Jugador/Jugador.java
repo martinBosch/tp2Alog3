@@ -11,7 +11,9 @@ import Edificios.EdificioProtoss;
 import Edificios.NexoMineral;
 import Edificios.Pilon;
 import Edificios.Refineria;
+import Magias.TormentaPsionica;
 import Razas.Raza;
+import Unidades.AltoTemplario;
 import Unidades.Unidad;
 import Unidades.UnidadProtoss;
 
@@ -30,12 +32,15 @@ public class Jugador {
 	private ArrayList<Edificio> listaDeEdificiosACrear;
 	private ArrayList<Unidad> listaDeUnidades;
 	private ArrayList<Unidad> listaDeUnidadesACrear;
+	private ArrayList<TormentaPsionica> listaDeTormentas;
+	private Jugador otroJugador;
 
 	public Jugador() {
 		this.listaDeEdificios = new ArrayList<Edificio>();
 		this.listaDeUnidades = new ArrayList<Unidad>();
 		this.listaDeEdificiosACrear = new ArrayList<Edificio>();
 		this.listaDeUnidadesACrear = new ArrayList<Unidad>();
+		this.listaDeTormentas = new ArrayList<TormentaPsionica>();
 		gases = 0;
 		minerales = 200;
 		poblacionMax = 5;
@@ -45,6 +50,24 @@ public class Jugador {
 	public void elegirRaza(Raza razaSet) {
 		this.raza = razaSet;
 	};
+	
+	public void referenciar(Jugador otro) {
+		this.otroJugador=otro;
+	};
+	
+	public void crearTormenta(int x, int y) {
+		Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
+		while (iterador.hasNext()){
+			Unidad unidadAux = iterador.next();
+			if ((unidadAux.getClass() == AltoTemplario.class)&&(unidadAux.getPosX()== x)&&(unidadAux.getPosY()== y)){
+				TormentaPsionica tormenta= ((AltoTemplario) unidadAux).tormentaPsionica(x,y,this.otroJugador.getListaUnidades());
+				if (tormenta != null){
+					this.listaDeTormentas.add(tormenta);
+				}
+			}
+		}
+	};
+	
 
 	public void modificarMineral(int mineralModificado) {
 		this.minerales = this.minerales + mineralModificado;
@@ -252,8 +275,19 @@ public class Jugador {
 		DisminuirTiempoDeConstruccion();
 		RegenerarEscudosProtoss(this.listaDeEdificios.iterator(),
 				this.listaDeUnidades.iterator());
+		tormentarTurnos();
+		
 	}
 
+	public void tormentarTurnos(){
+		Iterator<TormentaPsionica> iterador = this.listaDeTormentas.iterator();
+		while (iterador.hasNext()){
+			TormentaPsionica tormentaAux = iterador.next();
+			tormentaAux.PasarTurno();
+		}
+
+	}
+	
 	public ArrayList<Unidad> getListaUnidades() {
 		return this.listaDeUnidades;
 	}
