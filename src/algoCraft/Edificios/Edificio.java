@@ -10,4 +10,13 @@ public abstract class Edificio extends ObjetoMapa {
 		alto = 32;// Constantes.ALTO_EDIF
 	}
 
+	public boolean minador() {
+		return false;
+	}
+	public boolean gaseador() {
+		return false;
+	}
+	public boolean poblador() {
+		return false;
+	}
 }

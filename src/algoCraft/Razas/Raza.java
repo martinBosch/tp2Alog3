@@ -3,6 +3,7 @@ package Razas;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import algoCraft.AlgoCraft;
 import Edificios.Edificio;
 import Unidades.Unidad;
 
@@ -43,7 +44,7 @@ public abstract class Raza {
 	}
 
 	public boolean crearEdificio(int minerales, int gases,
-			ArrayList<Edificio> listaDeEdificios, Edificio edificioAuxiliar) {
+			ArrayList<Edificio> listaDeEdificios, Edificio edificioAuxiliar,AlgoCraft juego) {
 		boolean puede = false;
 
 		if ((edificioAuxiliar.getPrecioG() <= gases)
@@ -52,6 +53,12 @@ public abstract class Raza {
 						edificioAuxiliar.getEdifNecesario()))
 				&& (verificarEdificioEnRaza(edificioAuxiliar))) {
 			puede = true;
+		}
+		if(edificioAuxiliar.gaseador()){
+			//CHEQUEUAR QUE SE ESTE CREANDO ARRIBA DE UN VOLCAN
+		}
+		if(edificioAuxiliar.minador()){
+			//CHEQUEUAR QUE SE ESTE CREANDO ARRIBA DE UNA MINA
 		}
 		return puede;
 	};

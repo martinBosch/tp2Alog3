@@ -14,10 +14,20 @@ public class AlgoCraft {
 	AlgoCraft() {
 		Jugador1 = new Jugador();
 		Jugador2 = new Jugador();
-		Jugador1.referenciar(Jugador2);
-		Jugador2.referenciar(Jugador1);
+		Jugador1.referenciar(this);
+		Jugador2.referenciar(this);
 		Mapa.getInstance();
 		turnos = 0;
+	}
+	
+	public Jugador getOponente(Jugador jug){
+		Jugador jugAux;
+		if (jug==Jugador1){
+			jugAux= Jugador2;
+		} else {
+			jugAux= Jugador1;
+		}
+		return jugAux;
 	}
 	
 	void InicializarJugadores(Raza raza1, Raza raza2) {
