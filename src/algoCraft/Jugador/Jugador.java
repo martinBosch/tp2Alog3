@@ -3,6 +3,7 @@ package Jugador;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import algoCraft.AlgoCraft;
 import Edificios.Asimilador;
 import Edificios.CentroMineral;
 import Edificios.DepositoSuministro;
@@ -11,7 +12,9 @@ import Edificios.EdificioProtoss;
 import Edificios.NexoMineral;
 import Edificios.Pilon;
 import Edificios.Refineria;
+import Magias.TormentaPsionica;
 import Razas.Raza;
+import Unidades.AltoTemplario;
 import Unidades.Unidad;
 import Unidades.UnidadProtoss;
 
@@ -30,12 +33,15 @@ public class Jugador {
 	private ArrayList<Edificio> listaDeEdificiosACrear;
 	private ArrayList<Unidad> listaDeUnidades;
 	private ArrayList<Unidad> listaDeUnidadesACrear;
+	private ArrayList<TormentaPsionica> listaDeTormentas;
+	private AlgoCraft juego;
 
 	public Jugador() {
 		this.listaDeEdificios = new ArrayList<Edificio>();
 		this.listaDeUnidades = new ArrayList<Unidad>();
 		this.listaDeEdificiosACrear = new ArrayList<Edificio>();
 		this.listaDeUnidadesACrear = new ArrayList<Unidad>();
+		this.listaDeTormentas = new ArrayList<TormentaPsionica>();
 		gases = 0;
 		minerales = 200;
 		poblacionMax = 5;
@@ -45,6 +51,25 @@ public class Jugador {
 	public void elegirRaza(Raza razaSet) {
 		this.raza = razaSet;
 	};
+	
+	public void referenciar(AlgoCraft juegoActual) {
+		this.juego = juegoActual;
+	};
+	
+	public void crearTormenta(int x, int y) {
+		Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
+		while (iterador.hasNext()){
+			Unidad unidadAux = iterador.next();
+			if ((unidadAux.getClass() == AltoTemplario.class)&&(unidadAux.getPosX()== x)&&(unidadAux.getPosY()== y)){
+				TormentaPsionica tormenta= ((AltoTemplario) unidadAux).tormentaPsionica(x,y,juego.getOponente(this).getListaUnidades());
+				if (tormenta != null){
+					this.listaDeTormentas.add(tormenta);
+					unidadAux.YaJugo();
+				}
+			}
+		}
+	};
+	
 
 	public void modificarMineral(int mineralModificado) {
 		this.minerales = this.minerales + mineralModificado;
@@ -74,14 +99,15 @@ public class Jugador {
 		this.poblacion = this.poblacion + poblacionModificada;
 	};
 
-	public void crearEdificio(Edificio edificioACrear) {
+	public void crearEdificio(int x,int y,Edificio edificioACrear) {
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases,
-				this.listaDeEdificios, edificioACrear);
+				this.listaDeEdificios, edificioACrear,juego);
 		// Edificio pilon = new Pilon();
 		// Edificio deposito = new DepositoSuministro();
 		if (puede) {
 			modificarGas(-edificioACrear.getPrecioG());
 			modificarMineral(-edificioACrear.getPrecioM());
+			
 			this.listaDeEdificiosACrear.add(edificioACrear);
 		}
 	};
@@ -144,12 +170,10 @@ public class Jugador {
 		if (listaDeEdificios.size() != 0) {
 			while (iterator.hasNext()) {
 				edificioAuxiliar = iterator.next();
-				if ((edificioAuxiliar.getClass() == CentroMineral.class)
-						|| (edificioAuxiliar.getClass() == NexoMineral.class)) {
+				if ((edificioAuxiliar.minador())) {
 					numeroDeEdificiosMinerales++;
 				}
-				if ((edificioAuxiliar.getClass() == Refineria.class)
-						|| (edificioAuxiliar.getClass() == Asimilador.class)) {
+				if ((edificioAuxiliar.gaseador())) {
 					numeroDeEdificiosGases++;
 				}
 
@@ -171,8 +195,7 @@ public class Jugador {
 			edificioAuxiiliar = this.listaDeEdificiosACrear.get(i);
 			edificioAuxiiliar.bajarTiempoConstruccion();
 			if (edificioAuxiiliar.getTiempoConstruccion() == 0) {
-				if ((edificioAuxiiliar.getClass() == Pilon.class)
-						|| (edificioAuxiiliar.getClass() == DepositoSuministro.class)) {
+				if ((edificioAuxiiliar.poblador())) {
 					aumentarPoblacionMax();
 				}
 				this.listaDeEdificios.add(edificioAuxiiliar);
@@ -248,6 +271,13 @@ public class Jugador {
 		return ListaUnidadesAux;
 	}
 
+	private void reiniciarYaJugoUnidades(){
+		Iterable<Unidad> lista = this.listaDeUnidades;
+		for(Unidad unidadAux : lista){
+			unidadAux.reiniciarYaJugo();
+		}
+	}
+	
 	public void pasarTurno() {
 		aplicarRadiacion(this.listaDeUnidades.iterator());
 		destruirUnidades();
@@ -256,8 +286,20 @@ public class Jugador {
 		DisminuirTiempoDeConstruccion();
 		RegenerarEscudosProtoss(this.listaDeEdificios.iterator(),
 				this.listaDeUnidades.iterator());
+		tormentarTurnos();
+		reiniciarYaJugoUnidades();
+		
 	}
 
+	public void tormentarTurnos(){
+		Iterator<TormentaPsionica> iterador = this.listaDeTormentas.iterator();
+		while (iterador.hasNext()){
+			TormentaPsionica tormentaAux = iterador.next();
+			tormentaAux.PasarTurno();
+		}
+
+	}
+	
 	public ArrayList<Unidad> getListaUnidades() {
 		return this.listaDeUnidades;
 	}

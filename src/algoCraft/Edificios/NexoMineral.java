@@ -13,5 +13,7 @@ public class NexoMineral extends EdificioProtoss{ //Protoss
 		escudo=250;
 		escudoMax=250;
 	}
-		
+	public boolean minador() {
+		return true;
+	}
 }

@@ -8,24 +8,37 @@ public abstract class Unidad extends ObjetoMapa {
 	protected int vision;
 	protected int suministro;
 	protected String tipo;
-
 	protected int danioA;
 	protected int danioT;
 	protected int rangoA;
 	protected int rangoT;
 	protected boolean tieneRadiacion;
+	protected boolean yaJugo;
 
 	public Unidad(int x, int y) {
 		super(x, y);
 		ancho = 32;// Constantes.ANCHO_UNIDAD
 		alto = 32;// Constantes.ALTO_UNIDAD
 		tieneRadiacion = false;
+		yaJugo= false;
 	}
 
 	public int getDanioA() {
 		return danioA;
 	}
+	
+	public boolean getYaJugo() {
+		return yaJugo;
+	}
 
+	public void YaJugo() {
+		yaJugo=true;
+	}
+	
+	public void reiniciarYaJugo() {
+		yaJugo=false;
+	}
+	
 	public int getDanioT() {
 		return danioT;
 	}
@@ -43,7 +56,7 @@ public abstract class Unidad extends ObjetoMapa {
 
 	public int getVision() {
 		return vision;
-	};
+	}
 
 	public int getSuministros() {
 		return suministro;
@@ -57,6 +70,7 @@ public abstract class Unidad extends ObjetoMapa {
 		// 1 rango de ataque equivale a dos celdas.
 		if (distancia(atacado) < rangoT * (32 * 2)) {
 			atacado.recibirDanio(danioT);
+			this.YaJugo();
 		}
 	}
 	
@@ -68,5 +82,4 @@ public abstract class Unidad extends ObjetoMapa {
 		this.tieneRadiacion = true;
 
 	}
-
 }

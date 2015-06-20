@@ -11,5 +11,7 @@ public class Refineria extends Edificio{ //Terran
 		vida= 750;
 		nombre= "Refineria";
 	}
-	
+	public boolean gaseador() {
+		return true;
+	}
 }

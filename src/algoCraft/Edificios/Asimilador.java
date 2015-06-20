@@ -14,5 +14,7 @@ public class Asimilador extends EdificioProtoss { // Protoss
 		escudoMax=450;
 
 	}
-
+	public boolean gaseador() {
+		return true;
+	}
 }
