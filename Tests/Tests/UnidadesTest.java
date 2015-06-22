@@ -141,7 +141,7 @@ public class UnidadesTest {
 		jugador.modificarMineral(10000);
 
 		Edificio barraca = new Barraca(x, y);
-		jugador.crearEdificio(barraca);
+		jugador.crearEdificio(0, 0, barraca);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
@@ -166,21 +166,21 @@ public class UnidadesTest {
 		jugador.modificarMineral(10000);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
@@ -208,21 +208,21 @@ public class UnidadesTest {
 		jugador.modificarGas(300);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
@@ -250,21 +250,21 @@ public class UnidadesTest {
 		jugador.modificarGas(500);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
@@ -292,20 +292,20 @@ public class UnidadesTest {
 		jugador.modificarGas(1000);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
@@ -339,23 +339,23 @@ public class UnidadesTest {
 		jugador.modificarGas(1000);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 		edificioACrear = new DepositoSuministro(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
@@ -392,7 +392,7 @@ public class UnidadesTest {
 		jugador.modificarGas(1000);
 
 		Edificio edificioACrear = new Acceso(x, y);
-		jugador.crearEdificio(edificioACrear);
+		jugador.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
@@ -444,7 +444,7 @@ public class UnidadesTest {
 		jugadorUno.elegirRaza(raza.crearTerran());
 		
 		Edificio edificioACrear = new Barraca(x, y);
-		jugadorUno.crearEdificio(edificioACrear);
+		jugadorUno.crearEdificio(0, 0, edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugadorUno.pasarTurno();

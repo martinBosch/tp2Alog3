@@ -163,13 +163,13 @@ public class Jugador {
 		return listaDeUnidades.size();
 	}
 
-	public void aumentoGasYMineralPorEdificios(Iterator<Edificio> iterator) {
+	public void aumentoGasYMineralPorEdificios(Iterable<Edificio> iterable) {
 		int numeroDeEdificiosMinerales = 0;
 		int numeroDeEdificiosGases = 0;
 		Edificio edificioAuxiliar;
 		if (listaDeEdificios.size() != 0) {
-			while (iterator.hasNext()) {
-				edificioAuxiliar = iterator.next();
+			while (iterable.iterator().hasNext()) {
+				edificioAuxiliar = iterable.iterator().next();
 				if ((edificioAuxiliar.minador())) {
 					numeroDeEdificiosMinerales++;
 				}
@@ -212,13 +212,13 @@ public class Jugador {
 		}
 	}
 
-	private void RegenerarEscudosProtoss(Iterator<Edificio> iteratorEdificios,
+	private void RegenerarEscudosProtoss(Iterable<Edificio> iteratorEdificios,
 			Iterator<Unidad> iteratorUnidades) {
 		Edificio edificioAuxiliar;
 		Unidad unidadAuxiliar;
 		if (listaDeEdificios.size() != 0) {
-			while (iteratorEdificios.hasNext()) {
-				edificioAuxiliar = iteratorEdificios.next();
+			while (iteratorEdificios.iterator().hasNext()) {
+				edificioAuxiliar = iteratorEdificios.iterator().next();
 				if ((edificioAuxiliar.getClass().getSuperclass() == EdificioProtoss.class)) {
 					((EdificioProtoss) edificioAuxiliar).recargarEscudo();
 					;
@@ -237,22 +237,22 @@ public class Jugador {
 
 	}
 	
-	private void aplicarRadiacion(Iterator<Unidad> iteratorUnidades){
+	private void aplicarRadiacion(Iterable<Unidad> iteratorUnidades){
 		Unidad unidadAuxiliar;
 		ArrayList<Unidad> unidadesAledanias;
-		while (iteratorUnidades.hasNext()) {
-			unidadAuxiliar = iteratorUnidades.next();
+		while (iteratorUnidades.iterator().hasNext()) {
+			unidadAuxiliar = iteratorUnidades.iterator().next();
 			if(unidadAuxiliar.getEstadoIrradiacion()){
 				unidadesAledanias=VerificarUnidadesAledanias(unidadAuxiliar);
-				irradiar(unidadesAledanias.iterator());
+				irradiar(unidadesAledanias);
 			}
 		}
 	}
 
-	private void irradiar(Iterator<Unidad> unidadesAledanias) {
+	private void irradiar(Iterable<Unidad> unidadesAledanias) {
 		Unidad unidadAuxiliar;
-		while (unidadesAledanias.hasNext()) {
-			unidadAuxiliar = unidadesAledanias.next();
+		while (unidadesAledanias.iterator().hasNext()) {
+			unidadAuxiliar = unidadesAledanias.iterator().next();
 			unidadAuxiliar.recibirDanio(10);
 		}
 		
@@ -279,12 +279,12 @@ public class Jugador {
 	}
 	
 	public void pasarTurno() {
-		aplicarRadiacion(this.listaDeUnidades.iterator());
+		aplicarRadiacion(this.listaDeUnidades);
 		destruirUnidades();
 		destruirEdificios();
-		aumentoGasYMineralPorEdificios(this.listaDeEdificios.iterator());
+		aumentoGasYMineralPorEdificios(this.listaDeEdificios);
 		DisminuirTiempoDeConstruccion();
-		RegenerarEscudosProtoss(this.listaDeEdificios.iterator(),
+		RegenerarEscudosProtoss(this.listaDeEdificios,
 				this.listaDeUnidades.iterator());
 		tormentarTurnos();
 		reiniciarYaJugoUnidades();
