@@ -34,29 +34,42 @@ public class NaveCiencia extends Unidad{ //Terran
 		}
 	}
 
-	public void EMP(ArrayList<Unidad> unidadesAfectadas) {
-		Iterator<Unidad> iterator = unidadesAfectadas.iterator();
-		Unidad unidadAModificar;
-		while(iterator.hasNext()){
-			unidadAModificar = iterator.next();
-			if(unidadAModificar.getClass().getSuperclass()== UnidadProtoss.class){
-				((UnidadProtoss) unidadAModificar).eliminarEscudo();
-			}else{
-				if((unidadAModificar.getClass()==AltoTemplario.class)||(unidadAModificar.getClass()==NaveCiencia.class)){
-					((NaveCiencia) unidadAModificar).vaciarEnergia();
-				}else{
-					if((unidadAModificar.getClass()==AltoTemplario.class)){
-						((AltoTemplario) unidadAModificar).vaciarEnergia();
+	public void EMP(Iterable<Unidad> listaUnidades,int posXEMP,int posYEMP) {
+		if (energia >= 100) {
+			int x;
+			int y;
+			Unidad unidadAux;
+			int radio=3;
+			while (listaUnidades.iterator().hasNext()) {
+				unidadAux = listaUnidades.iterator().next();
+				x = posXEMP - unidadAux.getPosX();
+				y = posYEMP - unidadAux.getPosY();
+
+				if (radio <= (int) Math.sqrt(x * x + y * y)) {
+
+					if (unidadAux.getClass().getSuperclass() == UnidadProtoss.class) {
+						((UnidadProtoss) unidadAux).eliminarEscudo();
+					} else {
+						if ((unidadAux.getClass() == AltoTemplario.class)
+								|| (unidadAux.getClass() == NaveCiencia.class)) {
+							((NaveCiencia) unidadAux).vaciarEnergia();
+						} else {
+							if ((unidadAux.getClass() == AltoTemplario.class)) {
+								((AltoTemplario) unidadAux).vaciarEnergia();
+							}
+						}
 					}
 				}
+				energia = energia - 100;
 			}
 		}
-		energia=energia-100;
 	}
 
 	public void Radiacion(Unidad unidadAfectada) {
-		unidadAfectada.serIrradiada();
-		energia=energia-75;
+		if (energia >= 75) {
+			unidadAfectada.serIrradiada();
+			energia = energia - 75;
+		}
 	}
 	public void vaciarEnergia(){
 		this.energia=0;
