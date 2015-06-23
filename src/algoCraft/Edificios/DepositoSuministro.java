@@ -11,6 +11,7 @@ public class DepositoSuministro extends Edificio{ //Terran
 		vida= 500;
 		nombre= "Deposito Suministro";
 	}
+
 	public boolean poblador() {
 		return true;
 	}

@@ -161,7 +161,6 @@ public class EdificioTest {
 			jugador.pasarTurno();
 		}
 		assertTrue(jugador.getPoblacionMax() == 10);
-
 	}
 
 	@Test

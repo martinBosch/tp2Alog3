@@ -47,10 +47,11 @@ public class UnidadesTest {
 		assertTrue(templario.getTiempoConstruccion() == 7);
 	}
 
+	@Test
 	public void testCreacionDragones() {
 		Dragon dragon = new Dragon(x, y);
-		assertTrue(dragon.getPrecioG() == 125);
-		assertTrue(dragon.getPrecioM() == 50);
+		assertTrue(dragon.getPrecioM() == 125);
+		assertTrue(dragon.getPrecioG() == 50);
 		assertTrue(dragon.getNombre() == "Dragon");
 		assertTrue(dragon.getSuministros() == 2);
 		assertTrue(dragon.getVision() == 8);
@@ -62,6 +63,7 @@ public class UnidadesTest {
 		assertTrue(dragon.getTiempoConstruccion() == 6);
 	}
 
+	@Test
 	public void testCreacionEspectro() {
 		Espectro espectro = new Espectro(x, y);
 		assertTrue(espectro.getPrecioG() == 100);
@@ -77,6 +79,7 @@ public class UnidadesTest {
 		assertTrue(espectro.getTiempoConstruccion() == 8);
 	}
 
+	@Test
 	public void testCreacionGolliat() {
 		Golliat golliat = new Golliat(x, y);
 		assertTrue(golliat.getPrecioG() == 50);
@@ -92,12 +95,13 @@ public class UnidadesTest {
 		assertTrue(golliat.getTiempoConstruccion() == 6);
 	}
 
+	@Test
 	public void testCreacionMarine() {
 		Marine marine = new Marine(x, y);
 		assertTrue(marine.getPrecioG() == 0);
 		assertTrue(marine.getPrecioM() == 50);
 		assertTrue(marine.getNombre() == "Marine");
-		assertTrue(marine.getSuministros() == 2);
+		assertTrue(marine.getSuministros() == 1);
 		assertTrue(marine.getVision() == 7);
 		assertTrue(marine.getDanioA() == 6);
 		assertTrue(marine.getDanioT() == 6);
@@ -133,6 +137,7 @@ public class UnidadesTest {
 
 	@Test
 	public void testCreacionUnidadConEdificio() {
+
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
@@ -380,7 +385,7 @@ public class UnidadesTest {
 		assertTrue(jugador.getPoblacion() == 9);
 
 	}
-	
+
 	@Test
 	public void testEscudoProtoss() {
 		Jugador jugador = new Jugador();

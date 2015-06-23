@@ -13,5 +13,9 @@ public class Pilon extends EdificioProtoss{
 		escudo=300;
 		escudoMax=300;
 	}
-		
+
+	public boolean poblador() {
+		return true;
+	}
+
 }
