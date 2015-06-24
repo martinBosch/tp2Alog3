@@ -5,6 +5,11 @@ import java.util.Iterator;
 
 import Edificios.Edificio;
 import Edificios.EdificioProtoss;
+import Excepciones.ExcepcionEnergiaInsuficiente;
+import Excepciones.ExcepcionGasesInsuficientes;
+import Excepciones.ExcepcionMineralesInsuficientes;
+import Excepciones.ExcepcionPoblacionInsuficiente;
+import Excepciones.ExcepcionRazaEquivocada;
 import Magias.TormentaPsionica;
 import Razas.Protoss;
 import Razas.Raza;
@@ -35,7 +40,6 @@ public class Jugador {
 
 	private AlgoCraft juego;
 
-
 	public Jugador() {
 		this.listaDeEdificios = new ArrayList<Edificio>();
 		this.listaDeUnidades = new ArrayList<Unidad>();
@@ -56,17 +60,17 @@ public class Jugador {
 		this.juego = juegoActual;
 	};
 
-	public void crearTormenta(int x, int y) {
+	public void crearTormenta(int x, int y) throws ExcepcionEnergiaInsuficiente {
 		Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
+		TormentaPsionica tormenta = null;
 		while (iterador.hasNext()) {
 			Unidad unidadAux = iterador.next();
-			if ((unidadAux.getClass() == AltoTemplario.class) && 
-					(unidadAux.obtenerX()== x)&&(unidadAux.obtenerY()== y)){
-
-				TormentaPsionica tormenta = ((AltoTemplario) unidadAux).tormentaPsionica(x,y,
+			if ((unidadAux.getClass() == AltoTemplario.class)
+					&& (unidadAux.obtenerX() == x)
+					&& (unidadAux.obtenerY() == y)) {
+				tormenta = ((AltoTemplario) unidadAux).tormentaPsionica(x, y,
 						juego.getOponente(this).getListaUnidades());
-
-				if (tormenta != null){
+				if (tormenta != null) {
 					this.listaDeTormentas.add(tormenta);
 					unidadAux.YaJugo();
 				}
@@ -102,9 +106,10 @@ public class Jugador {
 		this.poblacion = this.poblacion + poblacionModificada;
 	};
 
-	public boolean crearEdificio(int x,int y,Edificio edificioACrear) {
+	public boolean crearEdificio(int x, int y, Edificio edificioACrear)
+			throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases,
-				this.listaDeEdificios, edificioACrear,juego);
+				this.listaDeEdificios, edificioACrear, juego);
 
 		if (puede) {
 			modificarGas(-edificioACrear.getPrecioG());
@@ -114,7 +119,9 @@ public class Jugador {
 		return puede;
 	}
 
-	public boolean crearUnidad(Unidad unidadACrear) {
+	public boolean crearUnidad(Unidad unidadACrear)
+			throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes,
+			ExcepcionMineralesInsuficientes {
 		boolean puede = false;
 		if (unidadACrear.getSuministros() <= (this.poblacionMax - this.poblacion)) {
 			puede = this.raza.crearUnidad(this.minerales, this.gases,
@@ -125,7 +132,10 @@ public class Jugador {
 				modificarMineral(-unidadACrear.getPrecioM());
 				modificarPoblacion(unidadACrear.getSuministros());
 				this.listaDeUnidadesACrear.add(unidadACrear);
-			}
+			} 
+		
+		}else {
+			throw new ExcepcionPoblacionInsuficiente();
 		}
 		return puede;
 	}
@@ -167,7 +177,6 @@ public class Jugador {
 	public int getGases() {
 		return gases;
 	}
-
 
 	public void aumentoGasYMineralPorEdificios(Iterable<Edificio> iterable) {
 		int numeroDeEdificiosMinerales = 0;
@@ -287,7 +296,8 @@ public class Jugador {
 		}
 	}
 
-	public void crearEMP(int posXEMP, int posYEMP, int x, int y) {
+	public void crearEMP(int posXEMP, int posYEMP, int x, int y)
+			throws ExcepcionRazaEquivocada, ExcepcionEnergiaInsuficiente {
 		if (this.raza.getClass() == Terran.class) {
 			Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
 			while (iterador.hasNext()) {
@@ -300,11 +310,14 @@ public class Jugador {
 							posYEMP);
 				}
 			}
+		} else {
+			throw new ExcepcionRazaEquivocada();
 		}
 	}
 
 	public void CrearAlucinaciones(Unidad unidadACopiar, int posCopia1X,
-			int posCopia1y, int posCopia2X, int posCopia2y, int x, int y) {
+			int posCopia1y, int posCopia2X, int posCopia2y, int x, int y)
+			throws ExcepcionEnergiaInsuficiente {
 		ArrayList<Unidad> listaAux = null;
 		if (this.raza.getClass() == Protoss.class) {
 			Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
@@ -354,18 +367,18 @@ public class Jugador {
 	}
 
 	public ArrayList<String> obtenerNombreUnidades() {
-		return raza.obtenerNombreUnidades()	;
+		return raza.obtenerNombreUnidades();
 	}
 
 	public ArrayList<String> obtenerNombreEdificios() {
-		return raza.obtenerNombreEdificios()	;
+		return raza.obtenerNombreEdificios();
 	}
 
 	public ArrayList<String> obtenerRutaImagenUnidades() {
 		return raza.obtenerRutaImagenUnidades();
 	}
 
-	public ArrayList<String> obtenerRutaImagenEdificios(){
+	public ArrayList<String> obtenerRutaImagenEdificios() {
 		return raza.obtenerRutaImagenEdificios();
 	}
 

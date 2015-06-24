@@ -3,8 +3,6 @@ package Tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import Edificios.Acceso;
@@ -13,6 +11,10 @@ import Edificios.DepositoSuministro;
 import Edificios.Edificio;
 import Edificios.Fabrica;
 import Edificios.PuertoEstelarT;
+import Excepciones.ExcepcionEnergiaInsuficiente;
+import Excepciones.ExcepcionGasesInsuficientes;
+import Excepciones.ExcepcionMineralesInsuficientes;
+import Excepciones.ExcepcionPoblacionInsuficiente;
 import Jugador.Jugador;
 import Razas.RazaBuilder;
 import Unidades.AltoTemplario;
@@ -22,7 +24,6 @@ import Unidades.Golliat;
 import Unidades.Marine;
 import Unidades.NaveCiencia;
 import Unidades.Unidad;
-import Unidades.UnidadCopia;
 import Unidades.UnidadProtoss;
 import Unidades.Zealot;
 
@@ -115,15 +116,15 @@ public class UnidadesTest {
 	public void testPoblacionMaxima() {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 		assertTrue(jugador.getPoblacionMax() == 5);
 	}
 
 	@Test
-	public void testCreacionUnidadSinEdificio() {
+	public void testCreacionUnidadSinEdificio() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 
 		Unidad marine = new Marine(x, y);
 		jugador.crearUnidad(marine);
@@ -136,12 +137,12 @@ public class UnidadesTest {
 	}
 
 	@Test
-	public void testCreacionUnidadConEdificio() {
+	public void testCreacionUnidadConEdificio() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 
 		jugador.modificarMineral(10000);
 
@@ -163,10 +164,10 @@ public class UnidadesTest {
 	}
 
 	@Test
-	public void testUnidadConMineralYsinGas() {
+	public void testUnidadConMineralYsinGas() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 		jugador.modificarMineral(300);
 		jugador.modificarMineral(10000);
 
@@ -190,9 +191,12 @@ public class UnidadesTest {
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
 		}
-
-		Unidad espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
+		try{
+			Unidad espectro = new Espectro(x, y);
+			jugador.crearUnidad(espectro);
+		}catch(ExcepcionGasesInsuficientes e){
+			System.out.println(e.getMessage());
+		}
 
 		for (int i = 1; i <= 8; i++) {
 			jugador.pasarTurno();
@@ -203,11 +207,11 @@ public class UnidadesTest {
 	}
 
 	@Test
-	public void testUnidadConMineralYConGas() {
+	public void testUnidadConMineralYConGas() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 
 		jugador.modificarMineral(450);
 		jugador.modificarGas(300);
@@ -245,11 +249,11 @@ public class UnidadesTest {
 	}
 
 	@Test
-	public void testUnidadSinMineralYConGas() {
+	public void testUnidadSinMineralYConGas() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 
 		jugador.modificarMineral(300);
 		jugador.modificarGas(500);
@@ -276,8 +280,11 @@ public class UnidadesTest {
 		}
 
 		Unidad espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
-
+		try{
+			jugador.crearUnidad(espectro);
+		}catch(ExcepcionMineralesInsuficientes e){
+			System.out.println(e.getMessage());
+		}
 		for (int i = 1; i <= 8; i++) {
 			jugador.pasarTurno();
 		}
@@ -287,11 +294,11 @@ public class UnidadesTest {
 	}
 
 	@Test
-	public void testUnidadSinSuministros() {
+	public void testUnidadSinSuministros() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 
 		jugador.modificarMineral(1000);
 		jugador.modificarGas(1000);
@@ -315,15 +322,18 @@ public class UnidadesTest {
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
 		}
-
-		Unidad espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
-		espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
-		espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
-		espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
+		try{
+			Unidad espectro = new Espectro(x, y);
+			jugador.crearUnidad(espectro);
+			espectro = new Espectro(x, y);
+			jugador.crearUnidad(espectro);
+			espectro = new Espectro(x, y);
+			jugador.crearUnidad(espectro);
+			espectro = new Espectro(x, y);
+			jugador.crearUnidad(espectro);
+		}catch(ExcepcionPoblacionInsuficiente e){
+			System.out.println(e.getMessage());
+		}
 
 		for (int i = 1; i <= 8; i++) {
 			jugador.pasarTurno();
@@ -334,11 +344,11 @@ public class UnidadesTest {
 	}
 
 	@Test
-	public void testUnidadConSuministrosAumentoDeSuministros() {
+	public void testUnidadConSuministrosAumentoDeSuministros() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 
 		jugador.modificarMineral(1500);
 		jugador.modificarGas(1000);
@@ -387,11 +397,11 @@ public class UnidadesTest {
 	}
 
 	@Test
-	public void testEscudoProtoss() {
+	public void testEscudoProtoss() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearProtoss());
+		jugador.asignarRaza(raza.crearProtoss());
 
 		jugador.modificarMineral(1500);
 		jugador.modificarGas(1000);
@@ -441,11 +451,11 @@ public class UnidadesTest {
 	 */
 
 	@Test
-	public void testRadiacion() {
+	public void testRadiacion() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugadorUno = new Jugador();
 		jugadorUno.modificarMineral(1000);
 		RazaBuilder raza = new RazaBuilder();
-		jugadorUno.elegirRaza(raza.crearTerran());
+		jugadorUno.asignarRaza(raza.crearTerran());
 
 		Edificio edificioACrear = new Barraca(x, y);
 		jugadorUno.crearEdificio(0, 0, edificioACrear);
@@ -465,7 +475,11 @@ public class UnidadesTest {
 		}
 		Iterable<Unidad> listaAux = jugadorUno.getListaUnidades();
 		Unidad unidad = listaAux.iterator().next();
-		((NaveCiencia) naveCiencia).Radiacion(unidad);
+		try {
+			((NaveCiencia) naveCiencia).Radiacion(unidad);
+		} catch (ExcepcionEnergiaInsuficiente e) {
+			System.out.println (e.getMessage());
+		}
 		jugadorUno.pasarTurno();
 		assertEquals(unidad.getVida(), 30);
 	}

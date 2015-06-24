@@ -1,6 +1,7 @@
 package Unidades;
 
 import Edificios.PuertoEstelarT;
+import Excepciones.ExcepcionEnergiaInsuficiente;
 
 public class NaveCiencia extends Unidad{ //Terran
 	
@@ -31,7 +32,7 @@ public class NaveCiencia extends Unidad{ //Terran
 		}
 	}
 
-	public void EMP(Iterable<Unidad> listaUnidades,int posXEMP,int posYEMP) {
+	public void EMP(Iterable<Unidad> listaUnidades,int posXEMP,int posYEMP)throws ExcepcionEnergiaInsuficiente {
 		if (energia >= 100) {
 			int x;
 			int y;
@@ -59,13 +60,17 @@ public class NaveCiencia extends Unidad{ //Terran
 				}
 				energia = energia - 100;
 			}
+		}else{
+			throw new ExcepcionEnergiaInsuficiente();
 		}
 	}
 
-	public void Radiacion(Unidad unidadAfectada) {
+	public void Radiacion(Unidad unidadAfectada)throws ExcepcionEnergiaInsuficiente {
 		if (energia >= 75) {
 			unidadAfectada.serIrradiada();
 			energia = energia - 75;
+		}else{
+			throw new ExcepcionEnergiaInsuficiente();
 		}
 	}
 	public void vaciarEnergia(){
