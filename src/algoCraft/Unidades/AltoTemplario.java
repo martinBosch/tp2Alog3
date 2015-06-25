@@ -3,6 +3,7 @@ package Unidades;
 import java.util.ArrayList;
 
 import Edificios.ArchivosTemplarios;
+import Excepciones.ExcepcionEnergiaInsuficiente;
 import Magias.TormentaPsionica;
 
 public class AltoTemplario extends UnidadProtoss {
@@ -42,19 +43,22 @@ public class AltoTemplario extends UnidadProtoss {
 	}
 
 	public TormentaPsionica tormentaPsionica(int x, int y,
-			Iterable<Unidad> iterable) {
+			Iterable<Unidad> iterable)throws ExcepcionEnergiaInsuficiente {
 		TormentaPsionica tormentaAux = null;
 		if (energia >= 75) {
 			tormentaAux = new TormentaPsionica(x, y, iterable);
 			energia = energia - 75;
+			return tormentaAux;
+		}else{
+			throw new ExcepcionEnergiaInsuficiente();
 		}
-		return tormentaAux;
+		
 	}
 
 	@SuppressWarnings("rawtypes")
 	public ArrayList<Unidad> alucinacion(int posCopia1X, int posCopia1y,
 			int posCopia2X, int posCopia2y, Iterable<Unidad> iterable,
-			UnidadProtoss unidadAlucinante) {
+			UnidadProtoss unidadAlucinante)throws ExcepcionEnergiaInsuficiente {
 		if (energia >= 100) {
 			UnidadCopia copiaUnidad;
 			ArrayList<Unidad> listaAux = new ArrayList<Unidad>();
@@ -75,7 +79,9 @@ public class AltoTemplario extends UnidadProtoss {
 			energia=energia-100;
 			return listaAux;
 		}
-		return null;
+		else {
+			throw new ExcepcionEnergiaInsuficiente();
+			}
 	}
 
 	public void vaciarEnergia(){

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import Edificios.Edificio;
+import Excepciones.ExcepcionGasesInsuficientes;
+import Excepciones.ExcepcionMineralesInsuficientes;
 import Unidades.Unidad;
 import algoCraft.AlgoCraft;
 
@@ -44,7 +46,7 @@ public abstract class Raza {
 	}
 
 	public boolean crearEdificio(int minerales, int gases,
-			ArrayList<Edificio> listaDeEdificios, Edificio edificioAuxiliar,AlgoCraft juego) {
+			ArrayList<Edificio> listaDeEdificios, Edificio edificioAuxiliar,AlgoCraft juego) throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		boolean puede = false;
 
 		if ((edificioAuxiliar.getPrecioG() <= gases)
@@ -53,6 +55,12 @@ public abstract class Raza {
 						edificioAuxiliar.getEdifNecesario()))
 				&& (verificarEdificioEnRaza(edificioAuxiliar))) {
 			puede = true;
+		}
+		if (edificioAuxiliar.getPrecioG() > gases){
+			throw new ExcepcionGasesInsuficientes();
+		}
+		if (edificioAuxiliar.getPrecioM() > minerales){
+			throw new ExcepcionMineralesInsuficientes();
 		}
 		if(edificioAuxiliar.gaseador()){
 			//CHEQUEUAR QUE SE ESTE CREANDO ARRIBA DE UN VOLCAN
@@ -90,7 +98,9 @@ public abstract class Raza {
 	}
 
 	public boolean crearUnidad(int minerales, int gases,
-			ArrayList<Edificio> listaDeEdificios, Unidad unidadACrear) {
+			ArrayList<Edificio> listaDeEdificios, Unidad unidadACrear)
+					throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+
 		boolean puede = false;
 
 		if ((verificarCreacionUnidad(unidadACrear, listaDeEdificios, minerales,
@@ -102,13 +112,19 @@ public abstract class Raza {
 	};
 
 	private boolean verificarCreacionUnidad(Unidad unidadAuxiliar,
-			ArrayList<Edificio> listaDeEdificios, int minerales, int gases) {
+			ArrayList<Edificio> listaDeEdificios, int minerales, int gases)
+					throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 
 		boolean EsPosibleCrear = (unidadAuxiliar.getPrecioG() <= gases)
 				&& (unidadAuxiliar.getPrecioM() <= minerales)
 				&& (verificarExistenciaDelEdificio(listaDeEdificios,
 						unidadAuxiliar.getEdifNecesario()));
-
+		if(unidadAuxiliar.getPrecioG() > gases){
+			throw new ExcepcionGasesInsuficientes();
+		}
+		if(unidadAuxiliar.getPrecioM() > minerales){
+			throw new ExcepcionMineralesInsuficientes();
+		}
 		return EsPosibleCrear;
 	}
 

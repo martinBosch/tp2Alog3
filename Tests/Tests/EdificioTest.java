@@ -14,6 +14,9 @@ import Edificios.Fabrica;
 import Edificios.Pilon;
 import Edificios.PuertoEstelarP;
 import Edificios.PuertoEstelarT;
+import Excepciones.ExcepcionGasesInsuficientes;
+import Excepciones.ExcepcionMineralesInsuficientes;
+import Excepciones.ExcepcionPoblacionInsuficiente;
 import Jugador.Jugador;
 import Razas.Raza;
 import Razas.RazaBuilder;
@@ -36,16 +39,16 @@ public class EdificioTest {
 	public void testPoblacionMaxima() {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 		assertTrue(jugador.getPoblacionMax() == 5);
 
 	}
 
 	@Test
-	public void testCrearEdificioConJugadorResteMineral() {
+	public void testCrearEdificioConJugadorResteMineral() throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearProtoss());
+		jugador.asignarRaza(raza.crearProtoss());
 		jugador.modificarMineral(300);
 		jugador.modificarGas(300);
 		Edificio acceso = new Acceso(x,y);
@@ -63,10 +66,10 @@ public class EdificioTest {
 	}
 
 	@Test
-	public void testCrearEdificiosYAgregarlosAListaProtoss() {
+	public void testCrearEdificiosYAgregarlosAListaProtoss() throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearProtoss());
+		jugador.asignarRaza(raza.crearProtoss());
 		jugador.modificarMineral(3000);
 		jugador.modificarGas(3000);
 		
@@ -96,10 +99,10 @@ public class EdificioTest {
 	}
 
 	@Test
-	public void testCrearEdificiosYAgregarlosAListaTerran() {
+	public void testCrearEdificiosYAgregarlosAListaTerran() throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearTerran());
+		jugador.asignarRaza(raza.crearTerran());
 		jugador.modificarMineral(3000);
 		jugador.modificarGas(3000);
 		
@@ -129,10 +132,10 @@ public class EdificioTest {
 	}
 
 	@Test
-	public void testCrearEdificioConJugadorResteGas() {
+	public void testCrearEdificioConJugadorResteGas() throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearProtoss());
+		jugador.asignarRaza(raza.crearProtoss());
 		jugador.modificarMineral(300);
 		jugador.modificarGas(300);
 		Edificio acceso = new Acceso(x,y);
@@ -150,10 +153,10 @@ public class EdificioTest {
 	}
 
 	@Test
-	public void testAumentarPoblacionMaxima() {
+	public void testAumentarPoblacionMaxima() throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
-		jugador.elegirRaza(raza.crearProtoss());
+		jugador.asignarRaza(raza.crearProtoss());
 		Edificio pilon = new Pilon(x,y);
 		jugador.crearEdificio(0, 0, pilon);
 		assertFalse(jugador.getPoblacionMax() == 10);
@@ -164,7 +167,7 @@ public class EdificioTest {
 	}
 
 	@Test
-	public void testCrearEdificioRaza() {
+	public void testCrearEdificioRaza() throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		RazaBuilder razaBuilder = new RazaBuilder();
 		Raza raza = razaBuilder.crearProtoss();
 		Edificio deposito = new DepositoSuministro(x,y);
