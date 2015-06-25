@@ -6,8 +6,10 @@ public class Constantes {
 	public static final int ANCHO_UNIDAD = 64;
 	public static final int ALTO_UNIDAD = 64;
 
-	public static int ANCHO_VENTANA = 800;
-	public static int ALTO_VENTANA = 600;
+	public static int ANCHO_VENTANA = 1250;
+	public static int ALTO_VENTANA = 650;
+//	public static int ANCHO_VENTANA = 800;
+//	public static int ALTO_VENTANA = 600;
 
 	public static int ANCHO_ESCENARIO = 3164;
 	public static int ALTO_ESCENARIO = 3164;

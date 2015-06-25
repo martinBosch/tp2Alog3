@@ -20,8 +20,8 @@ public class AlgoCraft {
 		jugador2.referenciar(this);
 
 		RazaBuilder raza = new RazaBuilder();
-		jugador1.asignarRaza(raza.crearTerran());
-		jugador2.asignarRaza(raza.crearProtoss());
+		jugador2.asignarRaza(raza.crearTerran());
+		jugador1.asignarRaza(raza.crearProtoss());
 
 		escenario = ( EscenarioBuilder.getInstance() ).obtenerEscenario();
 		jugTurno = jugador1;
@@ -43,17 +43,19 @@ public class AlgoCraft {
 	}
 
 	public void PasarTurno() {
+		jugTurno.pasarTurno();
+
 		if (jugTurno == jugador1) {
 			jugTurno = jugador2;
 		} else {
 			jugTurno = jugador1;
 		}
 	}
-	
+
 	public Escenario obtenerEscenario() {
 		return escenario;
 	}
-	
+
 	public Jugador obtenerJugadorTurno() {
 		return jugTurno;
 	}

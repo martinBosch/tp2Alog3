@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 
 import mapa.Escenario;
 import vista.Panel;
+import vista.objetosMapaVista.BarracaVista;
 import vista.objetosMapaVista.MarineVista;
+import Edificios.Barraca;
 import Jugador.Jugador;
 import Unidades.Marine;
 import algoCraft.AlgoCraft;
@@ -24,21 +26,51 @@ public class Boton implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 
-		Marine marine = new Marine(100, 100);
 		Jugador jugTurno = juego.obtenerJugadorTurno();
-		boolean puedeCrearUnidad = jugTurno.crearUnidad(marine);
-		
-		System.out.println("SE CREO: " + puedeCrearUnidad );
+		String nombreBoton = (String) e.getActionCommand();
 
-		if(puedeCrearUnidad) {
-			escenario.agregar(marine);
-	
-			MarineVista marineVista = new MarineVista(marine);
-			panel.agregarObjMapaVista(marineVista);
-			
-			panel.repaint();
+		switch(nombreBoton) {
+
+			case("Marine"):
+				Marine marine = new Marine(100, 100);
+				if ( escenario.posOcupada(marine.obtenerAreaOcupa()) &&
+						jugTurno.puedeCrearUnidad(marine)) {
+
+					return;
+				}
+				boolean puedeCrearUnidad = jugTurno.crearUnidad(marine);
+				if(puedeCrearUnidad) {
+					escenario.agregar(marine);
+					MarineVista marineVista = new MarineVista(marine);
+					panel.agregarObjMapaVista(marineVista);
+				}
+				break;
+
+			case("Barraca"):
+				Barraca barraca = new Barraca(400, 400);
+				if ( escenario.posOcupada(barraca.obtenerAreaOcupa()) &&
+						jugTurno.puedeCrearEdificio(barraca)) {
+
+					return;
+				}
+				boolean puedeCrearEdif = jugTurno.crearEdificio(200,200,barraca);
+				System.out.println("puedeCrearEdif: " + puedeCrearEdif);
+				if(puedeCrearEdif) {
+					System.out.println("ESCENARIO1: " + escenario);
+					escenario.agregar(barraca);
+					BarracaVista barracaVista = new BarracaVista(barraca);
+					panel.agregarObjMapaVista(barracaVista);
+				}
+				break;
+
+			case("Pasar Turno"):
+				juego.PasarTurno();
+				panel.agregarBotones();
+
 
 		}
+		panel.repaint();
+
 	}
 
 

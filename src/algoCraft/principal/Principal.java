@@ -3,7 +3,7 @@ import mapa.Escenario;
 import mapa.EscenarioBuilder;
 import vista.Panel;
 import vista.Ventana;
-import vista.objetosMapaVista.MapaListaVista;
+import vista.objetosMapaVista.EscenarioVista;
 import algoCraft.AlgoCraft;
 import control.Boton;
 import control.Raton;
@@ -26,10 +26,10 @@ public class Principal {
 
 //		escenario = ( EscenarioBuilder.getInstance() ).obtenerEscenario();
 		escenario = juego.obtenerEscenario();
-		MapaListaVista escenarioVista = new MapaListaVista(escenario);
+		EscenarioVista escenarioVista = new EscenarioVista(escenario);
 		panel.agregarObjMapaVista(escenarioVista);
 
-		( EscenarioBuilder.getInstance() ).cargarBases(panel);
+		( EscenarioBuilder.getInstance() ).cargarBases(panel, escenario);
 
 		teclado = new Teclado(escenario, panel);
 		raton = new Raton(escenario, panel);

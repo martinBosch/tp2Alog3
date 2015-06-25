@@ -28,11 +28,11 @@ public class Terran extends Raza {
 	public ArrayList<String> obtenerRutaImagenUnidades() {
 		ArrayList<String> RutaImagenUnidades = new ArrayList<String>();
 
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/Marine.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/Golliat.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/Espectro.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/NaveCiencia.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/NaveTransporteT.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/MarineBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/GolliatBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/EspectroBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/NaveCienciaBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/NaveTransporteTBoton.png");
 
 		return RutaImagenUnidades;
 	}
@@ -53,12 +53,12 @@ public class Terran extends Raza {
 	public ArrayList<String> obtenerRutaImagenEdificios() {
 		ArrayList<String> RutaImagenEdificios = new ArrayList<String>();
 
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/CentroMineral.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/Barraca.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/DepositoSuministro.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/Refineria.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/Fabrica.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/PuertoEstelarT.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/CentroMineralBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/BarracaBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/DepositoSuministroBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/RefineriaBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/FabricaBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/PuertoEstelarTBoton.png");
 
 		return RutaImagenEdificios;
 	}

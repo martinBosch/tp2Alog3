@@ -80,21 +80,19 @@ public class Panel extends JPanel implements PanelAgregable {
 	}
 
 	public void agregarBotones() {
-
 		JPanel panelBotones = new JPanel();
 		panelBotones.setLayout(new BorderLayout());
 
 		panelBotones.add( obtenerPanelUnidades(), BorderLayout.WEST );
 		panelBotones.add( obtenerPanelEdificios(), BorderLayout.EAST );
 
+		JButton boton = new JButton("Pasar Turno");
+		boton.setFocusable(false);
+		boton.addActionListener( botonOyente );
+		panelBotones.add(boton, BorderLayout.CENTER);
+		removeAll();
 		add( panelBotones, BorderLayout.SOUTH );
-
-
-//		JButton boton = new JButton("Marine");
-//		boton.setIcon(new ImageIcon(getClass().getResource("objetosMapaVista/imagenes/Marine.png")));
-//		boton.setFocusable(false);
-//		boton.addActionListener( botonOyente );
-//		add(boton, BorderLayout.SOUTH);
+		revalidate();
 	}
 
 
@@ -103,12 +101,16 @@ public class Panel extends JPanel implements PanelAgregable {
 		panelUnidades.setLayout(new GridLayout(3,2));
 
 		Jugador jugTurno = juego.obtenerJugadorTurno();
+		System.out.println("jugTurno: " + jugTurno);
+
 		ArrayList<String> nombreUnidades = jugTurno.obtenerNombreUnidades();
+		System.out.println("nombreUnidades: " + nombreUnidades);
+
 		ArrayList<String> rutaImagenUnidades = jugTurno.obtenerRutaImagenUnidades();
 
 		for( int i=0; i<Constantes.CANTIDAD_UNIDADES; i++ ) {
-			System.out.println(i);
-			System.out.println(	rutaImagenUnidades.get(i) );
+//			System.out.println(i);
+//			System.out.println(	rutaImagenUnidades.get(i) );
 
 			JButton boton = new JButton(nombreUnidades.get(i));
 			boton.setIcon(new ImageIcon(getClass().getResource( rutaImagenUnidades.get(i) )));
@@ -127,9 +129,9 @@ public class Panel extends JPanel implements PanelAgregable {
 		ArrayList<String> nombreEdificios = jugTurno.obtenerNombreEdificios();
 		ArrayList<String> rutaImagenEdificios = jugTurno.obtenerRutaImagenEdificios();
 
-		for( int i=0; i<Constantes.CANTIDAD_UNIDADES; i++ ) {
-			System.out.println(i);
-			System.out.println(	rutaImagenEdificios.get(i) );
+		for( int i=0; i<Constantes.CANTIDAD_EDIFICIOS; i++ ) {
+//			System.out.println(i);
+//			System.out.println(	rutaImagenEdificios.get(i) );
 
 			JButton boton = new JButton(nombreEdificios.get(i));
 			boton.setIcon(new ImageIcon(getClass().getResource( rutaImagenEdificios.get(i) )));

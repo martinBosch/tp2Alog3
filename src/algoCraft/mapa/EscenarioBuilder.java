@@ -58,11 +58,11 @@ public class EscenarioBuilder {
 //		this.cargarRecursos();
 	}
 
-	public void cargarBases(PanelAgregable panel) {
+	public void cargarBases(PanelAgregable panel, Escenario escenario) {
 		Base base1 = new Base(194, 208);
 		Base base2 = new Base(2760, 2640);
-		mapaLista.agregar(base1);
-		mapaLista.agregar(base2);
+		escenario.agregar(base1);
+		escenario.agregar(base2);
 		BaseVista base1Vista = new BaseVista(base1);
 		BaseVista base2Vista = new BaseVista(base2);
 		panel.agregarObjMapaVista(base1Vista);

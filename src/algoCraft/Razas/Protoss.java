@@ -27,11 +27,11 @@ public class Protoss extends Raza {
 	public ArrayList<String> obtenerRutaImagenUnidades() {
 		ArrayList<String> RutaImagenUnidades = new ArrayList<String>();
 
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/Zealot.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/Dragon.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/Scout.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/AltoTemplario.png");
-		RutaImagenUnidades.add("objetosMapaVista/imagenes/NaveTransporteP.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/ZealotBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/DragonBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/ScoutBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/AltoTemplarioBoton.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/NaveTransportePBoton.png");
 
 		return RutaImagenUnidades;
 	}
@@ -52,12 +52,12 @@ public class Protoss extends Raza {
 	public ArrayList<String> obtenerRutaImagenEdificios() {
 		ArrayList<String> RutaImagenEdificios = new ArrayList<String>();
 
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/NexoMineral.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/Pilon.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/Asimilador.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/Acceso.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/PuertoEstelarP.png");
-		RutaImagenEdificios.add("objetosMapaVista/imagenes/ArchivosTemplarios.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/NexoMineralBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/PilonBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/AsimiladorBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/AccesoBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/PuertoEstelarPBoton.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/ArchivosTemplariosBoton.png");
 
 		return RutaImagenEdificios;
 	}

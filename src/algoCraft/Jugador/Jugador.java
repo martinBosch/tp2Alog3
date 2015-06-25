@@ -102,6 +102,12 @@ public class Jugador {
 		this.poblacion = this.poblacion + poblacionModificada;
 	};
 
+	public boolean puedeCrearEdificio(Edificio edificioACrear) {
+		return this.raza.crearEdificio(this.minerales, this.gases,
+				this.listaDeEdificios, edificioACrear,juego);
+	}
+
+
 	public boolean crearEdificio(int x,int y,Edificio edificioACrear) {
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases,
 				this.listaDeEdificios, edificioACrear,juego);
@@ -113,6 +119,17 @@ public class Jugador {
 		}
 		return puede;
 	}
+
+	public boolean puedeCrearUnidad(Unidad unidadACrear) {
+		boolean puede = false;
+
+		if (unidadACrear.getSuministros() <= (this.poblacionMax - this.poblacion)) {
+			puede = this.raza.crearUnidad(this.minerales, this.gases,
+					this.listaDeEdificios, unidadACrear);
+		}
+		return puede;
+	}
+
 
 	public boolean crearUnidad(Unidad unidadACrear) {
 		boolean puede = false;
@@ -191,32 +208,42 @@ public class Jugador {
 	}
 
 	public void disminuirTiempoDeConstruccion() {
-		// Iterator<Edificio> iteradorEdificios = this.listaDeEdificiosACrear
-		// .iterator();
-		// Iterator<Unidad> iteradorUnidades = this.listaDeUnidadesACrear
-		// .iterator();
-		int i;
-		Edificio edificioAuxiiliar;
-		Unidad unidadAuxiliar;
-		for (i = 0; i < listaDeEdificiosACrear.size(); i++) {
-			edificioAuxiiliar = this.listaDeEdificiosACrear.get(i);
-			edificioAuxiiliar.bajarTiempoConstruccion();
-			if (edificioAuxiiliar.getTiempoConstruccion() == 0) {
-				if ((edificioAuxiiliar.poblador())) {
+		ArrayList<Edificio> edifTerminoTiempoConstruc = new ArrayList<Edificio>();
+		ArrayList<Unidad> unidTerminoTiempoConstruc = new ArrayList<Unidad>();
+
+		for (Edificio edificio : listaDeEdificiosACrear) {
+			edificio.bajarTiempoConstruccion();
+			if (edificio.getTiempoConstruccion() == 0) {
+				if ((edificio.poblador())) {
 					aumentarPoblacionMax();
 				}
-				this.listaDeEdificios.add(edificioAuxiiliar);
-				this.listaDeEdificiosACrear.remove(i);
+				edifTerminoTiempoConstruc.add(edificio);
 			}
 		}
-		for (i = 0; i < listaDeUnidadesACrear.size(); i++) {
-			unidadAuxiliar = this.listaDeUnidadesACrear.get(i);
-			unidadAuxiliar.bajarTiempoConstruccion();
-			if (unidadAuxiliar.getTiempoConstruccion() == 0) {
-				this.listaDeUnidades.add(unidadAuxiliar);
-				this.listaDeUnidadesACrear.remove(unidadAuxiliar);
+
+		for (Unidad unidad : listaDeUnidadesACrear) {
+			unidad.bajarTiempoConstruccion();
+			if (unidad.getTiempoConstruccion() == 0) {
+				unidTerminoTiempoConstruc.add(unidad);
 			}
 		}
+		actualizarObjMapaTerminoTiempoConstruc(edifTerminoTiempoConstruc,
+				unidTerminoTiempoConstruc);
+	}
+
+	public void actualizarObjMapaTerminoTiempoConstruc(ArrayList<Edificio> edifTerminoTiempoConstruc,
+			ArrayList<Unidad> unidTerminoTiempoConstruc) {
+
+		for (Edificio edificio : edifTerminoTiempoConstruc) {
+			this.listaDeEdificios.add(edificio);
+			this.listaDeEdificiosACrear.remove(edificio);
+		}
+
+		for (Unidad unidad : unidTerminoTiempoConstruc) {
+			this.listaDeUnidades.add(unidad);
+			this.listaDeUnidadesACrear.remove(unidad);
+		}
+
 	}
 
 	private void regenerarEscudosProtoss(Iterable<Edificio> iteratorEdificios,

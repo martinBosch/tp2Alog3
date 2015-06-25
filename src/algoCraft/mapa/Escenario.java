@@ -74,7 +74,7 @@ public class Escenario extends ObjetoMapa{
 		return true;		
 	}
 
-	private boolean posOcupada(Rectangle areaOcupaObjUbicar) {
+	public boolean posOcupada(Rectangle areaOcupaObjUbicar) {
 		for(ObjetoMapa objetoEnMapa : objetosEnMapa) {
 			Rectangle areaOcupaObjEnMapa = objetoEnMapa.obtenerAreaOcupa();
 			if (areaOcupaObjUbicar.intersects(areaOcupaObjEnMapa)) {
@@ -88,6 +88,8 @@ public class Escenario extends ObjetoMapa{
 
 	public void moverObjsEnMapa() {
 		for( ObjetoMapa objEnMapa : objetosEnMapa ) {
+			System.out.println("objMapa: " + objEnMapa);
+
 			objEnMapa.desplazar(dx, dy);
 			objEnMapa.mover();
 		}

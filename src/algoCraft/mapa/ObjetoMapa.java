@@ -129,7 +129,8 @@ public abstract class ObjetoMapa {
 	}
 
 	public void bajarTiempoConstruccion() {
-		tiempoConstruccion--;
+		tiempoConstruccion-=1;
+		System.out.println("TIEMPO CONSTR: " + tiempoConstruccion);
 	}
 		
 	public void recibirDanio(int danio) {
