@@ -6,8 +6,11 @@ import java.util.Iterator;
 import Edificios.Edificio;
 import Edificios.EdificioProtoss;
 import Magias.TormentaPsionica;
+import Razas.Protoss;
 import Razas.Raza;
+import Razas.Terran;
 import Unidades.AltoTemplario;
+import Unidades.NaveCiencia;
 import Unidades.Unidad;
 import Unidades.UnidadProtoss;
 import algoCraft.AlgoCraft;
@@ -48,14 +51,14 @@ public class Jugador {
 	public void asignarRaza(Raza raza) {
 		this.raza = raza;
 	};
-	
+
 	public void referenciar(AlgoCraft juegoActual) {
 		this.juego = juegoActual;
 	};
-	
+
 	public void crearTormenta(int x, int y) {
 		Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
-		while (iterador.hasNext()){
+		while (iterador.hasNext()) {
 			Unidad unidadAux = iterador.next();
 			if ((unidadAux.getClass() == AltoTemplario.class) && 
 					(unidadAux.obtenerX()== x)&&(unidadAux.obtenerY()== y)){
@@ -70,7 +73,6 @@ public class Jugador {
 			}
 		}
 	};
-	
 
 	public void modificarMineral(int mineralModificado) {
 		this.minerales = this.minerales + mineralModificado;
@@ -188,11 +190,11 @@ public class Jugador {
 		}
 	}
 
-	public void DisminuirTiempoDeConstruccion() {
-//		Iterator<Edificio> iteradorEdificios = this.listaDeEdificiosACrear
-//				.iterator();
-//		Iterator<Unidad> iteradorUnidades = this.listaDeUnidadesACrear
-//				.iterator();
+	public void disminuirTiempoDeConstruccion() {
+		// Iterator<Edificio> iteradorEdificios = this.listaDeEdificiosACrear
+		// .iterator();
+		// Iterator<Unidad> iteradorUnidades = this.listaDeUnidadesACrear
+		// .iterator();
 		int i;
 		Edificio edificioAuxiiliar;
 		Unidad unidadAuxiliar;
@@ -217,7 +219,7 @@ public class Jugador {
 		}
 	}
 
-	private void RegenerarEscudosProtoss(Iterable<Edificio> iteratorEdificios,
+	private void regenerarEscudosProtoss(Iterable<Edificio> iteratorEdificios,
 			Iterator<Unidad> iteratorUnidades) {
 		Edificio edificioAuxiliar;
 		Unidad unidadAuxiliar;
@@ -241,15 +243,15 @@ public class Jugador {
 		}
 
 	}
-	
-	private void aplicarRadiacion(Iterable<Unidad> iteratorUnidades){
+
+	private void aplicarRadiacion(Iterable<Unidad> iteratorUnidades) {
 		Unidad unidadAuxiliar;
 		ArrayList<Unidad> unidadesAledanias;
 		Iterator<Unidad> i = iteratorUnidades.iterator();
 		while (i.hasNext()) {
 			unidadAuxiliar = i.next();
-			if(unidadAuxiliar.getEstadoIrradiacion()){
-				unidadesAledanias=VerificarUnidadesAledanias(unidadAuxiliar);
+			if (unidadAuxiliar.getEstadoIrradiacion()) {
+				unidadesAledanias = VerificarUnidadesAledanias(unidadAuxiliar);
 				irradiar(unidadesAledanias);
 			}
 		}
@@ -262,50 +264,92 @@ public class Jugador {
 			unidadAuxiliar = i.next();
 			unidadAuxiliar.recibirDanio(10);
 		}
-		
+
 	}
 
 	private ArrayList<Unidad> VerificarUnidadesAledanias(Unidad unidad) {
-		ArrayList<Unidad> ListaUnidadesAux=new ArrayList<Unidad>();
+		ArrayList<Unidad> ListaUnidadesAux = new ArrayList<Unidad>();
 		Unidad unidadAuxiliar;
 		Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
 		while (iterador.hasNext()) {
 			unidadAuxiliar = iterador.next();
-			if(unidadAuxiliar.distancia(unidad)<=1){
+			if (unidadAuxiliar.distancia(unidad) <= 1) {
 				ListaUnidadesAux.add(unidadAuxiliar);
 			}
 		}
 		return ListaUnidadesAux;
 	}
 
-	private void reiniciarYaJugoUnidades(){
+	private void reiniciarYaJugoUnidades() {
 		Iterable<Unidad> lista = this.listaDeUnidades;
-		for(Unidad unidadAux : lista){
+		for (Unidad unidadAux : lista) {
 			unidadAux.reiniciarYaJugo();
 		}
 	}
-	
+
+	public void crearEMP(int posXEMP, int posYEMP, int x, int y) {
+		if (this.raza.getClass() == Terran.class) {
+			Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
+			while (iterador.hasNext()) {
+				Unidad unidadAux = iterador.next();
+
+				if ((unidadAux.getClass() == NaveCiencia.class)
+						&& (unidadAux.obtenerX() == x)
+						&& (unidadAux.obtenerY() == y)) {
+					((NaveCiencia) unidadAux).EMP(listaDeUnidades, posXEMP,
+							posYEMP);
+				}
+			}
+		}
+	}
+
+	public void CrearAlucinaciones(Unidad unidadACopiar, int posCopia1X,
+			int posCopia1y, int posCopia2X, int posCopia2y, int x, int y) {
+		ArrayList<Unidad> listaAux = null;
+		if (this.raza.getClass() == Protoss.class) {
+			Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
+			while (iterador.hasNext()) {
+				Unidad unidadAux = iterador.next();
+				if ((unidadAux.getClass() == AltoTemplario.class)
+						&& (unidadAux.obtenerX() == x)
+						&& (unidadAux.obtenerY() == y)) {
+					listaAux = ((AltoTemplario) unidadAux).alucinacion(
+							posCopia1X, posCopia1y, posCopia2X, posCopia2y,
+							this.getListaUnidades(),
+							(UnidadProtoss) unidadACopiar);
+				}
+			}
+			if (listaAux.size() != 0) {
+				iterador = listaAux.iterator();
+				while (iterador.hasNext()) {
+					this.listaDeUnidades.add(iterador.next());
+				}
+			}
+		}
+	}
+
 	public void pasarTurno() {
 		aplicarRadiacion(this.listaDeUnidades);
 		destruirUnidades();
 		destruirEdificios();
 		aumentoGasYMineralPorEdificios(this.listaDeEdificios);
-		DisminuirTiempoDeConstruccion();
-		RegenerarEscudosProtoss(this.listaDeEdificios, this.listaDeUnidades.iterator());
+		disminuirTiempoDeConstruccion();
+		regenerarEscudosProtoss(this.listaDeEdificios,
+				this.listaDeUnidades.iterator());
 		tormentarTurnos();
 		reiniciarYaJugoUnidades();
 	}
 
-	public void tormentarTurnos(){
+	public void tormentarTurnos() {
 		Iterator<TormentaPsionica> iterador = this.listaDeTormentas.iterator();
-		while (iterador.hasNext()){
+		while (iterador.hasNext()) {
 			TormentaPsionica tormentaAux = iterador.next();
 			tormentaAux.PasarTurno();
 		}
 
 	}
-	
-	public ArrayList<Unidad> getListaUnidades() {
+
+	public Iterable<Unidad> getListaUnidades() {
 		return this.listaDeUnidades;
 	}
 

@@ -13,15 +13,15 @@ public class TormentaPsionica {
 	int radio;
 	int turnosDeVida;
 	int danio;
-	ArrayList<Unidad> listaDeUnidadesOtroJugador;
+	Iterable<Unidad> listaDeUnidadesOtroJugador;
 	
-	public TormentaPsionica(int x,int y,ArrayList<Unidad> listaDeUnidades){
+	public TormentaPsionica(int x,int y,Iterable<Unidad> iterable){
 		posX=x;
 		posY=y;
 		radio=3;
 		turnosDeVida=2;
 		danio=100;
-		this.listaDeUnidadesOtroJugador= listaDeUnidades;
+		this.listaDeUnidadesOtroJugador= iterable;
 	}
 	
 	public void PasarTurno(){
@@ -29,8 +29,8 @@ public class TormentaPsionica {
 		InflingirDanio(this.listaDeUnidadesOtroJugador);
 	}
 	
-	public ArrayList<Unidad> InflingirDanio(ArrayList<Unidad> ListaUnidades){
-		Iterator<Unidad> iterador = ListaUnidades.iterator();
+	public Iterable<Unidad> InflingirDanio(Iterable<Unidad> listaDeUnidadesOtroJugador2){
+		Iterator<Unidad> iterador = listaDeUnidadesOtroJugador2.iterator();
 		Unidad UnidadAux;
 		int y;
 		int x;
@@ -43,6 +43,6 @@ public class TormentaPsionica {
 				UnidadAux.recibirDanio(danio);
 			}
 		}
-		return ListaUnidades;
+		return listaDeUnidadesOtroJugador2;
 	}
 }
