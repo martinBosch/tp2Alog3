@@ -17,6 +17,8 @@ import Razas.Raza;
 import Razas.Terran;
 import Unidades.AltoTemplario;
 import Unidades.NaveCiencia;
+import Unidades.NaveTransportadorP;
+import Unidades.NaveTransportadorT;
 import Unidades.Unidad;
 import Unidades.UnidadProtoss;
 import algoCraft.AlgoCraft;
@@ -122,6 +124,7 @@ public class Jugador {
 				this.listaDeEdificios, edificioACrear, juego,this.juego.obtenerListaObjetos());
 		
 		if (puede) {
+			edificioACrear.setJugador(this);
 			modificarGas(-edificioACrear.getPrecioG());
 			modificarMineral(-edificioACrear.getPrecioM());
 			this.listaDeEdificiosACrear.add(edificioACrear);
@@ -151,6 +154,7 @@ public class Jugador {
 					this.listaDeEdificios, unidadACrear);
 
 			if (puede) {
+				unidadACrear.setJugador(this);
 				modificarGas(-unidadACrear.getPrecioG());
 				modificarMineral(-unidadACrear.getPrecioM());
 				modificarPoblacion(unidadACrear.getSuministros());
@@ -176,11 +180,55 @@ public class Jugador {
 
 	public void destruirUnidades() {
 		Iterator<Unidad> iterator = this.listaDeUnidades.iterator();
+		Unidad aux;
+		NaveTransportadorP naveP=null;
+		NaveTransportadorT naveT=null;
 		int i = 0;
 		while (iterator.hasNext()) {
 			i++;
 			if (iterator.next().getVida() < 0) {
+				aux= listaDeUnidades.get(i);
+				if(aux.getClass()==NaveTransportadorP.class){
+					naveP=(NaveTransportadorP) aux;
+				}
+				if(aux.getClass()== NaveTransportadorT.class){
+					naveT = (NaveTransportadorT) aux;
+				}
 				this.listaDeUnidades.remove(i);
+				i--;
+			}
+		}
+		if (naveT != null){
+			Iterable<Unidad> lista= naveT.getListaAbordados();
+			Iterator<Unidad> iterador= this.listaDeUnidades.iterator();
+			Unidad unidadAMatar;
+			int j=0;
+			for (Unidad uniNave : lista){
+				while(iterador.hasNext()){
+					j++;
+					unidadAMatar= iterador.next();
+					if(uniNave == unidadAMatar){
+						this.listaDeUnidades.remove(j);
+						j--;
+					}
+				}
+			}
+			
+		}
+		if (naveP != null){
+			Iterable<Unidad> lista= naveP.getListaAbordados();
+			Iterator<Unidad> iterador= this.listaDeUnidades.iterator();
+			Unidad unidadAMatar;
+			int j=0;
+			for (Unidad uniNave : lista){
+				while(iterador.hasNext()){
+					j++;
+					unidadAMatar= iterador.next();
+					if(uniNave == unidadAMatar){
+						this.listaDeUnidades.remove(j);
+						j--;
+					}
+				}
 			}
 		}
 	}

@@ -3,6 +3,7 @@ package mapa;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import recursos.Agua;
 import recursos.GasVespeno;
 import recursos.Minerales;
 import recursos.Recurso;
@@ -82,6 +83,20 @@ public class EscenarioBuilder {
 //		}
 //	}
 
+	private void cargarAgua(Escenario escenario) {
+		Agua agua1 = new Agua(1985,0,1220,318);
+		Agua agua2 = new Agua(1985,0,317,515);
+		Agua agua3 = new Agua(1985,0,1013,311);
+		Agua agua4 = new Agua(1985,0,253,157);
+		Agua agua5 = new Agua(1985,0,1175,296);
+	
+		escenario.agregar(agua1);
+		escenario.agregar(agua2);
+		escenario.agregar(agua3);
+		escenario.agregar(agua4);
+		escenario.agregar(agua5);
+	}
+	
 	private void cargarRecursoCercanoBase(Base base, Recurso recurso) {
 		boolean posOcupada = true;
 

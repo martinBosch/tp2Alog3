@@ -3,6 +3,7 @@ package mapa;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import Jugador.Jugador;
 import constantes.Constantes;
 @SuppressWarnings("rawtypes")
 
@@ -19,7 +20,7 @@ public abstract class ObjetoMapa {
 	protected int alto;
 
 	protected Rectangle areaOcupa;
-
+	protected Jugador jugador;
 	protected int vida;
 	protected int precioM;
 	protected int precioG;
@@ -33,6 +34,7 @@ public abstract class ObjetoMapa {
 		this.y = y;
 		ancho = Constantes.ANCHO_UNIDAD;
 		alto = Constantes.ALTO_UNIDAD;
+		this.jugador= null;
 
 		areaOcupa = crearAreaOcupa();
 
@@ -56,6 +58,14 @@ public abstract class ObjetoMapa {
 
 	public boolean tieneVisibilidad() {
 		return false;
+	}
+	
+	public Jugador getJugador() {
+		return this.jugador;
+	}
+	
+	public void setJugador(Jugador aux) {
+		this.jugador = aux;
 	}
 
 	public Rectangle obtenerAreaVisible() {
