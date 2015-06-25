@@ -2,6 +2,7 @@ package algoCraft;
 
 import mapa.Escenario;
 import mapa.EscenarioBuilder;
+import mapa.ObjetoMapa;
 import Jugador.Jugador;
 import Razas.Raza;
 import Razas.RazaBuilder;
@@ -54,6 +55,10 @@ public class AlgoCraft {
 
 	public Escenario obtenerEscenario() {
 		return escenario;
+	}
+	
+	public Iterable<ObjetoMapa> obtenerListaObjetos() {
+		return escenario.obtenerListaObjetos();
 	}
 
 	public Jugador obtenerJugadorTurno() {

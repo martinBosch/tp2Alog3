@@ -3,6 +3,9 @@ package Razas;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import recursos.GasVespeno;
+import recursos.Minerales;
+import mapa.ObjetoMapa;
 import Edificios.Edificio;
 import Excepciones.ExcepcionGasesInsuficientes;
 import Excepciones.ExcepcionMineralesInsuficientes;
@@ -46,8 +49,9 @@ public abstract class Raza {
 	}
 
 	public boolean crearEdificio(int minerales, int gases,
-			ArrayList<Edificio> listaDeEdificios, Edificio edificioAuxiliar,AlgoCraft juego) throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+			ArrayList<Edificio> listaDeEdificios, Edificio edificioAuxiliar,AlgoCraft juego, Iterable<ObjetoMapa> listaObjetos) throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		boolean puede = false;
+		boolean puede2=false;
 
 		if ((edificioAuxiliar.getPrecioG() <= gases)
 				&& (edificioAuxiliar.getPrecioM() <= minerales)
@@ -55,6 +59,8 @@ public abstract class Raza {
 						edificioAuxiliar.getEdifNecesario()))
 				&& (verificarEdificioEnRaza(edificioAuxiliar))) {
 			puede = true;
+			
+
 		}
 		if (edificioAuxiliar.getPrecioG() > gases){
 			throw new ExcepcionGasesInsuficientes();
@@ -63,10 +69,27 @@ public abstract class Raza {
 			throw new ExcepcionMineralesInsuficientes();
 		}
 		if(edificioAuxiliar.gaseador()){
-			//CHEQUEUAR QUE SE ESTE CREANDO ARRIBA DE UN VOLCAN
+			for (ObjetoMapa obj : listaObjetos){
+				if((obj.obtenerX() == edificioAuxiliar.obtenerX())&&(obj.obtenerY() == edificioAuxiliar.obtenerY())){
+					if(obj.getClass()== GasVespeno.class){
+						puede2=true;
+						break;
+					}
+				}
+			}
 		}
 		if(edificioAuxiliar.minador()){
-			//CHEQUEUAR QUE SE ESTE CREANDO ARRIBA DE UNA MINA
+			for (ObjetoMapa obj : listaObjetos){
+				if((obj.obtenerX() == edificioAuxiliar.obtenerX())&&(obj.obtenerY() == edificioAuxiliar.obtenerY())){
+					if(obj.getClass()==Minerales.class){
+						puede2=true;
+						break;
+					}
+				}
+			}
+		}
+		if(((edificioAuxiliar.gaseador())||(edificioAuxiliar.minador())&&(!puede2))){
+			puede=false;		
 		}
 		return puede;
 	};

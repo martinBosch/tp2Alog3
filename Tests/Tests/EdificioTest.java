@@ -171,7 +171,7 @@ public class EdificioTest {
 		RazaBuilder razaBuilder = new RazaBuilder();
 		Raza raza = razaBuilder.crearProtoss();
 		Edificio deposito = new DepositoSuministro(x,y);
-		boolean puedeCrear = (raza.crearEdificio(100, 0, null, deposito, null));
+		boolean puedeCrear = (raza.crearEdificio(100, 0, null, deposito, null, null));
 		assertFalse(puedeCrear);
 
 	}

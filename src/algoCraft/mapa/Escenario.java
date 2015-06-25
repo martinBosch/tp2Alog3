@@ -275,7 +275,9 @@ public class Escenario extends ObjetoMapa{
 		}
 	}
 
-
+	public Iterable<ObjetoMapa> obtenerListaObjetos(){
+		return this.objetosEnMapa;
+	}
 
 
 

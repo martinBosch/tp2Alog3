@@ -3,6 +3,7 @@ package Jugador;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import mapa.ObjetoMapa;
 import Edificios.Edificio;
 import Edificios.EdificioProtoss;
 import Excepciones.ExcepcionEnergiaInsuficiente;
@@ -110,7 +111,7 @@ public class Jugador {
 			throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		
 		return this.raza.crearEdificio(this.minerales, this.gases,
-				this.listaDeEdificios, edificioACrear,juego);
+				this.listaDeEdificios, edificioACrear,juego, juego.obtenerListaObjetos());
 	}
 
 
@@ -118,8 +119,8 @@ public class Jugador {
 			throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases,
-				this.listaDeEdificios, edificioACrear, juego);
-
+				this.listaDeEdificios, edificioACrear, juego,this.juego.obtenerListaObjetos());
+		
 		if (puede) {
 			modificarGas(-edificioACrear.getPrecioG());
 			modificarMineral(-edificioACrear.getPrecioM());
@@ -132,7 +133,6 @@ public class Jugador {
 			throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 
 		boolean puede = false;
-
 		if (unidadACrear.getSuministros() <= (this.poblacionMax - this.poblacion)) {
 			puede = this.raza.crearUnidad(this.minerales, this.gases,
 					this.listaDeEdificios, unidadACrear);
@@ -239,11 +239,26 @@ public class Jugador {
 		for (Unidad unidad : listaDeUnidadesACrear) {
 			unidad.bajarTiempoConstruccion();
 			if (unidad.getTiempoConstruccion() == 0) {
+				posicionUnidad(unidad);
 				unidTerminoTiempoConstruc.add(unidad);
 			}
 		}
 		actualizarObjMapaTerminoTiempoConstruc(edifTerminoTiempoConstruc,
 				unidTerminoTiempoConstruc);
+	}
+
+	private void posicionUnidad(Unidad unidad) {
+		int x,y;
+		for(Edificio edificio : this.listaDeEdificios){
+			if (edificio.getClass() == unidad.getEdifNecesario().get(0)){
+				x= edificio.obtenerX();
+				y= edificio.obtenerY();
+				break;
+			}
+		}
+		for(ObjetoMapa edificio : this.juego.obtenerListaObjetos()){
+			//if ((edificio.obtenerX())   //A terminar asi re peola
+		}
 	}
 
 	public void actualizarObjMapaTerminoTiempoConstruc(ArrayList<Edificio> edifTerminoTiempoConstruc,
@@ -350,7 +365,7 @@ public class Jugador {
 
 	public void CrearAlucinaciones(Unidad unidadACopiar, int posCopia1X,
 			int posCopia1y, int posCopia2X, int posCopia2y, int x, int y)
-			throws ExcepcionEnergiaInsuficiente {
+			throws ExcepcionEnergiaInsuficiente, ExcepcionRazaEquivocada {
 		ArrayList<Unidad> listaAux = null;
 		if (this.raza.getClass() == Protoss.class) {
 			Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
@@ -371,6 +386,8 @@ public class Jugador {
 					this.listaDeUnidades.add(iterador.next());
 				}
 			}
+		}else {
+			throw new ExcepcionRazaEquivocada();
 		}
 	}
 
@@ -416,7 +433,9 @@ public class Jugador {
 	}
 
 
-
+	public void jugar(Unidad unidad){
+		
+	}
 
 
 
