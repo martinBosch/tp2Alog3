@@ -36,8 +36,8 @@ public class TormentaPsionica {
 		int x;
 		while(iterador.hasNext()){
 			UnidadAux = iterador.next();
-			x = posX - UnidadAux.getPosX();
-			y = posY - UnidadAux.getPosY();
+			x = posX - UnidadAux.obtenerX();
+			y = posY - UnidadAux.obtenerY();
 
 			if(radio<=(int) Math.sqrt( x*x + y*y )){
 				UnidadAux.recibirDanio(danio);

@@ -5,57 +5,65 @@ import java.util.ArrayList;
 @SuppressWarnings("rawtypes")
 public class Protoss extends Raza {
 
+
 	public Protoss(ArrayList<Class> listaEdificios, ArrayList<Class> listaUnidades) {
 		this.listaEdificios = new ArrayList<Class>(listaEdificios);
 		this.listaUnidades = new ArrayList<Class>(listaUnidades);
 	};
 
-	/*
-	 * public Edificio crearEdificio(int minerales, int gases,
-	 * ArrayList<Edificio> listaDeEdificios, int index) { Edificio edificio =
-	 * null;// cambiar Edificio edificioAuxiliar;
-	 * 
-	 * switch (index) { case (1): edificioAuxiliar = new NexoMineral(); if
-	 * ((edificioAuxiliar.getPrecioG() <= gases) &&
-	 * (edificioAuxiliar.getPrecioM() <= minerales)) { edificio =
-	 * edificioAuxiliar; } break; case (2): edificioAuxiliar = new Pilon(); if
-	 * ((edificioAuxiliar.getPrecioG() <= gases) &&
-	 * (edificioAuxiliar.getPrecioM() <= minerales)) { edificio =
-	 * edificioAuxiliar; } break; case (3): edificioAuxiliar = new Asimilador();
-	 * if ((edificioAuxiliar.getPrecioG() <= gases) &&
-	 * (edificioAuxiliar.getPrecioM() <= minerales)) { edificio =
-	 * edificioAuxiliar; } break; case (4): edificioAuxiliar = new Acceso(); if
-	 * ((edificioAuxiliar.getPrecioG() <= gases) &&
-	 * (edificioAuxiliar.getPrecioM() <= minerales)) { edificio =
-	 * edificioAuxiliar; } break; case (5): edificioAuxiliar = new
-	 * PuertoEstelarP(); if ((edificioAuxiliar.getPrecioG() <= gases) &&
-	 * (edificioAuxiliar.getPrecioM() <= minerales) &&
-	 * (verificarExistenciaDelEdificio(listaDeEdificios, "Acceso"))) { edificio
-	 * = edificioAuxiliar; } break; case (6): edificioAuxiliar = new
-	 * ArchivosTemplarios(); if ((edificioAuxiliar.getPrecioG() <= gases) &&
-	 * (edificioAuxiliar.getPrecioM() <= minerales) &&
-	 * (verificarExistenciaDelEdificio(listaDeEdificios, "Puerto Estelar"))) {
-	 * edificio = edificioAuxiliar; } break; } return edificio; };
-	 * 
-	 * public Unidad crearUnidad(int minerales, int gases, ArrayList<Edificio>
-	 * listaDeEdificios, int suministroDisponible, int index) { Unidad unidad =
-	 * null; Unidad unidadAuxiliar; switch (index) { case (1): unidadAuxiliar =
-	 * new Zealot(); if (verificarCreacionUnidad(unidadAuxiliar,"Acceso",
-	 * listaDeEdificios, minerales, gases, suministroDisponible)) { unidad =
-	 * unidadAuxiliar; } break; case (2): unidadAuxiliar = new Dragon(); if
-	 * (verificarCreacionUnidad(unidadAuxiliar,"Acceso", listaDeEdificios,
-	 * minerales, gases, suministroDisponible)) { unidad = unidadAuxiliar; }
-	 * break; case (3): unidadAuxiliar = new Scout(); if
-	 * (verificarCreacionUnidad(unidadAuxiliar,"Puerto Estelar",
-	 * listaDeEdificios, minerales, gases, suministroDisponible)) { unidad =
-	 * unidadAuxiliar; } break; case (4): unidadAuxiliar = new AltoTemplario();
-	 * if (verificarCreacionUnidad(unidadAuxiliar, "Puerto Estelar",
-	 * listaDeEdificios, minerales, gases, suministroDisponible)) { unidad =
-	 * unidadAuxiliar; } break; case (5): unidadAuxiliar = new
-	 * NaveTransportadorP(); if (verificarCreacionUnidad(unidadAuxiliar,
-	 * "Archivos Templarios", listaDeEdificios, minerales, gases,
-	 * suministroDisponible)) { unidad = unidadAuxiliar; } break; } return
-	 * unidad; };
-	 */
+
+	public ArrayList<String> obtenerNombreUnidades() {
+		ArrayList<String> nombreUnidades = new ArrayList<String>();
+
+		nombreUnidades.add("Zealot");
+		nombreUnidades.add("Dragon");
+		nombreUnidades.add("Scout");
+		nombreUnidades.add("AltoTemplario");
+		nombreUnidades.add("NaveTransporte");
+
+		return nombreUnidades;
+	}
+
+	public ArrayList<String> obtenerRutaImagenUnidades() {
+		ArrayList<String> RutaImagenUnidades = new ArrayList<String>();
+
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/Zealot.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/Dragon.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/Scout.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/AltoTemplario.png");
+		RutaImagenUnidades.add("objetosMapaVista/imagenes/NaveTransporteP.png");
+
+		return RutaImagenUnidades;
+	}
+
+	public ArrayList<String> obtenerNombreEdificios() {
+		ArrayList<String> nombreEdificios = new ArrayList<String>();
+
+		nombreEdificios.add("NexoMineral");
+		nombreEdificios.add("Pilon");
+		nombreEdificios.add("Asimilador");
+		nombreEdificios.add("Acceso");
+		nombreEdificios.add("PuertoEstelar");
+		nombreEdificios.add("ArchivosTemplarios");
+
+		return nombreEdificios;
+	}
+
+	public ArrayList<String> obtenerRutaImagenEdificios() {
+		ArrayList<String> RutaImagenEdificios = new ArrayList<String>();
+
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/NexoMineral.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/Pilon.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/Asimilador.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/Acceso.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/PuertoEstelarP.png");
+		RutaImagenEdificios.add("objetosMapaVista/imagenes/ArchivosTemplarios.png");
+
+		return RutaImagenEdificios;
+	}
+
+
+
+
 
 }

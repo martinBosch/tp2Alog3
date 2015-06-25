@@ -1,46 +1,61 @@
 package algoCraft;
 
-import mapa.Mapa;
+import mapa.Escenario;
+import mapa.EscenarioBuilder;
 import Jugador.Jugador;
 import Razas.Raza;
+import Razas.RazaBuilder;
 
 public class AlgoCraft {
 
-	Jugador Jugador1;
-	Jugador Jugador2;
-	Mapa mapa;
-	int turnos;
+	private Jugador jugador1;
+	private Jugador jugador2;
+	private Escenario escenario;
+	private Jugador jugTurno;
 
-	AlgoCraft() {
-		Jugador1 = new Jugador();
-		Jugador2 = new Jugador();
-		Jugador1.referenciar(this);
-		Jugador2.referenciar(this);
-		Mapa.getInstance();
-		turnos = 0;
+	public AlgoCraft() {
+		jugador1 = new Jugador();
+		jugador2 = new Jugador();
+		jugador1.referenciar(this);
+		jugador2.referenciar(this);
+
+		RazaBuilder raza = new RazaBuilder();
+		jugador1.asignarRaza(raza.crearTerran());
+		jugador2.asignarRaza(raza.crearProtoss());
+
+		escenario = ( EscenarioBuilder.getInstance() ).obtenerEscenario();
+		jugTurno = jugador1;
 	}
-	
-	public Jugador getOponente(Jugador jug){
+
+	public Jugador getOponente(Jugador jugador){
 		Jugador jugAux;
-		if (jug==Jugador1){
-			jugAux= Jugador2;
+		if (jugador==jugador1){
+			jugAux= jugador2;
 		} else {
-			jugAux= Jugador1;
+			jugAux= jugador1;
 		}
 		return jugAux;
 	}
-	
-	void InicializarJugadores(Raza raza1, Raza raza2) {
-		Jugador1.elegirRaza(raza1);
-		Jugador2.elegirRaza(raza2);
+
+	public void InicializarJugadores(Raza raza1, Raza raza2) {
+		jugador1.asignarRaza(raza1);
+		jugador2.asignarRaza(raza2);
 	}
 
-	void PasarTurnos() {
-		if ((turnos % 2) == 0) {
-			Jugador1.pasarTurno();
+	public void PasarTurno() {
+		if (jugTurno == jugador1) {
+			jugTurno = jugador2;
 		} else {
-			Jugador2.pasarTurno();
+			jugTurno = jugador1;
 		}
+	}
+	
+	public Escenario obtenerEscenario() {
+		return escenario;
+	}
+	
+	public Jugador obtenerJugadorTurno() {
+		return jugTurno;
 	}
 	
 

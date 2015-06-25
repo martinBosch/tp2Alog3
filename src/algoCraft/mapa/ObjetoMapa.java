@@ -2,19 +2,25 @@ package mapa;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+
+import constantes.Constantes;
 @SuppressWarnings("rawtypes")
 
 public abstract class ObjetoMapa {
 
 	protected String nombre;
 
-	protected int posX;
-	protected int posY;
+	protected int x;
+	protected int y;
+	protected int dx;
+	protected int dy;
+
 	protected int ancho;
 	protected int alto;
 
-	protected int vida;
+	protected Rectangle areaOcupa;
 
+	protected int vida;
 	protected int precioM;
 	protected int precioG;
 	protected int tiempoConstruccion;
@@ -23,27 +29,80 @@ public abstract class ObjetoMapa {
 
 
 	public ObjetoMapa(int x, int y) {
-		posX = x;
-		posY = y;
+		this.x = x;
+		this.y = y;
+		ancho = Constantes.ANCHO_UNIDAD;
+		alto = Constantes.ALTO_UNIDAD;
+
+		areaOcupa = crearAreaOcupa();
+
 		edifNecesario = new ArrayList<Class>();
 	}
 
 	public Rectangle obtenerAreaOcupa() {
-		return new Rectangle(posX, posY, ancho, alto);
+		actualizarAreaOcupa();
+		return (Rectangle) areaOcupa.clone();
 	}
 
-	public void mover(int x, int y) {
-		posX = x;
-		posY = y;
+	private Rectangle crearAreaOcupa() {
+		return new Rectangle(x, y, ancho, alto);
+	}
+
+	public void actualizarAreaOcupa() {
+		areaOcupa.setLocation(x, y);
+	}
+
+
+
+	public boolean tieneVisibilidad() {
+		return false;
+	}
+
+	public Rectangle obtenerAreaVisible() {
+		return null;
+	}
+
+	public void actualizarAreaVisible() {
+	}
+
+
+
+	public void ubicar(int nuevoX, int nuevoY) {
+		x = nuevoX;
+		y = nuevoY;
 	}
 	
-	public int getPosX() {
-		return posX;
+	public int obtenerX() {
+		return x;
 	}
 
-	public int getPosY() {
-		return posY;
+	public int obtenerY() {
+		return y;
 	}
+
+	public void mover() {
+		x += dx;
+		y += dy;
+	}
+
+	public void desplazar(int dx, int dy) {
+		this.dx = dx;
+		this.dy = dy;
+	}
+	
+	public int obtenerDesplazamientoX() {
+		return dx;
+	}
+
+	public int obtenerDesplazamientoY() {
+		return dy;
+	}
+
+	public boolean sePuedeDesplazarAlSelecionar() {
+		return false;
+	}
+
+
 
 	public int getVida() {
 		return vida;
@@ -75,30 +134,14 @@ public abstract class ObjetoMapa {
 		
 	public void recibirDanio(int danio) {
 		vida -= danio;
-
-//		if (this.vida > vidaABajar) {
-//			this.vida = this.vida - vidaABajar;
-//		} else {
-//			this.vida = 0;
-//		}
 	} 
  
-//	public void atacarEdificio(Edificio edificioAAtacar) {
-//		double DiferenciaPosicionX = Math.pow(
-//				this.getPosX() - edificioAAtacar.getPosX(), 2);
-//		double DiferenciaPosicionY = Math.pow(
-//				this.getPosY() - edificioAAtacar.getPosY(), 2);
-//		if (DiferenciaPosicionX + DiferenciaPosicionY <= Math.pow(
-//				this.getRangoT(), 2)) {
-//			edificioAAtacar.bajarVida(this.getDanioT());
-//		}
-//	}
-
 	public int distancia(ObjetoMapa atacado) {
-		int x = posX - atacado.getPosX();
-		int y = posY - atacado.getPosY();
+		int distX = x - atacado.obtenerX();
+		int distY = y - atacado.obtenerY();
 
-		return (int) Math.sqrt( x*x + y*y );
+		return (int) Math.sqrt( distX*distX + distY*distY );
 	}
+
 
 }

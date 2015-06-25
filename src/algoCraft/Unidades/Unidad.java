@@ -1,11 +1,16 @@
 package Unidades;
 
+import java.awt.Rectangle;
+
 import mapa.ObjetoMapa;
+import constantes.Constantes;
 
 public abstract class Unidad extends ObjetoMapa {
 
-	protected int transporte;
 	protected int vision;
+	private Rectangle areaVisible;
+
+	protected int transporte;
 	protected int suministro;
 	protected String tipo;
 	protected int danioA;
@@ -17,11 +22,60 @@ public abstract class Unidad extends ObjetoMapa {
 
 	public Unidad(int x, int y) {
 		super(x, y);
-		ancho = 32;// Constantes.ANCHO_UNIDAD
-		alto = 32;// Constantes.ALTO_UNIDAD
+
+		areaVisible = crearAreaVisible();
+
 		tieneRadiacion = false;
 		yaJugo= false;
 	}
+
+
+	public Rectangle obtenerAreaVisible() {
+		actualizarAreaVisible();
+		return (Rectangle) areaVisible.clone();
+	}
+
+	private int obtenerXareaVision() {
+		int anchoVision = vision * (Constantes.ANCHO_UNIDAD/2);
+		int centro_nave_X = x + Constantes.ANCHO_UNIDAD / 2;
+		int xVision = centro_nave_X - anchoVision / 2;
+		return xVision;
+	}
+
+	private int obtenerYareaVision() {
+		int anchoVision = vision * (Constantes.ALTO_UNIDAD/2);
+		int centro_nave_Y = y + Constantes.ALTO_UNIDAD / 2;
+		int yVision = centro_nave_Y - anchoVision / 2;
+		return yVision;
+	}
+
+	private Rectangle crearAreaVisible() {
+		int anchoVision = vision * (Constantes.ANCHO_UNIDAD/2);
+		int altoVision = vision * (Constantes.ALTO_UNIDAD/2);
+
+		int xVision = obtenerXareaVision();
+		int yVision = obtenerYareaVision();
+
+		return new Rectangle(xVision, yVision, anchoVision, altoVision);
+	}
+
+	public void actualizarAreaVisible() {
+		int xVision = obtenerXareaVision();
+		int yVision = obtenerYareaVision();
+
+		areaVisible.setLocation(xVision, yVision);
+	}
+
+	public boolean tieneVisibilidad() {
+		return true;
+	}
+
+
+	public boolean sePuedeDesplazarAlSelecionar() {
+		return true;
+	}
+
+
 
 	public int getDanioA() {
 		return danioA;

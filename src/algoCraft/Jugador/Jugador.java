@@ -23,12 +23,15 @@ public class Jugador {
 	private int minerales;
 	private int poblacion;
 	private int poblacionMax;
+
 	private ArrayList<Edificio> listaDeEdificios;
 	private ArrayList<Edificio> listaDeEdificiosACrear;
 	private ArrayList<Unidad> listaDeUnidades;
 	private ArrayList<Unidad> listaDeUnidadesACrear;
 	private ArrayList<TormentaPsionica> listaDeTormentas;
+
 	private AlgoCraft juego;
+
 
 	public Jugador() {
 		this.listaDeEdificios = new ArrayList<Edificio>();
@@ -42,8 +45,8 @@ public class Jugador {
 		poblacion = 0;
 	}
 
-	public void elegirRaza(Raza razaSet) {
-		this.raza = razaSet;
+	public void asignarRaza(Raza raza) {
+		this.raza = raza;
 	};
 	
 	public void referenciar(AlgoCraft juegoActual) {
@@ -54,8 +57,12 @@ public class Jugador {
 		Iterator<Unidad> iterador = this.listaDeUnidades.iterator();
 		while (iterador.hasNext()){
 			Unidad unidadAux = iterador.next();
-			if ((unidadAux.getClass() == AltoTemplario.class)&&(unidadAux.getPosX()== x)&&(unidadAux.getPosY()== y)){
-				TormentaPsionica tormenta= ((AltoTemplario) unidadAux).tormentaPsionica(x,y,juego.getOponente(this).getListaUnidades());
+			if ((unidadAux.getClass() == AltoTemplario.class) && 
+					(unidadAux.obtenerX()== x)&&(unidadAux.obtenerY()== y)){
+
+				TormentaPsionica tormenta = ((AltoTemplario) unidadAux).tormentaPsionica(x,y,
+						juego.getOponente(this).getListaUnidades());
+
 				if (tormenta != null){
 					this.listaDeTormentas.add(tormenta);
 					unidadAux.YaJugo();
@@ -93,35 +100,24 @@ public class Jugador {
 		this.poblacion = this.poblacion + poblacionModificada;
 	};
 
-	public void crearEdificio(int x,int y,Edificio edificioACrear) {
+	public boolean crearEdificio(int x,int y,Edificio edificioACrear) {
 		boolean puede = this.raza.crearEdificio(this.minerales, this.gases,
 				this.listaDeEdificios, edificioACrear,juego);
-		// Edificio pilon = new Pilon();
-		// Edificio deposito = new DepositoSuministro();
+
 		if (puede) {
 			modificarGas(-edificioACrear.getPrecioG());
 			modificarMineral(-edificioACrear.getPrecioM());
-			
 			this.listaDeEdificiosACrear.add(edificioACrear);
 		}
-	};
-
-	public int getCantidadEdificios() {
-		return listaDeEdificios.size();
+		return puede;
 	}
 
-	public int getMinerales() {
-		return minerales;
-	}
-
-	public int getGases() {
-		return gases;
-	}
-
-	public void crearUnidad(Unidad unidadACrear) {
+	public boolean crearUnidad(Unidad unidadACrear) {
+		boolean puede = false;
 		if (unidadACrear.getSuministros() <= (this.poblacionMax - this.poblacion)) {
-			boolean puede = this.raza.crearUnidad(this.minerales, this.gases,
+			puede = this.raza.crearUnidad(this.minerales, this.gases,
 					this.listaDeEdificios, unidadACrear);
+
 			if (puede) {
 				modificarGas(-unidadACrear.getPrecioG());
 				modificarMineral(-unidadACrear.getPrecioM());
@@ -129,6 +125,7 @@ public class Jugador {
 				this.listaDeUnidadesACrear.add(unidadACrear);
 			}
 		}
+		return puede;
 	}
 
 	public void destruirEdificios() {
@@ -156,6 +153,19 @@ public class Jugador {
 	public int getCantidadUnidades() {
 		return listaDeUnidades.size();
 	}
+
+	public int getCantidadEdificios() {
+		return listaDeEdificios.size();
+	}
+
+	public int getMinerales() {
+		return minerales;
+	}
+
+	public int getGases() {
+		return gases;
+	}
+
 
 	public void aumentoGasYMineralPorEdificios(Iterable<Edificio> iterable) {
 		int numeroDeEdificiosMinerales = 0;
@@ -298,5 +308,26 @@ public class Jugador {
 	public ArrayList<Unidad> getListaUnidades() {
 		return this.listaDeUnidades;
 	}
+
+	public ArrayList<String> obtenerNombreUnidades() {
+		return raza.obtenerNombreUnidades()	;
+	}
+
+	public ArrayList<String> obtenerNombreEdificios() {
+		return raza.obtenerNombreEdificios()	;
+	}
+
+	public ArrayList<String> obtenerRutaImagenUnidades() {
+		return raza.obtenerRutaImagenUnidades();
+	}
+
+	public ArrayList<String> obtenerRutaImagenEdificios(){
+		return raza.obtenerRutaImagenEdificios();
+	}
+
+
+
+
+
 
 }

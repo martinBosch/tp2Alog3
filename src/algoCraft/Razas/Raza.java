@@ -3,9 +3,9 @@ package Razas;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import algoCraft.AlgoCraft;
 import Edificios.Edificio;
 import Unidades.Unidad;
+import algoCraft.AlgoCraft;
 
 @SuppressWarnings("rawtypes")
 public abstract class Raza {
@@ -103,19 +103,24 @@ public abstract class Raza {
 
 	private boolean verificarCreacionUnidad(Unidad unidadAuxiliar,
 			ArrayList<Edificio> listaDeEdificios, int minerales, int gases) {
+
 		boolean EsPosibleCrear = (unidadAuxiliar.getPrecioG() <= gases)
 				&& (unidadAuxiliar.getPrecioM() <= minerales)
 				&& (verificarExistenciaDelEdificio(listaDeEdificios,
 						unidadAuxiliar.getEdifNecesario()));
+
 		return EsPosibleCrear;
 	}
 
-	/*
-	 * public Edificio crearEdificio(int minerales ,int
-	 * gases,ArrayList<Edificio> ListaDeEdificios,int num); public Unidad
-	 * crearUnidad(int minerales, int gases, ArrayList<Edificio>
-	 * ListaDeEdificios,int suministroDisponible, int num); public boolean
-	 * verificarExistenciaDelEdificio( ArrayList<Edificio> listaDeEdificios,
-	 * String EdificioAVerrificar);
-	 */
+	public abstract ArrayList<String> obtenerNombreUnidades();
+
+	public abstract ArrayList<String> obtenerNombreEdificios();
+
+	public abstract ArrayList<String> obtenerRutaImagenUnidades();
+
+	public abstract ArrayList<String> obtenerRutaImagenEdificios();
+
+
+
+
 }

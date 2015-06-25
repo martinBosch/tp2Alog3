@@ -49,8 +49,8 @@ public class AltoTemplario extends UnidadProtoss {
 	public void Alucinacion(ArrayList<UnidadProtoss> listaUnidades,UnidadProtoss unidadAlucinante){
 		UnidadCopia copiaUnidad;
 		Class auxiliar = unidadAlucinante.getClass();
-		int posicionX = unidadAlucinante.getPosX();
-		int posicionY = unidadAlucinante.getPosY();
+		int posicionX = unidadAlucinante.obtenerX();
+		int posicionY = unidadAlucinante.obtenerY();
 		for(int i=0;i<2;i++){
 				copiaUnidad= new UnidadCopia(posicionX+10+i*10,posicionY,auxiliar,unidadAlucinante.getEscudoMax(),unidadAlucinante.getEscudo());
 				listaUnidades.add(copiaUnidad);

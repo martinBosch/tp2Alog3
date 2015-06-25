@@ -2,21 +2,21 @@ package construcciones;
 
 import java.util.Random;
 
-import mapa.ObjetoMapa;
+import Edificios.Edificio;
 
-public class Base extends ObjetoMapa {
+public class Base extends Edificio {
 
-	private int posX;
-	private int posY;
 	private int perimetroCercanoX;
 	private int perimetroCercanoY;
 
 	public Base(int x, int y, int perimetroCercanoX, int perimetroCercanoY) {
 		super(x,y);
-		ancho = 64;// Constantes.ANCHO_EDIF
-		alto = 32;// Constantes.ALTO_EDIF
 		this.perimetroCercanoX = perimetroCercanoX;
 		this.perimetroCercanoY = perimetroCercanoY;
+	}
+	
+	public Base(int x, int y) {
+		super(x,y);
 	}
 
 	private int obtenerCoordCercana(int limiteCoordMapa,
@@ -36,12 +36,12 @@ public class Base extends ObjetoMapa {
 
 	public int obtenerCoordXCercana(int anchoMapa) {
 		return this.obtenerCoordCercana(anchoMapa, this.perimetroCercanoX,
-				this.posX);
+				this.x);
 	}
 
 	public int obtenerCoordYCercana(int altoMapa) {
 		return this.obtenerCoordCercana(altoMapa, this.perimetroCercanoY,
-				this.posY);
+				this.y);
 	}
 
 	private int obtenerNumRandom(int inicio, int fin) {
