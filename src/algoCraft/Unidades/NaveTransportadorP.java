@@ -43,4 +43,9 @@ public class NaveTransportadorP extends UnidadProtoss{
 			this.unidadesTransportadas =  new ArrayList<Unidad>();
 		return listaAux;
 	}
+	
+	public Iterable<Unidad> getListaAbordados(){
+		Iterable<Unidad> listaAux = (Iterable<Unidad>) unidadesTransportadas;
+		return listaAux;
+	}
 }

@@ -42,4 +42,8 @@ public class NaveTransportadorT extends Unidad { //Terran
 		return listaAux;
 	}
 	
+	public Iterable<Unidad> getListaAbordados(){
+		Iterable<Unidad> listaAux = (Iterable<Unidad>) unidadesTransportadas;
+		return listaAux;
+	}
 }
