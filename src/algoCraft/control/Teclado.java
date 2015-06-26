@@ -100,7 +100,6 @@ public class Teclado extends KeyAdapter implements KeyListener {
 
 		escenario.noAgregarVisionUnidades();
 		escenario.mover();
-		System.out.println("ESCENARIO2: " + escenario);
 
 		escenario.moverObjsEnMapa();
 

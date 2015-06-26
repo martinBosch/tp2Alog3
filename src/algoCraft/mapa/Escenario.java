@@ -5,6 +5,8 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 
 import vista.Panel;
+import Jugador.Jugador;
+import Unidades.Unidad;
 import constantes.Constantes;
 
 public class Escenario extends ObjetoMapa{
@@ -21,6 +23,8 @@ public class Escenario extends ObjetoMapa{
 	private int segCoordXobjsEnMapaSeleccionar;
 	private int segCoordYobjsEnMapaSeleccionar;
 	private boolean moverObjsEnMapaSeleccionados;
+	
+	private ObjetoMapa objMapaSeleccionado;
 
 	private Area areaNoVisible;
 	private ArrayList<Rectangle> rectangulosVisibles;
@@ -45,6 +49,7 @@ public class Escenario extends ObjetoMapa{
 		rectangulosVisibles = new ArrayList<Rectangle>();
 
 		objsEnMapaSeleccionados = new ArrayList<ObjetoMapa>();
+		objMapaSeleccionado = null;
 	}
 
 //	private synchronized static void createInstance() {
@@ -97,6 +102,50 @@ public class Escenario extends ObjetoMapa{
 
 
 
+	public void realizarAccionClick(int ratonX, int ratonY, Jugador jugTurno) {
+
+		if (objMapaSeleccionado != null) {
+			ObjetoMapa objMapaEnPos = obtenerObjMapaEnPosAjeno(ratonX, ratonY, jugTurno);
+			
+			System.out.println("objMapaEnPos: " + objMapaEnPos);
+
+			if(objMapaEnPos == null) {
+				if (objMapaSeleccionado.sePuedeMover()){
+					((Unidad) objMapaSeleccionado).ubicar(ratonX, ratonY);
+				}
+			}
+			else {
+				System.out.println("ATACO");
+
+				objMapaSeleccionado.atacar(objMapaEnPos);
+			}
+			this.objMapaSeleccionado = null;
+		}
+		else {
+			this.objMapaSeleccionado = obtenerObjMapaEnPosPropio(ratonX, ratonY, jugTurno);
+		}
+
+		System.out.println("objMapaSeleccionado: " + objMapaSeleccionado);
+
+	}
+
+	public ObjetoMapa obtenerObjMapaEnPosPropio(int x, int y, Jugador jugTurno) {
+		for(ObjetoMapa objMapa : objetosEnMapa) {
+			if( objMapa.obtenerAreaOcupa().contains(x, y) && objMapa.getJugador()==jugTurno) {
+				return objMapa;
+			}
+		}
+		return null;
+	}
+
+	public ObjetoMapa obtenerObjMapaEnPosAjeno(int x, int y, Jugador jugTurno) {
+		for(ObjetoMapa objMapa : objetosEnMapa) {
+			if( objMapa.obtenerAreaOcupa().contains(x, y) && objMapa.getJugador()!=jugTurno) {
+				return objMapa;
+			}
+		}
+		return null;
+	}
 
 	public void agregarVisionUnidades() {
 		this.agregarVisionUnidades = true;

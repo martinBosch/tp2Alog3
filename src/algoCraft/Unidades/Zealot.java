@@ -15,8 +15,8 @@ public class Zealot extends UnidadProtoss {
 		danioA= 0;
 		danioT= 8;
 		suministro= 2;
-		rangoA= 1;
-		rangoT= 1;
+		rangoA= 2;
+		rangoT= 2;
 		vida= 100; //No se entiendeuu
 		nombre= "Zealot";
 		tipo="Otro";

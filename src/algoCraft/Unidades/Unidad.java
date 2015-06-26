@@ -50,9 +50,9 @@ public abstract class Unidad extends ObjetoMapa {
 	}
 
 	private Rectangle crearAreaVisible() {
-		int anchoVision = vision * (Constantes.ANCHO_UNIDAD/2);
-		int altoVision = vision * (Constantes.ALTO_UNIDAD/2);
-
+		int anchoVision = vision * (Constantes.ANCHO_UNIDAD);
+		int altoVision = vision * (Constantes.ALTO_UNIDAD);
+		
 		int xVision = obtenerXareaVision();
 		int yVision = obtenerYareaVision();
 
@@ -75,6 +75,12 @@ public abstract class Unidad extends ObjetoMapa {
 		return true;
 	}
 
+	public void ubicar(int nuevoX, int nuevoY) {
+//		if(areaVisible.contains(nuevoX, nuevoY)){
+			x = nuevoX;
+			y = nuevoY;
+//		}
+	}
 
 
 	public int getDanioA() {
@@ -121,17 +127,33 @@ public abstract class Unidad extends ObjetoMapa {
 	}
 
 	public void atacar(ObjetoMapa atacado) {
-		// 1 rango de ataque equivale a dos celdas.
-		if (distancia(atacado) < rangoT * (32 * 2)) {
+
+		System.out.println("DISTANCIA: " + distancia(atacado));
+
+		System.out.println("ANCHO: " + Constantes.ANCHO_UNIDAD);
+		System.out.println("RANGO T: " + rangoT);
+
+		System.out.println("DISTANCIA2: " + (rangoT * Constantes.ANCHO_UNIDAD));
+		System.out.println("JUGADOR DISTINTO: " + ( this.getJugador() != atacado.getJugador() ) );
+
+		if (distancia(atacado) < rangoT * Constantes.ANCHO_UNIDAD &&
+				this.getJugador() != atacado.getJugador()) {
 			atacado.recibirDanio(danioT);
+			
+			System.out.println("DANIO: " + atacado.getVida());
+			
 			this.YaJugo();
 		}
 	}
-	
+
+	public boolean sePuedeMover() {
+		return true;
+	}
+
 	public boolean getEstadoIrradiacion(){
 		return tieneRadiacion;
 	}
-	
+
 	public void serIrradiada() {
 		this.tieneRadiacion = true;
 

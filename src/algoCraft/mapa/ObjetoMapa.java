@@ -3,6 +3,7 @@ package mapa;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import Jugador.Jugador;
 import constantes.Constantes;
 @SuppressWarnings("rawtypes")
 
@@ -17,6 +18,8 @@ public abstract class ObjetoMapa {
 
 	protected int ancho;
 	protected int alto;
+	
+	protected Jugador jugador;
 
 	protected Rectangle areaOcupa;
 
@@ -130,7 +133,6 @@ public abstract class ObjetoMapa {
 
 	public void bajarTiempoConstruccion() {
 		tiempoConstruccion-=1;
-		System.out.println("TIEMPO CONSTR: " + tiempoConstruccion);
 	}
 		
 	public void recibirDanio(int danio) {
@@ -144,5 +146,20 @@ public abstract class ObjetoMapa {
 		return (int) Math.sqrt( distX*distX + distY*distY );
 	}
 
+	public void atacar(ObjetoMapa objMapa) {
+		
+	}
+	
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
+	}
+
+	public Jugador getJugador() {
+		return jugador;
+	}
+
+	public boolean sePuedeMover() {
+		return false;
+	}
 
 }

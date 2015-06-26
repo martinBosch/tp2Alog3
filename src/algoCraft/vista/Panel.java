@@ -30,12 +30,13 @@ public class Panel extends JPanel implements PanelAgregable {
 	private Teclado teclado;// provisorio para dibujar limites.
 	private Raton raton;
 	private Boton botonOyente;
+	private boolean cambiarBotones;
 
 	public Panel(AlgoCraft juego) {
 
 		objsMapaVista = new ArrayList<ObjetoMapaVista>();
 		this.juego = juego;
-		agregarBotones();
+		cambiarBotones = true;
 
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
@@ -60,9 +61,15 @@ public class Panel extends JPanel implements PanelAgregable {
 			objMapaVista.dibujar(g2);
 		}
 
-		agregarBotones();
+		if (cambiarBotones) {
+			agregarBotones();
+			cambiarBotones = false;
+		}
 //		teclado.dibujarLimites(g2);
+//		( (EscenarioVista) objsMapaVista.get(0) ).dibujarAreaVisible(Graphics2D g) {
+
 	}
+
 
 	public void agregarObjMapaVista(ObjetoMapaVista objMapaVista) {
 		objsMapaVista.add(objMapaVista);
@@ -75,8 +82,12 @@ public class Panel extends JPanel implements PanelAgregable {
 		this.raton = raton;
 		addMouseListener(raton);
 		addMouseMotionListener(raton);
-		
+
 		this.botonOyente = botonOyente;
+	}
+
+	public void cambiarBotones() {
+		cambiarBotones = true;
 	}
 
 	public void agregarBotones() {
@@ -90,6 +101,7 @@ public class Panel extends JPanel implements PanelAgregable {
 		boton.setFocusable(false);
 		boton.addActionListener( botonOyente );
 		panelBotones.add(boton, BorderLayout.CENTER);
+
 		removeAll();
 		add( panelBotones, BorderLayout.SOUTH );
 		revalidate();
@@ -101,17 +113,12 @@ public class Panel extends JPanel implements PanelAgregable {
 		panelUnidades.setLayout(new GridLayout(3,2));
 
 		Jugador jugTurno = juego.obtenerJugadorTurno();
-		System.out.println("jugTurno: " + jugTurno);
 
 		ArrayList<String> nombreUnidades = jugTurno.obtenerNombreUnidades();
-		System.out.println("nombreUnidades: " + nombreUnidades);
 
 		ArrayList<String> rutaImagenUnidades = jugTurno.obtenerRutaImagenUnidades();
 
 		for( int i=0; i<Constantes.CANTIDAD_UNIDADES; i++ ) {
-//			System.out.println(i);
-//			System.out.println(	rutaImagenUnidades.get(i) );
-
 			JButton boton = new JButton(nombreUnidades.get(i));
 			boton.setIcon(new ImageIcon(getClass().getResource( rutaImagenUnidades.get(i) )));
 			boton.setFocusable(false);
@@ -130,9 +137,6 @@ public class Panel extends JPanel implements PanelAgregable {
 		ArrayList<String> rutaImagenEdificios = jugTurno.obtenerRutaImagenEdificios();
 
 		for( int i=0; i<Constantes.CANTIDAD_EDIFICIOS; i++ ) {
-//			System.out.println(i);
-//			System.out.println(	rutaImagenEdificios.get(i) );
-
 			JButton boton = new JButton(nombreEdificios.get(i));
 			boton.setIcon(new ImageIcon(getClass().getResource( rutaImagenEdificios.get(i) )));
 			boton.setFocusable(false);

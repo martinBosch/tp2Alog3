@@ -32,7 +32,7 @@ public class Principal {
 		( EscenarioBuilder.getInstance() ).cargarBases(panel, escenario);
 
 		teclado = new Teclado(escenario, panel);
-		raton = new Raton(escenario, panel);
+		raton = new Raton(juego, panel);
 		Boton botonOyente = new Boton(juego, panel);
 		panel.agregarControladores(teclado, raton, botonOyente);
 

@@ -7,12 +7,14 @@ import mapa.Escenario;
 import vista.Panel;
 import vista.objetosMapaVista.BarracaVista;
 import vista.objetosMapaVista.MarineVista;
+import vista.objetosMapaVista.ZealotVista;
 import Edificios.Barraca;
 import Excepciones.ExcepcionGasesInsuficientes;
 import Excepciones.ExcepcionMineralesInsuficientes;
 import Excepciones.ExcepcionPoblacionInsuficiente;
 import Jugador.Jugador;
 import Unidades.Marine;
+import Unidades.Zealot;
 import algoCraft.AlgoCraft;
 
 public class Boton implements ActionListener {
@@ -37,32 +39,38 @@ public class Boton implements ActionListener {
 
 			case("Marine"):
 				Marine marine = new Marine(100, 100);
-			try {
-				if ( escenario.posOcupada(marine.obtenerAreaOcupa()) &&
-						jugTurno.puedeCrearUnidad(marine)) {
+				marine.setJugador(jugTurno);
+			
+				escenario.agregar(marine);
+				MarineVista marineVista2 = new MarineVista(marine);
+				panel.agregarObjMapaVista(marineVista2);
 
-					return;
+				try {
+					if ( escenario.posOcupada(marine.obtenerAreaOcupa()) &&
+							jugTurno.puedeCrearUnidad(marine)) {
+	
+						return;
+					}
+				} catch (ExcepcionGasesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExcepcionMineralesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			} catch (ExcepcionGasesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExcepcionMineralesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			boolean puedeCrearUnidad = false;
-			try {
-				puedeCrearUnidad = jugTurno.crearUnidad(marine);
-			} catch (ExcepcionPoblacionInsuficiente e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExcepcionGasesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExcepcionMineralesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				boolean puedeCrearUnidad = false;
+				try {
+					puedeCrearUnidad = jugTurno.crearUnidad(marine);
+				} catch (ExcepcionPoblacionInsuficiente e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExcepcionGasesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExcepcionMineralesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				if(puedeCrearUnidad) {
 					escenario.agregar(marine);
 					MarineVista marineVista = new MarineVista(marine);
@@ -70,43 +78,52 @@ public class Boton implements ActionListener {
 				}
 				break;
 
-			case("Barraca"):
-				Barraca barraca = new Barraca(400, 400);
-			try {
-				if ( escenario.posOcupada(barraca.obtenerAreaOcupa()) &&
-						jugTurno.puedeCrearEdificio(barraca)) {
+			case("Zealot"):
+				System.out.println("ZEALOT");
+				Zealot zealot = new Zealot(300, 300);
+				zealot.setJugador(jugTurno);
 
-					return;
+				escenario.agregar(zealot);
+				ZealotVista zealotVista = new ZealotVista(zealot);
+				panel.agregarObjMapaVista(zealotVista);
+
+				
+				
+			case("Barraca"):
+					Barraca barraca = new Barraca(400, 400);
+				try {
+					if ( escenario.posOcupada(barraca.obtenerAreaOcupa()) &&
+							jugTurno.puedeCrearEdificio(barraca)) {
+	
+						return;
+					}
+				} catch (ExcepcionGasesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExcepcionMineralesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			} catch (ExcepcionGasesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExcepcionMineralesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			boolean puedeCrearEdif = false;
-			try {
-				puedeCrearEdif = jugTurno.crearEdificio(200,200,barraca);
-			} catch (ExcepcionGasesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExcepcionMineralesInsuficientes e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-				System.out.println("puedeCrearEdif: " + puedeCrearEdif);
-				if(puedeCrearEdif) {
-					System.out.println("ESCENARIO1: " + escenario);
-					escenario.agregar(barraca);
-					BarracaVista barracaVista = new BarracaVista(barraca);
-					panel.agregarObjMapaVista(barracaVista);
+				boolean puedeCrearEdif = false;
+				try {
+					puedeCrearEdif = jugTurno.crearEdificio(200,200,barraca);
+				} catch (ExcepcionGasesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExcepcionMineralesInsuficientes e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				break;
+					if(puedeCrearEdif) {
+						escenario.agregar(barraca);
+						BarracaVista barracaVista = new BarracaVista(barraca);
+						panel.agregarObjMapaVista(barracaVista);
+					}
+					break;
 
 			case("Pasar Turno"):
 				juego.PasarTurno();
-				panel.agregarBotones();
+				panel.cambiarBotones();
 
 
 //		boolean puedeCrearUnidad;
