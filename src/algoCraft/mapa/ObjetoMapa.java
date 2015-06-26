@@ -18,11 +18,10 @@ public abstract class ObjetoMapa {
 
 	protected int ancho;
 	protected int alto;
-	
+
 	protected Jugador jugador;
 
 	protected Rectangle areaOcupa;
-	protected Jugador jugador;
 	protected int vida;
 	protected int precioM;
 	protected int precioG;
@@ -62,14 +61,6 @@ public abstract class ObjetoMapa {
 		return false;
 	}
 	
-	public Jugador getJugador() {
-		return this.jugador;
-	}
-	
-	public void setJugador(Jugador aux) {
-		this.jugador = aux;
-	}
-
 	public Rectangle obtenerAreaVisible() {
 		return null;
 	}
