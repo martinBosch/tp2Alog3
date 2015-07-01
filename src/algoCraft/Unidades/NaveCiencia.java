@@ -1,12 +1,17 @@
 package Unidades;
 
+import java.awt.Rectangle;
+
+import mapa.ObjetoMapa;
 import Edificios.PuertoEstelarT;
-import Excepciones.ExcepcionEnergiaInsuficiente;
+import constantes.Constantes;
 
 public class NaveCiencia extends Unidad{ //Terran
-	
+
 	private int energia;
-	
+	private int radioEMP;
+	private ObjetoMapa atacadoRadiacion;
+
 	public NaveCiencia(int x, int y){
 		super(x,y);
 
@@ -18,65 +23,75 @@ public class NaveCiencia extends Unidad{ //Terran
 		danioA= 0;
 		danioT= 0;
 		suministro= 2;
-		rangoA= 0;
-		rangoT= 0;
+		rangoA= 5;
+		rangoT= 5;
 		vida= 200;
-		energia=50;
 		nombre= "Nave Ciencia";
 		tipo="Aereo";
 		edifNecesario.add(PuertoEstelarT.class);
+
+		energia = 50;
+		radioEMP = 5 * Constantes.ANCHO_UNIDAD;
+		atacadoRadiacion = null;
 	}
-	public void AumentarEnergia(){
+
+	public boolean esUnidadMagica() {
+		return true;
+	}
+
+	public int getEnergia() {
+		return energia;
+	}
+
+	public void recibirDanioMagico() {
+		this.energia = 0;
+	}
+
+	public void aumentarEnergia(){
 		if (energia<=190){
-			energia=energia+10;
+			energia+=10;
 		}
 	}
 
-	public void EMP(Iterable<Unidad> listaUnidades,int posXEMP,int posYEMP)throws ExcepcionEnergiaInsuficiente {
-		if (energia >= 100) {
-			int x;
-			int y;
-			Unidad unidadAux;
-			int radio=3;
-			while (listaUnidades.iterator().hasNext()) {
-				unidadAux = listaUnidades.iterator().next();
-				x = posXEMP - unidadAux.obtenerX();
-				y = posYEMP - unidadAux.obtenerY();
+	public void atacarConMagia(ObjetoMapa atacado, Iterable<ObjetoMapa> objetosEnMapa) {
 
-				if (radio <= (int) Math.sqrt(x * x + y * y)) {
+		if(energia >= 100) {
+			EMP(objetosEnMapa);
+		}
+		if(energia >= 75) {
+			radiacion(atacado);
+		}
+	}
 
-					if (unidadAux.getClass().getSuperclass() == UnidadProtoss.class) {
-						((UnidadProtoss) unidadAux).eliminarEscudo();
-					} else {
-						if ((unidadAux.getClass() == AltoTemplario.class)
-								|| (unidadAux.getClass() == NaveCiencia.class)) {
-							((NaveCiencia) unidadAux).vaciarEnergia();
-						} else {
-							if ((unidadAux.getClass() == AltoTemplario.class)) {
-								((AltoTemplario) unidadAux).vaciarEnergia();
-							}
-						}
-					}
-				}
-				energia = energia - 100;
+
+	public void EMP(Iterable<ObjetoMapa> objetosEnMapa) {
+		Rectangle areaEMP = new Rectangle(x - radioEMP/2, y - radioEMP/2, radioEMP, radioEMP);
+
+		for(ObjetoMapa objMapa : objetosEnMapa) {
+			if( areaEMP.contains(objMapa.obtenerX(), objMapa.obtenerY()) && objMapa != this ) {
+				objMapa.recibirDanioMagico();
 			}
-		}else{
-			throw new ExcepcionEnergiaInsuficiente();
+		}
+		energia -= 100;
+	}
+
+	public void radiacion(ObjetoMapa atacado) {
+		atacadoRadiacion = atacado;
+		irradiar();
+		energia -= 75;
+	}
+
+	public void irradiar() {
+		if(atacadoRadiacion != null && !atacadoRadiacion.murio())
+		{
+			atacadoRadiacion.recibirDanio(10);
 		}
 	}
 
-	public void Radiacion(Unidad unidadAfectada)throws ExcepcionEnergiaInsuficiente {
-		if (energia >= 75) {
-			unidadAfectada.serIrradiada();
-			energia = energia - 75;
-		}else{
-			throw new ExcepcionEnergiaInsuficiente();
-		}
+	public void pasarTurno() {
+		super.pasarTurno();
+		aumentarEnergia();
+		irradiar();
 	}
-	public void vaciarEnergia(){
-		this.energia=0;
-	}
-	
-	
-	
+
 }

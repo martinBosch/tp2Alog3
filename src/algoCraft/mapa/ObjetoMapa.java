@@ -29,7 +29,6 @@ public abstract class ObjetoMapa {
 	protected ArrayList<Class> edifNecesario;
 
 
-
 	public ObjetoMapa(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -47,7 +46,7 @@ public abstract class ObjetoMapa {
 		return (Rectangle) areaOcupa.clone();
 	}
 
-	private Rectangle crearAreaOcupa() {
+	protected Rectangle crearAreaOcupa() {
 		return new Rectangle(x, y, ancho, alto);
 	}
 
@@ -71,10 +70,8 @@ public abstract class ObjetoMapa {
 
 
 	public void ubicar(int nuevoX, int nuevoY) {
-		x = nuevoX;
-		y = nuevoY;
 	}
-	
+
 	public int obtenerX() {
 		return x;
 	}
@@ -105,13 +102,43 @@ public abstract class ObjetoMapa {
 		return false;
 	}
 
+	public int obtenerAncho() {
+		return ancho;
+	}
 
+	public int obtenerAlto() {
+		return alto;
+	}
+
+
+	public int getSuministros() {
+		return 0;
+	}
 
 	public int getVida() {
 		return vida;
 	}
+	
+	public int getEscudo() {
+		return -1;
+	}
 
-	public ArrayList<Class> getEdifNecesario() {
+	public int getEnergia() {
+		return -1;
+	}
+
+	public boolean vive() {
+		return tiempoConstruccion <= 0;
+	}
+
+	public boolean murio() {
+		return vida <= 0;
+	}
+
+	public void realizarAccionMurio() {
+	}
+
+	public Iterable<Class> getEdifNecesario() {
 		return edifNecesario;
 	}
 	
@@ -137,8 +164,11 @@ public abstract class ObjetoMapa {
 		
 	public void recibirDanio(int danio) {
 		vida -= danio;
-	} 
- 
+	}
+
+	public void recibirDanioMagico() {
+	}
+
 	public int distancia(ObjetoMapa atacado) {
 		int distX = x - atacado.obtenerX();
 		int distY = y - atacado.obtenerY();
@@ -147,19 +177,45 @@ public abstract class ObjetoMapa {
 	}
 
 	public void atacar(ObjetoMapa objMapa) {
-		
 	}
-	
+
+	public void atacarConMagia(ObjetoMapa atacado, Iterable<ObjetoMapa> objetosEnMapa) {
+	}
+
+	public boolean puedeAtacar() {
+		return false;
+	}
+
+	public boolean esUnidadMagica() {
+		return false;
+	}
+
+
+	public boolean dentroRangoAtaque(ObjetoMapa atacado) {
+		return false;
+	}
+
 	public void setJugador(Jugador jugador) {
 		this.jugador = jugador;
 	}
-
+	
 	public Jugador getJugador() {
 		return jugador;
 	}
 
-	public boolean sePuedeMover() {
-		return false;
+	public boolean esDeJugador(Jugador jugador) {
+		return this.jugador == jugador;
+	}
+
+	public boolean tieneJugador() {
+		return true;
+	}
+
+	public boolean estaEnPos(int posX, int posY) {
+		return areaOcupa.contains(posX, posY);
+	}
+
+	public void pasarTurno() {
 	}
 
 }

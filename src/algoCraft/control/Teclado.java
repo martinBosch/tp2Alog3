@@ -1,6 +1,5 @@
 package control;
 
-import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -30,7 +29,7 @@ public class Teclado extends KeyAdapter implements KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		// Controla que al mantener pulsada una tecla los
-		// eventos que se llaman rapidamente se ejecuten todos.
+		// eventos que se llaman rapidamente no se ejecuten todos.
 		if(System.currentTimeMillis() - intervaloEjecucionEventos < 35) {
 			return;
 		}
@@ -98,16 +97,10 @@ public class Teclado extends KeyAdapter implements KeyListener {
 
 		limites.actualizarLimitesEscenario(dxEscenario, dyEscenario);
 
-		escenario.noAgregarVisionUnidades();
 		escenario.mover();
 
 		escenario.moverObjsEnMapa();
 
 		panel.repaint();
 	}
-
-	public void dibujarLimites(Graphics2D g2) {
-		limites.dibujar(g2);
-	}
-
 }

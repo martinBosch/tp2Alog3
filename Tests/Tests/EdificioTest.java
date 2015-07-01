@@ -14,12 +14,17 @@ import Edificios.Fabrica;
 import Edificios.Pilon;
 import Edificios.PuertoEstelarP;
 import Edificios.PuertoEstelarT;
+import Excepciones.ExcepcionGasVespenoNecesario;
 import Excepciones.ExcepcionGasesInsuficientes;
+import Excepciones.ExcepcionMineralNecesario;
 import Excepciones.ExcepcionMineralesInsuficientes;
-import Excepciones.ExcepcionPoblacionInsuficiente;
+import Excepciones.ExcepcionNoPoseeEdifNecesario;
+import Excepciones.ExcepcionPoblacionMaxSuperada;
+import Excepciones.ExcepcionPosicionOcupada;
 import Jugador.Jugador;
 import Razas.Raza;
 import Razas.RazaBuilder;
+import algoCraft.AlgoCraft;
 
 public class EdificioTest {
 
@@ -53,11 +58,11 @@ public class EdificioTest {
 		jugador.modificarGas(300);
 		Edificio acceso = new Acceso(x,y);
 		Edificio puertoEstelar = new PuertoEstelarP(x,y);
-		jugador.crearEdificio(0, 0, acceso);
+		jugador.agregarEdificioACrear(acceso);
 		for(int i=1;i<=8;i++){
 			jugador.pasarTurno();
 		}
-		jugador.crearEdificio(0, 0, puertoEstelar);
+		jugador.agregarEdificioACrear(puertoEstelar);
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}
@@ -74,21 +79,21 @@ public class EdificioTest {
 		jugador.modificarGas(3000);
 		
 		Edificio acceso = new Acceso(x,y);
-		jugador.crearEdificio(0, 0, acceso);
+		jugador.agregarEdificioACrear(acceso);
 		
 		for(int i=1;i<=8;i++){
 			jugador.pasarTurno();
 		}
 		
 		Edificio puertoEstelar = new PuertoEstelarP(x,y);
-		jugador.crearEdificio(0, 0, puertoEstelar);
+		jugador.agregarEdificioACrear(puertoEstelar);
 		
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}
 		
 		Edificio archivosTemplarios = new ArchivosTemplarios(x,y);
-		jugador.crearEdificio(0, 0, archivosTemplarios);
+		jugador.agregarEdificioACrear(archivosTemplarios);
 		
 		for(int i=1;i<=9;i++){
 			jugador.pasarTurno();
@@ -107,21 +112,21 @@ public class EdificioTest {
 		jugador.modificarGas(3000);
 		
 		Edificio barraca = new Barraca(x,y);
-		jugador.crearEdificio(0, 0, barraca);
+		jugador.agregarEdificioACrear(barraca);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
 		Edificio fabrica = new Fabrica(x,y);
-		jugador.crearEdificio(0, 0, fabrica);
+		jugador.agregarEdificioACrear(fabrica);
 		
 		for(int i=1;i<=12;i++){
 			jugador.pasarTurno();
 		}
 		
 		Edificio puertoEstelar = new PuertoEstelarT(x,y);
-		jugador.crearEdificio(0, 0, puertoEstelar);
+		jugador.agregarEdificioACrear(puertoEstelar);
 		
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
@@ -140,11 +145,11 @@ public class EdificioTest {
 		jugador.modificarGas(300);
 		Edificio acceso = new Acceso(x,y);
 		Edificio puertoEstelar = new PuertoEstelarP(x,y);
-		jugador.crearEdificio(0, 0, acceso);
+		jugador.agregarEdificioACrear(acceso);
 		for(int i=1;i<=8;i++){
 			jugador.pasarTurno();
 		}
-		jugador.crearEdificio(0, 0, puertoEstelar);
+		jugador.agregarEdificioACrear(puertoEstelar);
 		for(int i=1;i<=10;i++){
 			jugador.pasarTurno();
 		}
@@ -153,25 +158,33 @@ public class EdificioTest {
 	}
 
 	@Test
-	public void testAumentarPoblacionMaxima() throws  ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	public void testAumentarPoblacionMaxima() throws ExcepcionGasesInsuficientes,
+	ExcepcionMineralesInsuficientes 
+	{
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
 		jugador.asignarRaza(raza.crearProtoss());
 		Edificio pilon = new Pilon(x,y);
-		jugador.crearEdificio(0, 0, pilon);
+		pilon.setJugador(jugador);
+		jugador.agregarEdificioACrear(pilon);
 		assertFalse(jugador.getPoblacionMax() == 10);
-		for(int i=1;i<=5;i++){
+		for(int i=1;i<=6;i++){
 			jugador.pasarTurno();
 		}
 		assertTrue(jugador.getPoblacionMax() == 10);
 	}
 
 	@Test
-	public void testCrearEdificioRaza() throws ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	public void testCrearEdificioRaza() throws ExcepcionGasesInsuficientes,
+	ExcepcionMineralesInsuficientes, ExcepcionPoblacionMaxSuperada,
+	ExcepcionNoPoseeEdifNecesario, ExcepcionGasVespenoNecesario,
+	ExcepcionMineralNecesario, ExcepcionPosicionOcupada
+	{
+		AlgoCraft juego = new AlgoCraft();
 		RazaBuilder razaBuilder = new RazaBuilder();
 		Raza raza = razaBuilder.crearProtoss();
 		Edificio deposito = new DepositoSuministro(x,y);
-		boolean puedeCrear = (raza.crearEdificio(100, 0, null, deposito, null, null));
+		boolean puedeCrear = juego.obtenerJugador2().puedeCrearEdificio(deposito);
 		assertFalse(puedeCrear);
 
 	}

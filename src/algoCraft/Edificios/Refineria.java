@@ -14,4 +14,9 @@ public class Refineria extends Edificio{ //Terran
 	public boolean gaseador() {
 		return true;
 	}
+
+	public void pasarTurno() {
+		jugador.modificarGas(10);
+	}
+
 }

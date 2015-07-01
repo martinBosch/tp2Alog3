@@ -20,8 +20,8 @@ import Unidades.Espectro;
 import Unidades.Golliat;
 import Unidades.Marine;
 import Unidades.NaveCiencia;
-import Unidades.NaveTransportadorP;
-import Unidades.NaveTransportadorT;
+import Unidades.NaveTransporteP;
+import Unidades.NaveTransporteT;
 import Unidades.Scout;
 import Unidades.Zealot;
 
@@ -59,7 +59,7 @@ public class RazaBuilder {
 		listaUnidades.add(uni3.getClass());
 		NaveCiencia uni4 = new NaveCiencia(x,y);
 		listaUnidades.add(uni4.getClass());
-		NaveTransportadorP uni5 = new NaveTransportadorP(x,y);
+		NaveTransporteP uni5 = new NaveTransporteP(x,y);
 		listaUnidades.add(uni5.getClass());
 
 		Raza raza = new Terran(listaEdificios, listaUnidades);
@@ -98,7 +98,7 @@ public class RazaBuilder {
 		listaUnidades.add(uni3.getClass());
 		AltoTemplario uni4 = new AltoTemplario(x,y);
 		listaUnidades.add(uni4.getClass());
-		NaveTransportadorT uni5 = new NaveTransportadorT(x,y);
+		NaveTransporteT uni5 = new NaveTransporteT(x,y);
 		listaUnidades.add(uni5.getClass());
 
 		Raza raza = new Protoss(listaEdificios, listaUnidades);

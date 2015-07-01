@@ -1,39 +1,30 @@
 package mapa;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import recursos.Agua;
 import recursos.GasVespeno;
 import recursos.Minerales;
-import recursos.Recurso;
-import vista.PanelAgregable;
 import vista.objetosMapaVista.BaseVista;
-import constantes.Constantes;
+import vista.objetosMapaVista.ObjetoMapaVista;
+import Jugador.Jugador;
 import construcciones.Base;
 
 public class EscenarioBuilder {
 
 	private static EscenarioBuilder INSTANCE = null;
 
-	private int ancho;
-	private int alto;
+	private ArrayList<ObjetoMapa> objetosInicialesEnMapa;
+	private ArrayList<ObjetoMapaVista> objetosVistaInicialesEnMapa;
 
-	private ArrayList<ObjetoMapa> objetosEnMapa;
-
-	Escenario mapaLista;
+	Escenario escenario;
 
 
 	public EscenarioBuilder() {
-		
-		ancho = Constantes.ANCHO_ESCENARIO;
-		alto = Constantes.ALTO_ESCENARIO;
-
-		objetosEnMapa = new ArrayList<ObjetoMapa>();
-
-		cargarTablero();
-		mapaLista = new Escenario(objetosEnMapa);
+		objetosInicialesEnMapa = new ArrayList<ObjetoMapa>();
+		objetosVistaInicialesEnMapa = new ArrayList<ObjetoMapaVista>();
 	}
+
 
 	private synchronized static void createInstance() {
 		if (INSTANCE == null) {
@@ -47,43 +38,42 @@ public class EscenarioBuilder {
 		return INSTANCE;
 	}
 
-	public Escenario obtenerEscenario() {
-		return mapaLista;
+	public Escenario obtenerEscenario(Jugador jug1, Jugador jug2) {
+		cargarTablero(jug1, jug2);
+		escenario = new Escenario(objetosInicialesEnMapa);
+
+		return escenario;
 	}
 
 	public static void reiniciarEscenario() {
 		INSTANCE = null;
 	}
 
-	private void cargarTablero() {
-//		this.cargarRecursos();
+	private void cargarTablero(Jugador jug1, Jugador jug2) {
+		cargarBases(jug1, jug2);
+		cargarRecursos();
+		cargarAgua();
 	}
 
-	public void cargarBases(PanelAgregable panel, Escenario escenario) {
-		Base base1 = new Base(194, 208);
-		Base base2 = new Base(2760, 2640);
-		escenario.agregar(base1);
-		escenario.agregar(base2);
-		BaseVista base1Vista = new BaseVista(base1);
-		BaseVista base2Vista = new BaseVista(base2);
-		panel.agregarObjMapaVista(base1Vista);
-		panel.agregarObjMapaVista(base2Vista);
+	public void cargarBases(Jugador jug1, Jugador jug2) {
+		Base base1 = new Base(175, 176);
+		base1.setJugador(jug1);
+		jug1.asignarBase(base1);
+		Base base2 = new Base(2750, 2620);
+		base2.setJugador(jug2);
+		jug2.asignarBase(base2);
+
+		objetosInicialesEnMapa.add(base1);
+		objetosInicialesEnMapa.add(base2);
+
+		BaseVista baseVista1 = new BaseVista(base1);
+		objetosVistaInicialesEnMapa.add(baseVista1);
+		BaseVista baseVista2 = new BaseVista(base2);
+		objetosVistaInicialesEnMapa.add(baseVista2);
 	}
 
-//	private void cargarRecursos() {
-//		this.cargarRecursosCercaBases();
-//	}
 
-//	private void cargarRecursosCercaBases() {
-//		for(Base base : bases) {
-//			this.cargarGasCercanoBase(base);
-//			this.cargarMineralCercanoBase(base);
-//			this.cargarMineralCercanoBase(base);
-//			this.cargarMineralCercanoBase(base);
-//		}
-//	}
-
-	private void cargarRecursos(Escenario escenario) {
+	private void cargarRecursos() {
 		Minerales mineral1 = new Minerales(376,348,64,64);
 		Minerales mineral2 = new Minerales(578,64,64,64);
 		Minerales mineral3 = new Minerales(700,190,64,64);
@@ -97,75 +87,62 @@ public class EscenarioBuilder {
 		Minerales mineral11 = new Minerales(2296,2588,64,64);
 		Minerales mineral12 = new Minerales(2430,2882,64,64);
 		Minerales mineral13 = new Minerales(1528,2682,64,64);
-		Minerales mineral14 = new Minerales(1400,1662,64,64);
+		Minerales mineral14 = new Minerales(1400,2940,64,64);
 		Minerales mineral15 = new Minerales(1662,2972,64,64);
 		Minerales mineral16 = new Minerales(758,2492,64,64);
 		Minerales mineral17 = new Minerales(758,2976,64,64);
 		Minerales mineral18 = new Minerales(60,2880,64,64);
+
 		GasVespeno gas1 = new GasVespeno(150,640,64,64);
 		GasVespeno gas2 = new GasVespeno(1746,96,64,64);
 		GasVespeno gas3 = new GasVespeno(2704,826,64,64);
 		GasVespeno gas4 = new GasVespeno(2798,2332,64,64);
 		GasVespeno gas5 = new GasVespeno(1488,2398,64,64);
 		GasVespeno gas6 = new GasVespeno(396,2718,64,64);
-	}
-	
-	private void cargarAgua(Escenario escenario) {
-		Agua agua1 = new Agua(1985,0,1220,318);
-		Agua agua2 = new Agua(1985,0,317,515);
-		Agua agua3 = new Agua(1985,0,1013,311);
-		Agua agua4 = new Agua(1985,0,253,157);
-		Agua agua5 = new Agua(1985,0,1175,296);
-	
-		escenario.agregar(agua1);
-		escenario.agregar(agua2);
-		escenario.agregar(agua3);
-		escenario.agregar(agua4);
-		escenario.agregar(agua5);
-	}
-	
-	private void cargarRecursoCercanoBase(Base base, Recurso recurso) {
-		boolean posOcupada = true;
+		
+		objetosInicialesEnMapa.add(mineral1);
+		objetosInicialesEnMapa.add(mineral2);
+		objetosInicialesEnMapa.add(mineral3);
+		objetosInicialesEnMapa.add(mineral4);
+		objetosInicialesEnMapa.add(mineral5);
+		objetosInicialesEnMapa.add(mineral6);
+		objetosInicialesEnMapa.add(mineral7);
+		objetosInicialesEnMapa.add(mineral8);
+		objetosInicialesEnMapa.add(mineral9);
+		objetosInicialesEnMapa.add(mineral10);
+		objetosInicialesEnMapa.add(mineral11);
+		objetosInicialesEnMapa.add(mineral12);
+		objetosInicialesEnMapa.add(mineral13);
+		objetosInicialesEnMapa.add(mineral14);
+		objetosInicialesEnMapa.add(mineral15);
+		objetosInicialesEnMapa.add(mineral16);
+		objetosInicialesEnMapa.add(mineral17);
+		objetosInicialesEnMapa.add(mineral18);
 
-		while (posOcupada) {
-			int x = base.obtenerCoordXCercana(this.ancho);
-			int y = base.obtenerCoordYCercana(this.alto);
-			recurso.ubicar(x, y);
-			posOcupada = this.posOcupada(recurso.obtenerAreaOcupa());
-			if (!posOcupada) {
-				objetosEnMapa.add(recurso);
-			}
-		}
+		objetosInicialesEnMapa.add(gas1);
+		objetosInicialesEnMapa.add(gas2);
+		objetosInicialesEnMapa.add(gas3);
+		objetosInicialesEnMapa.add(gas4);
+		objetosInicialesEnMapa.add(gas5);
+		objetosInicialesEnMapa.add(gas6);
 	}
 
-	private void cargarGasCercanoBase(Base base) {
-		int x = base.obtenerCoordXCercana(this.ancho);
-		int y = base.obtenerCoordYCercana(this.alto);
+	private void cargarAgua() {
+		Agua agua1 = new Agua(1980,0,320,1215);
+		Agua agua2 = new Agua(1470,900,830,320);
+		Agua agua3 = new Agua(1470,900,320,1340);
+		Agua agua4 = new Agua(1020,1985,770,258);
+		Agua agua5 = new Agua(1020,1985,320,1175);
 
-		this.cargarRecursoCercanoBase(base, new GasVespeno(x, y,64,64));
+		objetosInicialesEnMapa.add(agua1);
+		objetosInicialesEnMapa.add(agua2);
+		objetosInicialesEnMapa.add(agua3);
+		objetosInicialesEnMapa.add(agua4);
+		objetosInicialesEnMapa.add(agua5);
 	}
 
-	private void cargarMineralCercanoBase(Base base) {
-		int x = base.obtenerCoordXCercana(this.ancho);
-		int y = base.obtenerCoordYCercana(this.alto);
-
-		this.cargarRecursoCercanoBase(base, new Minerales(x, y,64,64));
-	}
-
-	private boolean posOcupada(Rectangle areaOcupaObjUbicar) {
-		for(ObjetoMapa objetoEnMapa : objetosEnMapa) {
-			Rectangle areaOcupaObjEnMapa = objetoEnMapa.obtenerAreaOcupa();
-			if (areaOcupaObjUbicar.intersects(areaOcupaObjEnMapa)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	
-	public boolean fueraLimites(int coordX, int coordY) {
-		return (coordX < 0 || coordX >= (this.ancho))
-				|| (coordY < 0 || coordY >= (this.alto));
+	public Iterable<ObjetoMapaVista> obtenerEscenarioVistasIniciales() {
+		return objetosVistaInicialesEnMapa;
 	}
 
 }

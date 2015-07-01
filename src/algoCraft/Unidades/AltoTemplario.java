@@ -1,14 +1,19 @@
 package Unidades;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import mapa.ObjetoMapa;
 import Edificios.ArchivosTemplarios;
 import Excepciones.ExcepcionEnergiaInsuficiente;
-import Magias.TormentaPsionica;
+import constantes.Constantes;
 
 public class AltoTemplario extends UnidadProtoss {
 
 	private int energia;
+	private int turnoTormenta;
+	private int radioTormenta;
+	private ArrayList<ObjetoMapa> objMapaAfectadoTormenta;
 
 	public AltoTemplario(int x, int y) {
 		super(x, y);
@@ -21,38 +26,68 @@ public class AltoTemplario extends UnidadProtoss {
 		danioA = 0;
 		danioT = 0;
 		suministro = 2;
-		rangoA = 0;
-		rangoT = 0;
+		rangoA = 5;
+		rangoT = 5;
 		vida = 40;
-		energia = 50;
 		nombre = "Alto Templario";
 		tipo = "Otro";
 		edifNecesario.add(ArchivosTemplarios.class);
 		escudo = 40;
 		escudoMax = 40;
+
+		energia = 50;
+		radioTormenta = 5 * Constantes.ANCHO_UNIDAD;
+		objMapaAfectadoTormenta = new ArrayList<ObjetoMapa>();
 	}
 
-	public int GetEnergia() {
+
+	public boolean esUnidadMagica() {
+		return true;
+	}
+
+	public void recibirDanioMagico() {
+		this.energia = 0;
+	}
+
+	public int getEnergia() {
 		return energia;
 	}
 
-	public void AumentarEnergia() {
+	public void aumentarEnergia() {
 		if (energia <= 185) {
 			energia = energia + 15;
 		}
 	}
 
-	public TormentaPsionica tormentaPsionica(int x, int y,
-			Iterable<Unidad> iterable)throws ExcepcionEnergiaInsuficiente {
-		TormentaPsionica tormentaAux = null;
-		if (energia >= 75) {
-			tormentaAux = new TormentaPsionica(x, y, iterable);
-			energia = energia - 75;
-			return tormentaAux;
-		}else{
-			throw new ExcepcionEnergiaInsuficiente();
+	public void atacarConMagia(ObjetoMapa atacado, Iterable<ObjetoMapa> objetosEnMapa) {
+		if(energia >= 75) {
+			tormentaPsionica(objetosEnMapa);
 		}
-		
+	}
+
+
+	public void tormentaPsionica (Iterable<ObjetoMapa> objetosEnMapa) {
+		Rectangle areaTormenta = new Rectangle(x - radioTormenta/2, y - radioTormenta/2,
+				radioTormenta, radioTormenta);
+
+		for(ObjetoMapa objMapa : objetosEnMapa) {
+			if( areaTormenta.contains(objMapa.obtenerX(), objMapa.obtenerY()) && objMapa != this) {
+				objMapaAfectadoTormenta.add(objMapa);
+			}
+		}
+		turnoTormenta = 2;
+		objMapaAfectadoTormenta.clear();
+		aplicarDanioTormenta();
+		energia-=100;
+	}
+
+	public void aplicarDanioTormenta() {
+		if(turnoTormenta>0) {
+			for(ObjetoMapa objMapaAfectado : objMapaAfectadoTormenta) {
+				objMapaAfectado.recibirDanio(10);
+			}
+			turnoTormenta-=1;
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -84,8 +119,10 @@ public class AltoTemplario extends UnidadProtoss {
 			}
 	}
 
-	public void vaciarEnergia(){
-		this.energia=0;
+	public void pasarTurno() {
+		super.pasarTurno();
+		aumentarEnergia();
+		aplicarDanioTormenta();
 	}
 
 }

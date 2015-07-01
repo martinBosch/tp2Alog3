@@ -8,7 +8,7 @@ public class Acceso extends EdificioProtoss{ //Protoss
 		precioM= 150;
 		precioG= 0;
 		tiempoConstruccion= 8;
-		vida= 500; //NO SE ENTIENDE
+		vida= 500;
 		nombre= "Acceso";
 		escudo=550;
 		escudoMax=550;

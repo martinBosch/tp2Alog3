@@ -76,10 +76,10 @@ public abstract class Unidad extends ObjetoMapa {
 	}
 
 	public void ubicar(int nuevoX, int nuevoY) {
-//		if(areaVisible.contains(nuevoX, nuevoY)){
 			x = nuevoX;
 			y = nuevoY;
-//		}
+
+			actualizarAreaOcupa();
 	}
 
 
@@ -126,27 +126,21 @@ public abstract class Unidad extends ObjetoMapa {
 		return this.tipo;
 	}
 
+	public boolean dentroRangoAtaque(ObjetoMapa atacado) {
+		return (distancia(atacado) < rangoT * Constantes.ANCHO_UNIDAD &&
+				!this.esDeJugador( atacado.getJugador() ) );
+	}
+
 	public void atacar(ObjetoMapa atacado) {
-
-		System.out.println("DISTANCIA: " + distancia(atacado));
-
-		System.out.println("ANCHO: " + Constantes.ANCHO_UNIDAD);
-		System.out.println("RANGO T: " + rangoT);
-
-		System.out.println("DISTANCIA2: " + (rangoT * Constantes.ANCHO_UNIDAD));
-		System.out.println("JUGADOR DISTINTO: " + ( this.getJugador() != atacado.getJugador() ) );
-
 		if (distancia(atacado) < rangoT * Constantes.ANCHO_UNIDAD &&
-				this.getJugador() != atacado.getJugador()) {
+				!this.esDeJugador( atacado.getJugador() ) )
+		{
 			atacado.recibirDanio(danioT);
-			
-			System.out.println("DANIO: " + atacado.getVida());
-			
 			this.YaJugo();
 		}
 	}
 
-	public boolean sePuedeMover() {
+	public boolean puedeAtacar() {
 		return true;
 	}
 

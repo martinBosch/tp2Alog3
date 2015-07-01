@@ -20,7 +20,7 @@ public class Terran extends Raza {
 		nombreUnidades.add("Golliat");
 		nombreUnidades.add("Espectro");
 		nombreUnidades.add("NaveCiencia");
-		nombreUnidades.add("NaveTransporte");
+		nombreUnidades.add("NaveTransporteT");
 		
 		return nombreUnidades;
 	}
@@ -45,7 +45,7 @@ public class Terran extends Raza {
 		nombreEdificios.add("DepositoSuministro");
 		nombreEdificios.add("Refineria");
 		nombreEdificios.add("Fabrica");
-		nombreEdificios.add("PuertoEstelar");
+		nombreEdificios.add("PuertoEstelarT");
 
 		return nombreEdificios;
 	}

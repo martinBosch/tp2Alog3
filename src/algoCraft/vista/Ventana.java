@@ -13,7 +13,7 @@ public class Ventana extends JFrame {
 	public Ventana(Panel panel) {
 
 		setSize(Constantes.ANCHO_VENTANA, Constantes.ALTO_VENTANA);
-		setTitle("Mover imagen con java");
+		setTitle("AlgoCraft");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setLayout(new BorderLayout());

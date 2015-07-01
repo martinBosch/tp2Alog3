@@ -1,15 +1,13 @@
 package recursos;
 
-import mapa.ObjetoMapa;
 
-public class Agua extends ObjetoMapa{
+public class Agua extends Recurso {
 
-	public Agua(int x, int y, int alto, int ancho) {
+	public Agua(int x, int y, int anchoAgua, int altoAgua) {
 		super(x, y);
-		this.alto=alto;
-		this.ancho=ancho;
-		// TODO Auto-generated constructor stub
-	}
+		ancho = anchoAgua;
+		alto = altoAgua;
 
-	
+		areaOcupa = crearAreaOcupa();
+	}
 }

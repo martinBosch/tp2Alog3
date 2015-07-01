@@ -2,32 +2,34 @@ package Unidades;
 
 import java.util.ArrayList;
 
-import Edificios.PuertoEstelarT;
+import Edificios.PuertoEstelarP;
 
-public class NaveTransportadorT extends Unidad { //Terran
-	private ArrayList<Unidad> unidadesTransportadas;
-	int numeroAbordado;
+public class NaveTransporteP extends UnidadProtoss{
+		private ArrayList<Unidad> unidadesTransportadas;
+		int numeroAbordado;
 	
-	public NaveTransportadorT(int x, int y){
+	public NaveTransporteP(int x, int y){
 		super(x,y);
 		this.numeroAbordado=0;
 		unidadesTransportadas = new ArrayList<Unidad>();
 		transporte= 8; //Dice Capacidad. Imagino que debe ser esto
 		vision= 8;
-		precioM= 100;
-		precioG= 100;
-		tiempoConstruccion= 7;
+		precioM= 200;
+		precioG= 0;
+		tiempoConstruccion= 8;
 		danioA= 0;
 		danioT= 0;
 		suministro= 2;
 		rangoA= 0;
 		rangoT= 0;
-		vida= 150;
+		vida= 80;
 		nombre= "Nave Transportador";
 		tipo="Aereo";
-		edifNecesario.add(PuertoEstelarT.class);
+		edifNecesario.add(PuertoEstelarP.class);
+		escudo=60;
+		escudoMax=60;
 	}
-	
+
 	public void abordar(Unidad unidadAAbordar){
 		if(unidadAAbordar.getSuministros()+this.numeroAbordado <= this.transporte){
 			this.unidadesTransportadas.add(unidadAAbordar);

@@ -8,9 +8,8 @@ public class UnidadProtoss extends Unidad {
 
 	public UnidadProtoss(int x, int y) {
 		super(x, y);
+
 		this.escudoDestruido = false;
-		ancho = 32;// Constantes.ANCHO_UNIDAD
-		alto = 32;// Constantes.ALTO_UNIDAD
 	}
 
 	public int getEscudo() {
@@ -33,9 +32,9 @@ public class UnidadProtoss extends Unidad {
 		}
 	}
 
-	public void eliminarEscudo() {
+	public void recibirDanioMagico() {
 		this.escudo=0;
-	};
+	}
 	
 	public void EstablecerValoresDeCopia() {
 		vida=0;
@@ -45,6 +44,10 @@ public class UnidadProtoss extends Unidad {
 
 	public int getEscudoMax() {
 		return escudo;
+	}
+
+	public void pasarTurno() {
+		recargarEscudo();
 	}
 
 }

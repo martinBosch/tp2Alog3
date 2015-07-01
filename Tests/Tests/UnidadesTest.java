@@ -11,10 +11,10 @@ import Edificios.DepositoSuministro;
 import Edificios.Edificio;
 import Edificios.Fabrica;
 import Edificios.PuertoEstelarT;
-import Excepciones.ExcepcionEnergiaInsuficiente;
 import Excepciones.ExcepcionGasesInsuficientes;
 import Excepciones.ExcepcionMineralesInsuficientes;
-import Excepciones.ExcepcionPoblacionInsuficiente;
+import Excepciones.ExcepcionNoPoseeEdifNecesario;
+import Excepciones.ExcepcionPoblacionMaxSuperada;
 import Jugador.Jugador;
 import Razas.RazaBuilder;
 import Unidades.AltoTemplario;
@@ -42,8 +42,8 @@ public class UnidadesTest {
 		assertTrue(templario.getVision() == 7);
 		assertTrue(templario.getDanioA() == 0);
 		assertTrue(templario.getDanioT() == 0);
-		assertTrue(templario.getRangoA() == 0);
-		assertTrue(templario.getRangoT() == 0);
+		assertTrue(templario.getRangoA() == 5);
+		assertTrue(templario.getRangoT() == 5);
 		assertTrue(templario.getVida() == 40);
 		assertTrue(templario.getTiempoConstruccion() == 7);
 	}
@@ -120,25 +120,25 @@ public class UnidadesTest {
 		assertTrue(jugador.getPoblacionMax() == 5);
 	}
 
-	@Test
-	public void testCreacionUnidadSinEdificio() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	@Test(expected=ExcepcionNoPoseeEdifNecesario.class)
+	public void testCreacionUnidadSinEdificio() throws ExcepcionPoblacionMaxSuperada, 
+	ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes,
+	ExcepcionNoPoseeEdifNecesario 
+	{
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
 		jugador.asignarRaza(raza.crearTerran());
 
 		Unidad marine = new Marine(x, y);
-		jugador.crearUnidad(marine);
+		marine.setJugador(jugador);
 
-		for (int i = 1; i <= 3; i++) {
-			jugador.pasarTurno();
-		}
-
-		assertTrue(jugador.getPoblacion() == 0);
+		jugador.puedeCrearUnidad(marine);
 	}
 
 	@Test
-	public void testCreacionUnidadConEdificio() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
-
+	public void testCreacionUnidadConEdificio() throws ExcepcionPoblacionMaxSuperada,
+	ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes 
+	{
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
@@ -147,14 +147,16 @@ public class UnidadesTest {
 		jugador.modificarMineral(10000);
 
 		Edificio barraca = new Barraca(x, y);
-		jugador.crearEdificio(0, 0, barraca);
+		barraca.setJugador(jugador);
+		jugador.agregarEdificioACrear(barraca);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		Marine marine = new Marine(x, y);
-		jugador.crearUnidad(marine);
+		marine.setJugador(jugador);
+		jugador.agregarUnidadACrear(marine);
 
 		for (int i = 1; i <= 3; i++) {
 			jugador.pasarTurno();
@@ -163,8 +165,10 @@ public class UnidadesTest {
 		assertTrue(jugador.getPoblacion() == 1);
 	}
 
-	@Test
-	public void testUnidadConMineralYsinGas() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	@Test(expected=ExcepcionGasesInsuficientes.class)
+	public void testUnidadConMineralYsinGas() throws ExcepcionPoblacionMaxSuperada,
+	ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes, ExcepcionNoPoseeEdifNecesario
+	{
 		Jugador jugador = new Jugador();
 		RazaBuilder raza = new RazaBuilder();
 		jugador.asignarRaza(raza.crearTerran());
@@ -172,42 +176,38 @@ public class UnidadesTest {
 		jugador.modificarMineral(10000);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
 		}
-		try{
-			Unidad espectro = new Espectro(x, y);
-			jugador.crearUnidad(espectro);
-		}catch(ExcepcionGasesInsuficientes e){
-			System.out.println(e.getMessage());
-		}
+		Unidad espectro = new Espectro(x, y);
+		espectro.setJugador(jugador);
 
-		for (int i = 1; i <= 8; i++) {
-			jugador.pasarTurno();
-		}
-
-		assertTrue(jugador.getPoblacion() == 0);
-
+		jugador.puedeCrearUnidad(espectro);
 	}
 
 	@Test
-	public void testUnidadConMineralYConGas() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	public void testUnidadConMineralYConGas() throws ExcepcionPoblacionMaxSuperada,
+	ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes 
+	{
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
@@ -217,39 +217,45 @@ public class UnidadesTest {
 		jugador.modificarGas(300);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
 		}
 
 		Unidad espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
+		espectro.setJugador(jugador);
+		jugador.agregarUnidadACrear(espectro);
 
 		for (int i = 1; i <= 8; i++) {
 			jugador.pasarTurno();
 		}
 
 		assertTrue(jugador.getPoblacion() == 2);
-
 	}
 
-	@Test
-	public void testUnidadSinMineralYConGas() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	@Test(expected=ExcepcionMineralesInsuficientes.class)
+	public void testUnidadSinMineralYConGas() throws ExcepcionPoblacionMaxSuperada,
+	ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes,
+	ExcepcionNoPoseeEdifNecesario
+	{
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
@@ -259,42 +265,40 @@ public class UnidadesTest {
 		jugador.modificarGas(500);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
 		}
 
 		Unidad espectro = new Espectro(x, y);
-		try{
-			jugador.crearUnidad(espectro);
-		}catch(ExcepcionMineralesInsuficientes e){
-			System.out.println(e.getMessage());
-		}
-		for (int i = 1; i <= 8; i++) {
-			jugador.pasarTurno();
-		}
+		espectro.setJugador(jugador);
 
-		assertTrue(jugador.getPoblacion() == 0);
-
+		jugador.puedeCrearUnidad(espectro);
 	}
 
-	@Test
-	public void testUnidadSinSuministros() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	@Test(expected=ExcepcionPoblacionMaxSuperada.class)
+	public void testUnidadSinSuministros() throws ExcepcionPoblacionMaxSuperada,
+	ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes,
+	ExcepcionNoPoseeEdifNecesario 
+	{
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
@@ -304,47 +308,47 @@ public class UnidadesTest {
 		jugador.modificarGas(1000);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
 		}
-		try{
-			Unidad espectro = new Espectro(x, y);
-			jugador.crearUnidad(espectro);
-			espectro = new Espectro(x, y);
-			jugador.crearUnidad(espectro);
-			espectro = new Espectro(x, y);
-			jugador.crearUnidad(espectro);
-			espectro = new Espectro(x, y);
-			jugador.crearUnidad(espectro);
-		}catch(ExcepcionPoblacionInsuficiente e){
-			System.out.println(e.getMessage());
-		}
 
-		for (int i = 1; i <= 8; i++) {
-			jugador.pasarTurno();
-		}
+		Unidad espectro = new Espectro(x, y);
+		espectro.setJugador(jugador);
+		jugador.agregarUnidadACrear(espectro);
 
-		assertTrue(jugador.getPoblacion() == 4);
+		espectro = new Espectro(x, y);
+		espectro.setJugador(jugador);
+		jugador.agregarUnidadACrear(espectro);
 
+		espectro = new Espectro(x, y);
+		espectro.setJugador(jugador);
+
+		jugador.puedeCrearUnidad(espectro);
 	}
 
 	@Test
-	public void testUnidadConSuministrosAumentoDeSuministros() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	public void testUnidadConSuministrosAumentoDeSuministros()
+			throws ExcepcionPoblacionMaxSuperada, ExcepcionGasesInsuficientes,
+			ExcepcionMineralesInsuficientes 
+	{
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
@@ -354,50 +358,61 @@ public class UnidadesTest {
 		jugador.modificarGas(1000);
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new Fabrica(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		edificioACrear = new PuertoEstelarT(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 		edificioACrear = new DepositoSuministro(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 10; i++) {
 			jugador.pasarTurno();
 		}
 
 		Unidad marine = new Marine(x, y);
-		jugador.crearUnidad(marine);
+		marine.setJugador(jugador);
+		jugador.agregarUnidadACrear(marine);
 
 		Unidad espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
+		espectro.setJugador(jugador);
+		jugador.agregarUnidadACrear(espectro);
+
 		espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
+		espectro.setJugador(jugador);
+		jugador.agregarUnidadACrear(espectro);
+
 		espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
+		espectro.setJugador(jugador);
+		jugador.agregarUnidadACrear(espectro);
+
 		espectro = new Espectro(x, y);
-		jugador.crearUnidad(espectro);
+		espectro.setJugador(jugador);
+		jugador.agregarUnidadACrear(espectro);
 
 		for (int i = 1; i <= 8; i++) {
 			jugador.pasarTurno();
 		}
 
 		assertTrue(jugador.getPoblacion() == 9);
-
 	}
 
 	@Test
-	public void testEscudoProtoss() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	public void testEscudoProtoss() throws ExcepcionPoblacionMaxSuperada, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugador = new Jugador();
 
 		RazaBuilder raza = new RazaBuilder();
@@ -407,14 +422,16 @@ public class UnidadesTest {
 		jugador.modificarGas(1000);
 
 		Edificio edificioACrear = new Acceso(x, y);
-		jugador.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugador);
+		jugador.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
 		}
 
 		UnidadProtoss zealot = new Zealot(x, y);
-		jugador.crearUnidad(zealot);
+		zealot.setJugador(jugador);
+		jugador.agregarUnidadACrear(zealot);
 
 		for (int i = 1; i <= 12; i++) {
 			jugador.pasarTurno();
@@ -438,48 +455,35 @@ public class UnidadesTest {
 
 	}
 
-	/*
-	 * @Test public void testAlucinacion(){ ArrayList<Unidad> listaUnidades=new
-	 * ArrayList<Unidad>(); UnidadProtoss zealot = new Zealot(30,30);
-	 * listaUnidades.add(zealot); AltoTemplario altoTemplario = new
-	 * AltoTemplario(50,50); Iterable<Unidad> iterable=listaUnidades;
-	 * altoTemplario.alucinacion(iterable, zealot);
-	 * assertEquals(listaUnidades.size(),3); assertTrue(((UnidadCopia)
-	 * listaUnidades.get(2)).getClassCopia()==Zealot.class);
-	 * assertTrue(((UnidadCopia) listaUnidades.get(1)).getVida()==0);
-	 * assertTrue(((UnidadCopia) listaUnidades.get(2)).getEscudo()==60); }
-	 */
-
 	@Test
-	public void testRadiacion() throws ExcepcionPoblacionInsuficiente, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
+	public void testRadiacion() throws ExcepcionPoblacionMaxSuperada, ExcepcionGasesInsuficientes, ExcepcionMineralesInsuficientes {
 		Jugador jugadorUno = new Jugador();
 		jugadorUno.modificarMineral(1000);
 		RazaBuilder raza = new RazaBuilder();
 		jugadorUno.asignarRaza(raza.crearTerran());
 
 		Edificio edificioACrear = new Barraca(x, y);
-		jugadorUno.crearEdificio(0, 0, edificioACrear);
+		edificioACrear.setJugador(jugadorUno);
+		jugadorUno.agregarEdificioACrear(edificioACrear);
 
 		for (int i = 1; i <= 12; i++) {
 			jugadorUno.pasarTurno();
 		}
 
 		Unidad naveCiencia = new NaveCiencia(50, 50);
+		naveCiencia.setJugador(jugadorUno);
 
 		Unidad marine = new Marine(80, 80);
-		jugadorUno.crearUnidad(marine);
+		marine.setJugador(jugadorUno);
+		jugadorUno.agregarUnidadACrear(marine);
 
 		for (int i = 1; i <= 10; i++) {
 			jugadorUno.pasarTurno();
-			((NaveCiencia) naveCiencia).AumentarEnergia();
+			((NaveCiencia) naveCiencia).aumentarEnergia();
 		}
 		Iterable<Unidad> listaAux = jugadorUno.getListaUnidades();
 		Unidad unidad = listaAux.iterator().next();
-		try {
-			((NaveCiencia) naveCiencia).Radiacion(unidad);
-		} catch (ExcepcionEnergiaInsuficiente e) {
-			System.out.println (e.getMessage());
-		}
+		((NaveCiencia) naveCiencia).radiacion(unidad);
 		jugadorUno.pasarTurno();
 		assertEquals(unidad.getVida(), 30);
 	}

@@ -19,7 +19,7 @@ public class Protoss extends Raza {
 		nombreUnidades.add("Dragon");
 		nombreUnidades.add("Scout");
 		nombreUnidades.add("AltoTemplario");
-		nombreUnidades.add("NaveTransporte");
+		nombreUnidades.add("NaveTransporteP");
 
 		return nombreUnidades;
 	}
@@ -43,7 +43,7 @@ public class Protoss extends Raza {
 		nombreEdificios.add("Pilon");
 		nombreEdificios.add("Asimilador");
 		nombreEdificios.add("Acceso");
-		nombreEdificios.add("PuertoEstelar");
+		nombreEdificios.add("PuertoEstelarP");
 		nombreEdificios.add("ArchivosTemplarios");
 
 		return nombreEdificios;
@@ -61,9 +61,5 @@ public class Protoss extends Raza {
 
 		return RutaImagenEdificios;
 	}
-
-
-
-
 
 }

@@ -9,11 +9,9 @@ public class EdificioProtoss extends Edificio {
 	public EdificioProtoss(int x, int y) {
 		super(x, y);
 		this.escudoDestruido=false;
-		ancho = 32;// Constantes.ANCHO_UNIDAD
-		alto = 32;// Constantes.ALTO_UNIDAD
 	}
 
-	int getEscudo() {
+	public int getEscudo() {
 		return this.escudo;
 	}
 

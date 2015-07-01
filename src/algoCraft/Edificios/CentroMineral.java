@@ -10,7 +10,13 @@ public class CentroMineral extends Edificio { // Terran
 		vida = 500;
 		nombre = "Centro de Mineral";
 	}
+
 	public boolean minador() {
 		return true;
 	}
+
+	public void pasarTurno() {
+		jugador.modificarMineral(10);
+	}
+
 }

@@ -4,33 +4,27 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
-import vista.Panel;
 import Jugador.Jugador;
-import Unidades.Unidad;
 import constantes.Constantes;
 
-public class Escenario extends ObjetoMapa{
-
-	private static Escenario INSTANCE = null;
+public class Escenario extends ObjetoMapa {
 
 	private ArrayList<ObjetoMapa> objetosEnMapa;
 
 	private boolean agregarVisionUnidades;
 
-	private ArrayList<ObjetoMapa> objsEnMapaSeleccionados;
-	private int primCoordXobjsEnMapaSeleccionar;
-	private int primCoordYobjsEnMapaSeleccionar;
-	private int segCoordXobjsEnMapaSeleccionar;
-	private int segCoordYobjsEnMapaSeleccionar;
-	private boolean moverObjsEnMapaSeleccionados;
-	
-	private ObjetoMapa objMapaSeleccionado;
+	private boolean guardarUbicacionEdificioAconstruir;
+	private int ubicacionXedificioAcostruir;
+	private int ubicacionYedificioAcostruir;
+
+	private ObjetoMapa objMapaPropioSeleccionado;
+	private ObjetoMapa objMapaContrarioSelecionado;
 
 	private Area areaNoVisible;
 	private ArrayList<Rectangle> rectangulosVisibles;
 
 
-	public Escenario(ArrayList<ObjetoMapa> objetosInicialesEnMapa){
+	public Escenario(Iterable<ObjetoMapa> objetosInicialesEnMapa){
 
 		super(0, 0);
 
@@ -42,41 +36,41 @@ public class Escenario extends ObjetoMapa{
 
 		agregarVisionUnidades = true;
 
-		objetosEnMapa = objetosInicialesEnMapa;
+		cargarObjMapaIniciales(objetosInicialesEnMapa);
 
-		areaNoVisible = new Area(new Rectangle(0, 0, Constantes.ANCHO_VENTANA,
-				Constantes.ALTO_VENTANA));
+		areaNoVisible = new Area(new Rectangle(0, 0,
+				Constantes.ANCHO_VENTANA, Constantes.ALTO_VENTANA));
 		rectangulosVisibles = new ArrayList<Rectangle>();
 
-		objsEnMapaSeleccionados = new ArrayList<ObjetoMapa>();
-		objMapaSeleccionado = null;
+		guardarUbicacionEdificioAconstruir = false;
+		ubicacionXedificioAcostruir = -1;
+		ubicacionYedificioAcostruir = -1;
+
+		objMapaPropioSeleccionado = null;
+		objMapaContrarioSelecionado = null;
 	}
 
-//	private synchronized static void createInstance() {
-//		if (INSTANCE == null) {
-//			INSTANCE = new MapaLista();
-//		}
-//	}
-//
-//	public static MapaLista getInstance() {
-//		if (INSTANCE == null)
-//			createInstance();
-//		return INSTANCE;
-//	}
 
+	public void cargarObjMapaIniciales(Iterable<ObjetoMapa> objetosInicialesEnMapa) {
+		objetosEnMapa = new ArrayList<ObjetoMapa>();
+
+		for(ObjetoMapa objMapaInicial : objetosInicialesEnMapa) {
+			objetosEnMapa.add(objMapaInicial);
+		}
+	}
 
 	public boolean fueraLimites(int coordX, int coordY) {
-	return ( coordX < 0 || coordX >= (this.ancho) )
+		return ( coordX < 0 || coordX >= (this.ancho) )
 			|| ( coordY < 0 || coordY >= (this.alto) );
-}
-
+	}
 
 	public boolean agregar(ObjetoMapa objetoAgregar) {
-		if ( posOcupada(objetoAgregar.obtenerAreaOcupa()) ) {
-			return false;
-		}
 		objetosEnMapa.add(objetoAgregar);
 		return true;		
+	}
+
+	public void borrar(ObjetoMapa objetoBorrar) {
+		objetosEnMapa.remove(objetoBorrar);
 	}
 
 	public boolean posOcupada(Rectangle areaOcupaObjUbicar) {
@@ -89,246 +83,177 @@ public class Escenario extends ObjetoMapa{
 		return false;
 	}
 
+	public boolean posOcupada(int x, int y) {
+		Rectangle areaOcupa = new Rectangle(x, y,
+				Constantes.ANCHO_UNIDAD, Constantes.ALTO_UNIDAD);
+		return posOcupada(areaOcupa);
+	}
 
 
 	public void moverObjsEnMapa() {
 		for( ObjetoMapa objEnMapa : objetosEnMapa ) {
-			System.out.println("objMapa: " + objEnMapa);
-
 			objEnMapa.desplazar(dx, dy);
 			objEnMapa.mover();
+			objEnMapa.desplazar(0, 0);
 		}
+	}
+
+
+
+
+
+	public void guardarUbicacionEdificioAconstruir() {
+		guardarUbicacionEdificioAconstruir = true;
+	}
+
+	public void reiniciarUbicacionEdificioAconstruir() {
+		guardarUbicacionEdificioAconstruir = false;
+	}
+
+	public boolean seGuardoUbicacionEdificioAconstruir() {
+		return guardarUbicacionEdificioAconstruir == true;
+	}
+
+	public void asignarUbicacionEdificioAconstruir(int ratonX, int ratonY) {
+		ubicacionXedificioAcostruir = ratonX;
+		ubicacionYedificioAcostruir = ratonY;
+	}
+
+	public int obtenerUbicacionXedificioAconstruir() {
+		return ubicacionXedificioAcostruir;
+	}
+
+	public int obtenerUbicacionYedificioAconstruir() {
+		return ubicacionYedificioAcostruir;
 	}
 
 
 
 	public void realizarAccionClick(int ratonX, int ratonY, Jugador jugTurno) {
 
-		if (objMapaSeleccionado != null) {
-			ObjetoMapa objMapaEnPos = obtenerObjMapaEnPosAjeno(ratonX, ratonY, jugTurno);
-			
-			System.out.println("objMapaEnPos: " + objMapaEnPos);
+		if(guardarUbicacionEdificioAconstruir == true) {
+			asignarUbicacionEdificioAconstruir(ratonX, ratonY);
+			return;
+		}
 
-			if(objMapaEnPos == null) {
-				if (objMapaSeleccionado.sePuedeMover()){
-					((Unidad) objMapaSeleccionado).ubicar(ratonX, ratonY);
-				}
-			}
-			else {
-				System.out.println("ATACO");
+		asignarObjMapaSeleccionado(ratonX, ratonY, jugTurno);
+		asignarObjMapaJugContrario(ratonX, ratonY, jugTurno);
 
-				objMapaSeleccionado.atacar(objMapaEnPos);
-			}
-			this.objMapaSeleccionado = null;
+		if(objMapaContrarioSelecionado == null) {
+			moverObjMapaPropioSeleccionado(ratonX, ratonY);
 		}
 		else {
-			this.objMapaSeleccionado = obtenerObjMapaEnPosPropio(ratonX, ratonY, jugTurno);
+			atacarObjMapaContrarioSeleccionado();
 		}
+	}
 
-		System.out.println("objMapaSeleccionado: " + objMapaSeleccionado);
+	public void moverObjMapaPropioSeleccionado(int x, int y) {
+		if( !posOcupada(x, y) && objMapaPropioSeleccionado!=null
+				&& objMapaPropioSeleccionado.vive() )
+		{
+			x-= (objMapaPropioSeleccionado.obtenerAncho() / 2);
+			y-= (objMapaPropioSeleccionado.obtenerAlto() / 2);
+			objMapaPropioSeleccionado.ubicar(x, y);
+		}
+	}
+
+	public void atacarObjMapaContrarioSeleccionado() {
+		if(objMapaPropioSeleccionado!=null 
+				&& objMapaContrarioSelecionado.vive()
+				&& objMapaPropioSeleccionado.vive())
+		{
+			if(objMapaPropioSeleccionado.esUnidadMagica()) {
+				objMapaPropioSeleccionado.atacarConMagia(objMapaContrarioSelecionado, objetosEnMapa);
+			}
+			else {
+				objMapaPropioSeleccionado.atacar(objMapaContrarioSelecionado);
+			}
+		}
+	}
+
+	public void devolverAtaque() {
+		if(objMapaContrarioSelecionado.puedeAtacar() 
+				&& objMapaContrarioSelecionado.vive() ) 
+		{
+			objMapaContrarioSelecionado.atacar(objMapaPropioSeleccionado);
+		}
+	}
+
+	public boolean seRealizoAtaque() {
+		if(objMapaContrarioSelecionado != null && objMapaPropioSeleccionado != null)
+		{
+			return objMapaPropioSeleccionado.puedeAtacar()
+					&& objMapaPropioSeleccionado.vive()
+					&& objMapaContrarioSelecionado.vive()
+					&& objMapaPropioSeleccionado.dentroRangoAtaque(objMapaContrarioSelecionado);
+		}
+		return false;
+	}
+
+	public void asignarObjMapaSeleccionado(int ratonX, int ratonY, Jugador jugTurno) {
+		ObjetoMapa objMapaSeleccionado = obtenerObjMapaPropioEnPos(ratonX, ratonY, jugTurno);
+
+		if (this.objMapaPropioSeleccionado != objMapaSeleccionado &&
+				objMapaSeleccionado != null)
+		{
+			this.objMapaPropioSeleccionado = objMapaSeleccionado;
+		}
 
 	}
 
-	public ObjetoMapa obtenerObjMapaEnPosPropio(int x, int y, Jugador jugTurno) {
+	public void asignarObjMapaJugContrario(int ratonX, int ratonY, Jugador jugTurno) {
+		this.objMapaContrarioSelecionado = obtenerObjMapaJugContrarioEnPos(ratonX, ratonY, jugTurno);
+	}
+
+	public ObjetoMapa obtenerObjMapaPropioEnPos(int x, int y, Jugador jugTurno) {
 		for(ObjetoMapa objMapa : objetosEnMapa) {
-			if( objMapa.obtenerAreaOcupa().contains(x, y) && objMapa.getJugador()==jugTurno) {
+			if( objMapa.estaEnPos(x, y) && objMapa.esDeJugador(jugTurno)  && objMapa.tieneJugador()) {
 				return objMapa;
 			}
 		}
 		return null;
 	}
 
-	public ObjetoMapa obtenerObjMapaEnPosAjeno(int x, int y, Jugador jugTurno) {
+	public ObjetoMapa obtenerObjMapaJugContrarioEnPos(int x, int y, Jugador jugTurno) {
 		for(ObjetoMapa objMapa : objetosEnMapa) {
-			if( objMapa.obtenerAreaOcupa().contains(x, y) && objMapa.getJugador()!=jugTurno) {
+			if( objMapa.estaEnPos(x, y) && !objMapa.esDeJugador(jugTurno) && objMapa.tieneJugador()) {
 				return objMapa;
 			}
 		}
 		return null;
 	}
 
-	public void agregarVisionUnidades() {
-		this.agregarVisionUnidades = true;
+	public ObjetoMapa obtenerObjMapaContrarioSelecionado() {
+		return objMapaContrarioSelecionado;
 	}
 
-	public void noAgregarVisionUnidades() {
-		// solo se actualizara la vision de las
-		// unidades al moverse el escenario.
-		this.agregarVisionUnidades = false;
+	public ObjetoMapa obtenerObjMapaPropioSeleccionado() {
+		return objMapaPropioSeleccionado;
 	}
 
-	public Area obtenerAreaNoVisible() {
-		actualizarAreaVisible();
-		return areaNoVisible;
+	public void reiniciarObjMapaContrarioSeleccionado() {
+		objMapaContrarioSelecionado = null;
 	}
 
-	public void actualizarAreaVisible() {
-
-		actualizarVisibilidadUnidades();
-
-		areaNoVisible = new Area(new Rectangle(0, 0, Constantes.ANCHO_VENTANA,
-				Constantes.ALTO_VENTANA));
-
-		for (Rectangle rectanguloVisible : rectangulosVisibles) {
-			rectanguloVisible.translate(dx, dy);
-			areaNoVisible.subtract(new Area(rectanguloVisible));
-		}
+	public void reiniciarObjMapaPropioSeleccionado() {
+		objMapaPropioSeleccionado = null;
 	}
 
-	public void actualizarVisibilidadUnidades() {
-		for (ObjetoMapa objEnMapa : objetosEnMapa) {
-			if ( objEnMapa.tieneVisibilidad() ) {
-				actualizarVisibilidadUnidad(objEnMapa);
+	public void pasarTurno(Jugador jugTurno) {
+		objMapaPropioSeleccionado = null;
+		objMapaContrarioSelecionado = null;
+	}
+
+	public ObjetoMapa obtenerObjMapaEnPos(int x, int y) {
+		for(ObjetoMapa objMapa : objetosEnMapa) {
+			if( objMapa.estaEnPos(x, y)) {
+				return objMapa;
 			}
 		}
+		return null;
 	}
 
-	public void actualizarVisibilidadUnidad(ObjetoMapa objEnMapa) {
-		if( agregarVisionUnidades ) {
-			Rectangle areaVisible = objEnMapa.obtenerAreaVisible();
-			rectangulosVisibles.add(areaVisible);
-		}
-		else {
-			objEnMapa.actualizarAreaVisible();
-		}
-	}
-
-
-
-
-
-	public void guardarPrimerCoordUnidSeleccionar(int ratonX, int ratonY) {
-		if (moverObjsEnMapaSeleccionados){
-			return;
-		}
-		primCoordXobjsEnMapaSeleccionar = ratonX;
-		primCoordYobjsEnMapaSeleccionar = ratonY;
-	}
-
-	public void guardarSegCoordUnidSeleccionar(int ratonX, int ratonY) {
-		if (moverObjsEnMapaSeleccionados){
-			return;
-		}
-		segCoordXobjsEnMapaSeleccionar = ratonX;
-		segCoordYobjsEnMapaSeleccionar = ratonY;
-	}
-
-	public void guardarUnidSeleccionadas() {
-		if (moverObjsEnMapaSeleccionados){
-			return;
-		}
-		
-		Rectangle areaSeleccionada = obtenerAreaSeleccionada();
-		guardarUnidAdesplazar(areaSeleccionada);
-		moverObjsEnMapaSeleccionados = true;
-	}
-
-	public Rectangle obtenerAreaSeleccionada() {
-		int coordXareaSelccionada = primCoordXobjsEnMapaSeleccionar;
-		int coordYareaSelccionada = primCoordYobjsEnMapaSeleccionar;
-		int anchoAreaSeleccionada = 
-				Math.abs( segCoordXobjsEnMapaSeleccionar - primCoordXobjsEnMapaSeleccionar );
-		int altoAreaSeleccionada = 
-				Math.abs( segCoordYobjsEnMapaSeleccionar - primCoordYobjsEnMapaSeleccionar );
-
-		Rectangle areaSeleccionada = new Rectangle(
-				coordXareaSelccionada, coordYareaSelccionada,
-				anchoAreaSeleccionada, altoAreaSeleccionada);
-
-		return areaSeleccionada;
-	}
-
-	private void guardarUnidAdesplazar(Rectangle areaSeleccionada) {
-		for( ObjetoMapa objEnMapa : objetosEnMapa ) {
-			Rectangle areaOcupaObj = objEnMapa.obtenerAreaOcupa();
-			if( objEnMapa.sePuedeDesplazarAlSelecionar() &&
-					areaSeleccionada.contains(areaOcupaObj) ) {
-				objsEnMapaSeleccionados.add(objEnMapa);
-			}
-		}
-	}
-
-	public void moverNavesSeleccionadas(int ratonX, int ratonY, Panel panel) {
-		if (!moverObjsEnMapaSeleccionados) {
-			return;
-		}
-
-		agregarVisionUnidades();
-		for( ObjetoMapa objEnMapaSelecionado : objsEnMapaSeleccionados ) {
-			moverNaveSeleccionada(objEnMapaSelecionado, ratonX, ratonY, panel);
-		}
-
-		objsEnMapaSeleccionados.clear();
-		moverObjsEnMapaSeleccionados = false;
-	}
-
-	public void moverNaveSeleccionada(ObjetoMapa objEnMapaSelecionado,
-			int ratonX, int ratonY, Panel panel) {
-
-		int desplazamientoTotalX = ratonX - objEnMapaSelecionado.obtenerX();
-		int desplazamientoTotalY = ratonY - objEnMapaSelecionado.obtenerY();
-
-		int desplazamientoParcialX = ratonX - objEnMapaSelecionado.obtenerX();
-		int desplazamientoParcialY = ratonY - objEnMapaSelecionado.obtenerY();
-
-		boolean seguirX  = true;
-		boolean seguirY  = true;
-
-		int desplazamientoX = obtenerDesplazamiento(desplazamientoTotalX);
-		int desplazamientoY = obtenerDesplazamiento(desplazamientoTotalY);
-
-		while( seguirX || seguirY ) {
-
-			seguirX = seguirDesplazamiento(desplazamientoTotalX, desplazamientoParcialX);
-			seguirY = seguirDesplazamiento(desplazamientoTotalY, desplazamientoParcialY);
-
-			if(seguirX) {
-				desplazamientoParcialX -= desplazamientoX;
-			}
-			else {
-				desplazamientoX = 0;
-			}
-
-			if(seguirY) {
-				desplazamientoParcialY -= desplazamientoY;
-			}
-			else {
-				desplazamientoY = 0;
-			}
-
-			objEnMapaSelecionado.desplazar(desplazamientoX, desplazamientoY);
-			objEnMapaSelecionado.mover();
-			panel.repintar();
-		}
-	}
-
-	public boolean seguirDesplazamiento(int desplazamientoTotal, int desplazamientoParcial) {
-		
-		if(desplazamientoTotal>0){
-			return desplazamientoParcial > 0;
-		}
-		else{
-			return desplazamientoParcial < 0;
-		}
-	}
-
-
-	public int obtenerDesplazamiento(int desplazamientoTotal) {
-		int d = Constantes.DESPLAZAMIENTOUNIDAD;
-
-		if(desplazamientoTotal>0){
-			return d;
-		}
-		else{
-			return -d;
-		}
-	}
-
-	public Iterable<ObjetoMapa> obtenerListaObjetos(){
+	public Iterable<ObjetoMapa> obtenerObjetosEnMapa(){
 		return this.objetosEnMapa;
 	}
-
-
-
-
 }
